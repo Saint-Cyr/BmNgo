@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e25895a07a2717db5506a5894144fa8f",
-    "content-hash": "47ab31ca39785ea3b9dc69a6b8381e4e",
+    "hash": "17447c0bc6183f4b325dab218d0075bd",
+    "content-hash": "55443ac1170f228599c6e8e304f4a42c",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -773,6 +773,51 @@
                 "orm"
             ],
             "time": "2016-01-05 21:34:58"
+        },
+        {
+            "name": "hackzilla/barcode-bundle",
+            "version": "v1.4.1",
+            "target-dir": "Hackzilla/BarcodeBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hackzilla/BarcodeBundle.git",
+                "reference": "f4f2ca3d055249327bea20301528413313c6eb3d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hackzilla/BarcodeBundle/zipball/f4f2ca3d055249327bea20301528413313c6eb3d",
+                "reference": "f4f2ca3d055249327bea20301528413313c6eb3d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "suggest": {
+                "twig/twig": "to use outputHtml"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Hackzilla\\BarcodeBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Folke Ashberg",
+                    "homepage": "http://www.ashberg.de/php-barcode/"
+                },
+                {
+                    "name": "Daniel Platt",
+                    "email": "github@ofdan.co.uk",
+                    "homepage": "http://www.hackzilla.org"
+                }
+            ],
+            "description": "Barcode Generator Bundle",
+            "time": "2014-11-13 18:42:25"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2064,8 +2109,5 @@
     "platform": {
         "php": ">=5.5.9"
     },
-    "platform-dev": [],
-    "platform-overrides": {
-        "php": "5.5.9"
-    }
+    "platform-dev": []
 }
