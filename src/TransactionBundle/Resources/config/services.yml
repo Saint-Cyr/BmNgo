@@ -1,0 +1,10 @@
+services:
+    transaction.sale_handler:
+        class: TransactionBundle\Service\SaleHandler
+        arguments: ["@doctrine.orm.entity_manager"]
+        
+    transaction.admin.sale:
+        class: TransactionBundle\Admin\SaleAdmin
+        arguments: [~, TransactionBundle\Entity\Sale, TransactionBundle:SaleAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Sale }

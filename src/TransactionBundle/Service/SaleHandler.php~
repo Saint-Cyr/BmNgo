@@ -1,0 +1,8 @@
+<?php
+using Symfony\Component\HttpFoundation;
+
+class SaleHandler
+{
+
+
+}

@@ -1,0 +1,3 @@
+km_homepage:
+    path:     /
+    defaults: { _controller: KmBundle:Default:index }
