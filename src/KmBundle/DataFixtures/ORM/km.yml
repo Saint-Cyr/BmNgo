@@ -1,3 +1,40 @@
 TransactionBundle\Entity\Sale:
     sale_{1..10}:
         amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+
+TransactionBundle\Entity\STransaction:
+    stransaction1:
+        totalAmount: 1000.50
+        branch: '@branch1'
+    stransaction2:
+        totalAmount: 2000
+        branch: '@branch2'
+
+KmBundle\Entity\Branch:
+    branch1:
+        name: BRANCH 1
+    branch2:
+        name: BRANCH 2
+    
+KmBundle\Entity\Expenditure:
+    expenditure1:
+        amount: 40.10
+        branch: '@branch1'
+    expenditure2:
+        amount: 40.10
+        branch: '@branch1'
+        
+TransactionBundle\Entity\Product:
+    product1:
+        barcode: 051131995222
+        name: Nexcare
+        unitPrice: 130.00
+        wholeSalePrice: 7.00
+    product2:
+        barcode: 9780198610458
+        name: Oxford French Dictionary
+        unitPrice: 17.50
+        wholeSalePrice: 8.00
+        

@@ -37,6 +37,11 @@ class InitFixturesTest extends WebTestCase
     
     public function testInit()
     {
+        //$this->Init();
+    }
+    
+    public function Init()
+    {
         //Step 1: drop the DB.
         $command = new DropDatabaseDoctrineCommand();
         $this->application->add($command);
@@ -83,5 +88,14 @@ class InitFixturesTest extends WebTestCase
         
         
         $this->assertEquals(true, true);
-    } 
+    }
+    
+    /*
+     * To avoid PHPUnit to generate
+     * no tests found exception
+     */
+    public function testDummy()
+    {
+        $this->assertTrue(true);
+    }
 }

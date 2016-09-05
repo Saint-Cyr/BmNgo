@@ -1,4 +1,16 @@
 services:
-#    km.example:
-#        class: KmBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    km.statisticHandler:
+        class: KmBundle\Service\StatisticHandler
+        arguments: ["@doctrine.orm.entity_manager"]
+
+    km.admin.expenditure:
+        class: KmBundle\Admin\ExpenditureAdmin
+        arguments: [~, KmBundle\Entity\Expenditure, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Expenditure }
+
+    km.admin.branch:
+        class: KmBundle\Admin\BranchAdmin
+        arguments: [~, KmBundle\Entity\Branch, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Branch }

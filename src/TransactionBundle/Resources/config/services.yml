@@ -8,3 +8,15 @@ services:
         arguments: [~, TransactionBundle\Entity\Sale, TransactionBundle:SaleAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: Sale }
+
+    transaction.admin.product:
+        class: TransactionBundle\Admin\ProductAdmin
+        arguments: [~, TransactionBundle\Entity\Product, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Product }
+
+    transaction.admin.s_transaction:
+        class: TransactionBundle\Admin\STransactionAdmin
+        arguments: [~, TransactionBundle\Entity\STransaction, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: STransaction }

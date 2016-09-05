@@ -1,8 +1,8 @@
 <?php
 
 namespace TransactionBundle\Service;
-
-use Symfony\Component\HttpFoundation\Response;
+use TransactionBundle\Entity\STransaction;
+use TransactionBundle\Entity\Sale;
 
 class SaleHandler
 {
@@ -14,10 +14,21 @@ class SaleHandler
         $this->em = $em;
     }
     
-    public function processSaleTransaction()
+    public function processSaleTransaction(array $inputData)
     {
-        //For test purpose...(to be removed)
-        $sale1 = $this->em->getRepository('TransactionBundle:Sale')->find(1);
-        return $sale1->getAmount();
+        //Create an instance of a SaleTransaction
+        $stransaction = new STransaction();
+        $stransaction ->setTotalAmount($inputData['total']);
+        
+        //Loop over each sale
+        foreach ($inputData['stransaction'] as $s){
+            //create an instance of a sale
+            $sale = new Sale();
+            $sale->setAmount($s['saleAmount']);
+            $sale->setStransaction($stransaction);
+            $this->em->persist($sale);
+        }
+        //Persist its in DB.
+        $this->em->flush();
     }
 }

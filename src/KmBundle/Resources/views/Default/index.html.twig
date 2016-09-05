@@ -1,1 +1,244 @@
-Hello World!
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+  <title>KingManager</title>
+  <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
+  <script data-require="angular.js@1.2.13" data-semver="1.2.13" src="{{ asset('vendor/angular-1.2.13/angular.js') }}"></script>
+  <script data-require="angular.js@1.2.13" data-semver="1.2.13" src="{{ asset('jquery-1.10.2.min.js') }}"></script>
+  <script data-require="angular.js@1.2.13" data-semver="1.2.13" src="{{ asset('vendor/angular-1.2.13/angular-animate.js') }}"></script>
+
+<!-- Latest compiled and minified CSS -->
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">-->
+<link rel="stylesheet" href="vendor/bootstrap.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
+<script src="{{ asset('vendor/bootstrap.min.js') }}"></script>
+
+  <link rel="stylesheet" href="{{ asset('style.css') }}" />
+  
+  <script>
+    // Code goes here
+    var app = angular.module('myApp', []);
+    
+    app.controller('POSController', function ($scope, $http) {
+        $scope.food = {
+            {% for product in products %}
+                {{ product.id }} : {count: 1, id:{{ product.id }}, detail: "{{ product.name|upper }}", price: {{ product.unitPrice }}},
+            {% endfor %}
+        };
+        
+        var data = {
+    5010182974612: { count: 1, detail: "ITEME NAME", id: "AGDFT144", price: 10.50 },
+    3124142142123532: { id: "AGFHH156", price: 2.15 },
+    6588969543172554: { id: "BNHKL102", price: 101.60 }
+  };
+//By S@int-Cyr
+//$scope.barcode = 6588969543172554;
+  $scope.$watch("barcode", function(newValue, oldValue) {
+    if (newValue)
+      addSale(newValue);
+  });
+          
+  /*$scope.add(barcode) {
+      $scope.orderedItemCnt = 1;
+    var foodItem = {
+        orderedItemCnt: 1,
+        totalPrice: item.price,
+        itemId: item.id,
+        item: data[barcode],
+    };
+    //console.log(foodItem);
+  }*/
+//end By S@int-Cyr
+        $scope.itemsCnt = 1;
+        $scope.order = [];
+        $scope.isDisabled = true;
+
+    function isEmpty(obj) {
+        return Object.keys(obj).length === 0;
+    }
+        
+        $scope.add = function(item) {
+            alert
+          $scope.orderedItemCnt = 1;
+          var foodItem = {
+            orderedItemCnt : 1,
+            totalPrice : item.price,
+            itemId : item.id, 
+            id : $scope.itemsCnt,
+            item : data[0],
+          };
+          
+           
+          
+
+            // Find if the item is already in Cart
+            var cartItems = $.grep($scope.order, function(e){ return e.itemId == item.id; });
+
+             if(cartItems.length > 0  && !isEmpty($scope.order)){
+                cartItems[0].orderedItemCnt = ++ cartItems[0].orderedItemCnt; 
+                cartItems[0].totalPrice = item.price * cartItems[0].orderedItemCnt;
+             }
+             else{
+                $scope.order.push(foodItem);
+                $scope.itemsCnt = $scope.order.length; 
+             }
+        };
+
+        $scope.getSum = function() {
+          var i = 0,
+            sum = 0;
+
+          for(; i < $scope.order.length; i++) {
+            sum += parseFloat($scope.order[i].totalPrice, 10);
+          }
+          
+                return sum;
+        };
+
+        $scope.addItem = function(item, index) {         
+              item.orderedItemCnt = ++ item.orderedItemCnt; 
+              item.totalPrice = item.item.price * item.orderedItemCnt;
+        };
+
+
+        $scope.subtractItem = function(item, $index)
+        {
+          if (item.orderedItemCnt > 1) {
+              item.orderedItemCnt = -- item.orderedItemCnt; 
+              item.totalPrice = item.item.price * item.orderedItemCnt;
+          }
+          else{
+              $scope.isDisabled = true;
+              // isDisabled = false;    
+             // $("#SubstractItemBtn").prop("disabled", true);
+          }
+        }
+
+        $scope.deleteItem = function(index) {
+          $scope.order.splice(index, 1);
+        };
+
+        $scope.checkout = function(index) {
+          alert("Order total: $" + $scope.getSum() + "\n\nPayment received. Thanks. ");
+        };
+
+        $scope.clearOrder = function() {
+          $scope.order = [];
+        };
+    });
+
+
+  </script>
+</head>
+<body data-ng-controller="POSController">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron">
+          <h2><span class="text-warning">King</span><span class="text-success">Manager17</span></h2>
+          {% verbatim %}
+            <span class="pull-right text-muted">date goes here</span>
+          {% endverbatim %}
+          <div class="text-muted"><i>Circle branch</i></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="well">
+        <div class="input-group stylish-input-group">
+            <input type="text" name="barcode" ng-model="barcode" ng-model-options="{ debounce: 1000 }" />
+            <pre>user.name = <span ng-bind="barcode"></span></pre>
+            <!--<input ng-model="codebare" ng-change="codebare.length == 13 && add(codebare)" id="searchField" name="keyWord" type="text" class="form-control" placeholder="Product name or barcode value" autofocus />-->
+                <span class="input-group-addon">
+                    <button type="submit">
+                       <img src="{{ asset('images/barcode.png') }}" width="25px"/>
+                    </button>  
+                </span>
+        </div>
+        <br>
+        <div class="box">
+            <hr>
+            {% for product in products %}
+                <button class="buttons btn btn-primary" ng-click="add(food.{{ product.id }})">{{ product.name|upper }}</button>
+            {% endfor %}
+        </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div class="well">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Order Summary</h3>
+            </div>
+            <div class="panel-body" style="max-height:320px; overflow:auto;">
+              <div class="text-warning" ng-hide="order.length">
+                Noting ordered yet !
+              </div>
+              {% verbatim %}
+              <ul class="list-group">
+                <li class="list-group-item" ng-repeat="item in order">
+                  <span> {{item.item.detail}}</span>
+
+                  <div class="btn-group pull-right" role="group" aria-label="...">
+                      <button type="button" class="btn btn-xs " ng-disabled="" ng-click="subtractItem(item, $index)">
+                        <span type="button" class="glyphicon glyphicon-minus"></span>
+                      </button>
+                      <button type="button" class="btn  btn-xs" ng-click="addItem(item, $index)">
+                        <span class="glyphicon glyphicon-plus"></span>
+                      </button>
+                       <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                      </button>                     
+                  </div>
+                    <div class="label label-success pull-right">{{item.totalPrice | currency:'Gh¢ ':true:'1.2-2'}}</div>
+                    <div class="label label-default pull-right">{{item.orderedItemCnt}}</div>
+                </li>
+              </ul>
+              {% endverbatim %}
+            </div>
+            <div class="panel-footer" ng-show="order.length">
+              {% verbatim %}
+                <div class="label label-danger ">Total: {{getSum() | currency:'Gh¢ ':true:'1.2-2'}}</div>
+              {% endverbatim %}
+            </div>
+            <div class="panel-footer" ng-show="order.length">
+              <div class="text-muted">
+                Do not let go of customer without taking payment !
+              </div>
+            </div>
+            <div class="pull-right">
+              <span class="btn btn-default" ng-click="clearOrder()" ng-disabled="!order.length">Clear</span>
+              <span class="btn btn-danger" ng-click="checkout()" ng-disabled="!order.length">Checkout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#searchField').keyup(function(key)
+    {
+        if (this.value.length >= 3 || this.value == '')
+        {
+            $.ajax({
+            url : 'http://localhost/KINGMANAGER/web/app_dev.php/product_list',
+            type: 'post',
+            data : this.value,
+            success: function(html) {
+                        // Replace current position field ...
+                        $('#productList').html(html);
+                        // Position field now displays the appropriate positions.
+                      }
+            });
+        }
+        
+    });
+</script>
+</body>
+</html>
+

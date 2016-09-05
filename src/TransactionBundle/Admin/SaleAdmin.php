@@ -16,7 +16,6 @@ class SaleAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('id')
             ->add('amount')
         ;
     }
@@ -27,8 +26,9 @@ class SaleAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            ->add('stransaction')
             ->add('amount')
+            ->add('profit')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -45,8 +45,8 @@ class SaleAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('id')
             ->add('amount')
+            ->add('stransaction')
         ;
     }
 

@@ -1,3 +1,7 @@
 transaction_homepage:
     path:     /
     defaults: { _controller: TransactionBundle:Default:index }
+
+transaction_product_list:
+    path:     /product_list
+    defaults: { _controller: TransactionBundle:Default:productList }

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bdfd456fc342ec9a2228e63e4037adf5",
-    "content-hash": "e239a4debad26eba42563ff6838061c3",
+    "hash": "9ac6470243780a10c8762b706fdd26b6",
+    "content-hash": "737812c0738ea69f2d2204be7a124078",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -997,29 +997,25 @@
         },
         {
             "name": "hackzilla/barcode-bundle",
-            "version": "v1.4.1",
-            "target-dir": "Hackzilla/BarcodeBundle",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/hackzilla/BarcodeBundle.git",
-                "reference": "f4f2ca3d055249327bea20301528413313c6eb3d"
+                "reference": "428dd4697f374990c45fe29d68b1f92ae9853a61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/hackzilla/BarcodeBundle/zipball/f4f2ca3d055249327bea20301528413313c6eb3d",
-                "reference": "f4f2ca3d055249327bea20301528413313c6eb3d",
+                "url": "https://api.github.com/repos/hackzilla/BarcodeBundle/zipball/428dd4697f374990c45fe29d68b1f92ae9853a61",
+                "reference": "428dd4697f374990c45fe29d68b1f92ae9853a61",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.3.2"
             },
-            "suggest": {
-                "twig/twig": "to use outputHtml"
-            },
             "type": "library",
             "autoload": {
-                "psr-0": {
-                    "Hackzilla\\BarcodeBundle": ""
+                "psr-4": {
+                    "Hackzilla\\BarcodeBundle\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1038,7 +1034,7 @@
                 }
             ],
             "description": "Barcode Generator Bundle",
-            "time": "2014-11-13 18:42:25"
+            "time": "2015-12-05 22:23:01"
         },
         {
             "name": "incenteev/composer-parameter-handler",
