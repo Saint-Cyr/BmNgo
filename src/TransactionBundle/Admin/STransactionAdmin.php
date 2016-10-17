@@ -29,6 +29,7 @@ class STransactionAdmin extends AbstractAdmin
             ->add('branch')
             ->add('sales')
             ->add('totalAmount')
+            ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),

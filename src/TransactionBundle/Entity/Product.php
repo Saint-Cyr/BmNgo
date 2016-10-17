@@ -48,6 +48,10 @@ class Product
      * @ORM\Column(name="WholeSalePrice", type="float")
      */
     private $wholeSalePrice;
+    
+    public function __toString() {
+        return $this->name;
+    }
 
     /**
      * Get id

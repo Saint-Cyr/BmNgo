@@ -36,6 +36,13 @@ class Product
     private $barcode;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="currency", type="string", length=255)
+     */
+    private $currency;
+    
+    /**
      * @var float
      *
      * @ORM\Column(name="unitPrice", type="float")
@@ -48,6 +55,10 @@ class Product
      * @ORM\Column(name="WholeSalePrice", type="float")
      */
     private $wholeSalePrice;
+    
+    public function __toString() {
+        return $this->name;
+    }
 
     /**
      * Get id

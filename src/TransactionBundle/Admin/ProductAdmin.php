@@ -27,6 +27,7 @@ class ProductAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('id')
             ->add('name')
             ->add('unitPrice')
             ->add('barcode')
@@ -46,9 +47,14 @@ class ProductAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+        ->with('General information', array('class' => 'col-md-8'))
             ->add('name')
-            ->add('unitPrice')
             ->add('barcode')
+        ->end()
+        ->with('Pricing', array('class' => 'col-md-4'))
+            ->add('unitPrice')
+            ->add('wholeSalePrice')
+        ->end()
         ;
     }
 

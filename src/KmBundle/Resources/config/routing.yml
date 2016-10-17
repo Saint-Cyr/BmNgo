@@ -1,3 +1,7 @@
 km_homepage:
     path:     /generate_barcode
     defaults: { _controller: KmBundle:Default:index }
+    
+km_dashboard:
+    path:    /
+    defaults: { _controller: KmBundle:Default:dashboard }

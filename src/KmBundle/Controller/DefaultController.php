@@ -8,6 +8,12 @@ use Hackzilla\BarcodeBundle\Utility\Barcode;
 
 class DefaultController extends Controller
 {
+    public function dashboardAction()
+    {
+        //return new Response('------------Student profile information goes here --------------');
+        return $this->render('/admin/vendor_dashboard.html.twig');
+    }
+    
     public function indexAction()
     {
         $code = '1751477849934';

@@ -1,7 +1,16 @@
-transaction_homepage:
-    path:     /
-    defaults: { _controller: TransactionBundle:Default:index }
-
 transaction_product_list:
     path:     /product_list
     defaults: { _controller: TransactionBundle:Default:productList }
+
+transaction_pos:
+    path: /pos
+    defaults: { _controller: TransactionBundle:Default:pos }
+    
+sale_transaction:
+    type: rest
+    resource: "TransactionBundle:Api"
+    prefix: api
+    
+sale_transaction2:
+    path: /sale
+    defaults: { _controller: TransactionBundle:Default:sale }

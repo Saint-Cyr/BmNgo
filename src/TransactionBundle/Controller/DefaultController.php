@@ -4,12 +4,39 @@ namespace TransactionBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
-{
-    public function indexAction()
+{   
+    public function saleAction(Request $request)
     {
-        return $this->render('TransactionBundle:Default:index.html.twig');
+        //Get the data structure that came from the client as an array
+        $data = json_decode($request->getContent(), true);
+        //Get the sale handler service
+        $saleHandler = $this->get('transaction.sale_handler');
+        //Process the sale transaction
+        /*@Saint-Cyr NOTICE: because it is the Starter formular, we just manager one branch but we still have the right DB schema in order
+         * to keep compatibility with other formula so that when a customer want to upgrade, it make it easy for us. And we consider as
+         * one branch the the very first one in the database also we'll make sure the prevent other registration of any other branch
+         */
+        $mainBranch = $this->getDoctrine()->getManager()->getRepository('KmBundle:Branch')->find(1);
+        $saleHandler->processSaleTransaction($data, $mainBranch);
+        
+        $response = new Response('Successfull transaction');
+                            
+        $response->headers->set('Access-Control-Allow-Origin', 'http://localhost');
+        
+        return $response;
+    }
+    
+    public function posAction()
+    {
+        //Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Get the list of all the products
+        $products = $em->getRepository('TransactionBundle:Product')->findAll();
+        
+        return $this->render('TransactionBundle:POS:pos.html.twig', array('products' => $products));
     }
     
     public function productListAction()

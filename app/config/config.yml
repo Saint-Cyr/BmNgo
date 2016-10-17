@@ -16,6 +16,18 @@ fos_rest:
     routing_loader:
         default_format: json
 
+sonata_admin:
+    #security:
+        #handler: sonata.admin.security.handler.role
+    templates:
+        layout: KmBundle::standard_layout.html.twig
+    title_logo: images/logo.png
+    title: BeezyManager
+    dashboard:
+        #blocks:
+         #   - { position: left, type: sonata.admin.block.admin_list, settings: {groups: [Admin]} }
+            #- { position: right, type: sonata.admin.block.admin_list, settings: {groups: [Security]} }
+            
 sonata_block:
     default_contexts: [cms]
     blocks:

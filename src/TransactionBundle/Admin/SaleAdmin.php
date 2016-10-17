@@ -29,6 +29,7 @@ class SaleAdmin extends AbstractAdmin
             ->add('stransaction')
             ->add('amount')
             ->add('profit')
+            ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),

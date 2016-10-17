@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of Components of KingManager project
+ * This file is part of Components of BeezyManager project
  * By contributor S@int-Cyr MAPOUKA
  * (c) YAME Group <info@yamegroup.com>
  * For the full copyrght and license information, please view the LICENSE
