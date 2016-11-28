@@ -6,6 +6,10 @@ transaction_pos:
     path: /pos
     defaults: { _controller: TransactionBundle:Default:pos }
     
+transaction_pos2:
+    path: /pos2
+    defaults: { _controller: TransactionBundle:Default:pos2 }
+    
 sale_transaction:
     type: rest
     resource: "TransactionBundle:Api"

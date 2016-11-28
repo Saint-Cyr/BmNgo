@@ -39,6 +39,16 @@ class DefaultController extends Controller
         return $this->render('TransactionBundle:POS:pos.html.twig', array('products' => $products));
     }
     
+    public function pos2Action()
+    {
+        //Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Get the list of all the products
+        $products = $em->getRepository('TransactionBundle:Product')->findAll();
+        
+        return $this->render('TransactionBundle:POS:pos2.html.twig', array('products' => $products));
+    }
+    
     public function productListAction()
     {
         //Get the entity manager

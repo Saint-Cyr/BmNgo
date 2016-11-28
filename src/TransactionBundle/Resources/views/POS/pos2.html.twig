@@ -5,8 +5,8 @@
   <title>Point of Sale Interface</title>
   <!--<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
   <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
-
-  <!--<script data-require="angular.js@1.2.13" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular.js"></script>-->
+  
+  <!---<script data-require="angular.js@1.2.13" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular.js"></script>-->
   <script data-require="angular.js@1.2.13" data-semver="1.2.13" src="{{ asset('vendor/angular-1.2.13/angular.js') }}"></script>
   <!--<script data-require="angular.js@1.2.13" data-semver="1.2.13" src="http://code.angularjs.org/1.2.13/angular-animate.js"></script>-->
   <script data-require="angular.js@1.2.13" data-semver="1.2.13" src="{{ asset('vendor/angular-1.2.13/angular-animate.js') }}"></script>
@@ -17,59 +17,41 @@
 <!-- Latest compiled and minified JavaScript -->
 <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>-->
 <script src="{{ asset('vendor/bootstrap.min.js') }}"></script>
+<link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
 
   <link rel="stylesheet" href="{{ asset('style.css') }}" />
-  <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
   <script>
       // Code goes here
-
 var app = angular.module('myApp', []);
 
-app.controller('POSController', function ($scope, $http)
-{
-    $scope.fileName = 'KINGMANAGER/web/1.jpg';
-    $scope.focusImage = '';
+app.controller('POSController', function ($scope, $http) {
+    $scope.food = {
+      {% for p in products %}
+            {{ p.id }} : {count: 1, id: {{ p.id }}, detail: "{{ p }}", price: {{ p.unitPrice }} },  
+      {% endfor %}
+    };
     
-    var data = {
-        {% for p in products %}
-            "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24) }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
-        {% endfor %}
-  };
     
-        
     $scope.itemsCnt = 1;
     $scope.order = [];
     $scope.isDisabled = true;
 
-    function isEmpty(obj) {
-        return Object.keys(obj).length === 0;
-    }
-    
-  //$scope.barcode = 6588969543172554;
-  $scope.$watch("barcode", function(newValue, oldValue) {
-    if (newValue)
-      addSale(newValue);
-  });
-  
-  function addSale(barcode) {
-    var item = data[barcode];
-    
-    var foodItem = {
-        orderedItemCnt: 1,
-        totalPrice: item.price,
-        detail: item.detail,
-        itemId: item.id,
-        id: $scope.itemsCnt,
-        item: item,
-    };
-    
-    //By S@int-Cyr
-    $scope.fileName = item.fileName;
-    $scope.barcode = '';
-    console.log(foodItem);
-    
-    
-    // Find if the item is already in Cart
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+
+    $scope.add = function(item) {
+
+      $scope.orderedItemCnt = 1;
+      var foodItem = {
+        orderedItemCnt : 1,
+        totalPrice : item.price,
+        itemId : item.id, 
+        id : $scope.itemsCnt,
+        item : item
+      };
+
+        // Find if the item is already in Cart
         var cartItems = $.grep($scope.order, function(e){ return e.itemId == item.id; });
 
          if(cartItems.length > 0  && !isEmpty($scope.order)){
@@ -80,7 +62,7 @@ app.controller('POSController', function ($scope, $http)
             $scope.order.push(foodItem);
             $scope.itemsCnt = $scope.order.length; 
          }
-  }
+    };
     
     $scope.getSum = function() {
       var i = 0,
@@ -92,7 +74,7 @@ app.controller('POSController', function ($scope, $http)
       return sum;
     };
 
-    $scope.addItem = function(item, index) {
+    $scope.addItem = function(item, index) {         
           item.orderedItemCnt = ++ item.orderedItemCnt; 
           item.totalPrice = item.item.price * item.orderedItemCnt;
     };
@@ -114,6 +96,10 @@ app.controller('POSController', function ($scope, $http)
     $scope.deleteItem = function(index) {
       $scope.order.splice(index, 1);
     };
+    
+    /*$scope.checkout = function(index) {
+      alert("Order total: $" + $scope.getSum() + "\n\nPayment received. Thanks.");
+    };*/
     
     $scope.checkout = function(index) {
       //S@int-Cyr edition start here
@@ -146,138 +132,100 @@ app.controller('POSController', function ($scope, $http)
     
     $scope.clearOrder = function() {
       $scope.order = [];
-      
     };
-    
-    $scope.getChange = function(){
-        if($scope.getSum()){
-            var change = 0;
-            change = $scope.cacheAmount - $scope.getSum();
-            return change;
-        }
-    }
-    
-    $scope.focused = function(){
-        $scope.focusImage = 'fa-spin';
-    }
-    
-    $scope.blurred = function(){
-        $scope.focusImage = 'no-access.png';
-    }
 });
-
 
   </script>
 </head>
-
-
-
 <body data-ng-controller="POSController">
-        
   <div class="container">
+      <br>
     <div class="row">
-      <div class="col-md-6">
-        {% verbatim %}
-        <div class="jumbotron">
-            <h1 style="font-size: 120px; color: red;">{{getSum() | currency:' ':true:'1.2-2'}}</h1>
-        </div>
-        <div class="jumboron">
-        <div class="row">
-            <form name="itemForm">
-                  <input type="password" name="barcode"  style="opacity: 0;" id="barcodeId"
-                         ng-model="barcode" ng-model-options="{ debounce: 500 }" autofocus="true" ng-focus="focused()" ng-blur="blurred()"/>
-            <br/>
-            </form>
+      <div class="col-md-12">
+        
+      </div>
+    </div>
 
-            <div class="col-sm-6" onclick="document.getElementById('barcodeId').focus(); document.getElementById('barcodeId').value = ''; return false;">
-                  <span ng-model="focusImage">
-                      <i class="fa fa-cog {{ focusImage }} fa-5x fa-fw" aria-hidden="true"></i>
-                  </span>
-        {% endverbatim %}
-                <a href="" ><img src="{{ asset('barecode.jpg') }}" width="125" for="barcodeId"/></a>
-            </div>
-                {% verbatim %}
-            <div class="col-sm-6">
-                
-                
-            </div>
-        </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="well">
+          <div class="box">
+            <div class="text-info">Fridge</div>
+            <hr>
+            {% for p in products %}
+                <button class="buttons btn btn-success" ng-click="add(food.{{ p.id }})">{{ p.name }}</button>
+            {% endfor %}
+          </div>
+          {% verbatim %}
+          <br></br>
+          <div class="box">
+            <div class="text-info">Electronic Equipment</div>
+            <hr>
+
+            <button class="buttons btn btn-primary" ng-click="add(food.coldcoffee)">Cold Coffee</button>
+            <button class="buttons btn btn-primary" ng-click="add(food.hotcoffee)">Hot Coffee</button>
+            <button class="buttons btn btn-primary" ng-click="add(food.coke)">Coke</button>
+            <button class="buttons btn btn-primary" ng-click="add(food.dietcoke)">Diet Coke</button>
+            <button class="buttons btn btn-primary" ng-click="add(food.pepsi)">Pepsi</button>
+          </div>
+
         </div>
       </div>
-      <br>
-      <div class="col-md-6">
-        
+
+      <div class="col-sm-6">
+        <div class="well">
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Order Summary</h3>
-              
             </div>
             <div class="panel-body" style="max-height:320px; overflow:auto;">
               <div class="text-warning" ng-hide="order.length">
-                  {% endverbatim %}
+                {% endverbatim %}
                 <img src="{{ asset('images/logo.png') }}" style="margin-left:150px;" width="150"/>
                 {% verbatim %}
               </div>
-              
               <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in order">
-                    <span style="font-size: 23px;">{{item.detail}}</span>
-                  
+                  <span> {{item.item.detail}}</span>
+
                   <div class="btn-group pull-right" role="group" aria-label="...">
                       <button type="button" class="btn btn-xs " ng-disabled="" ng-click="subtractItem(item, $index)">
-                        <span type="button" class="fa fa-minus"></span>
+                        <span type="button" class="glyphicon glyphicon-minus"></span>
                       </button>
                       <button type="button" class="btn  btn-xs" ng-click="addItem(item, $index)">
-                        <span class="fa fa-plus"></span>
+                        <span class="glyphicon glyphicon-plus"></span>
                       </button>
-                      
                        <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
-                        <span class="fa fa-trash"></span>
+                        <span class="glyphicon glyphicon-trash"></span>
                       </button>                     
                   </div>
-                  <div class="label label-success pull-right">{{item.totalPrice | currency:'FCFA ':true:'1.2-2'}}</div>
+                  <div class="label label-success pull-right">FCFA {{item.totalPrice}}</div>
                   <div class="label label-default pull-right">{{item.orderedItemCnt}}</div>
+
                 </li>
               </ul>
-
+                  
             </div>
             <div class="panel-footer" ng-show="order.length">
-              <div class="label label-danger ">Total: {{getSum() | currency:'FCFA ':true:'1.2-2'}}</div>
+              <div class="label label-danger ">Total: FCFA {{getSum()}}</div>
             </div>
             <div class="panel-footer" ng-show="order.length">
               <div class="text-muted">
                 Do not let go of customer without taking payment !
               </div>
             </div>
+            
             <div class="pull-right">
-                <br>
-                <div class="input-group col-md-6">
-                    <span class="input-group-addon">
-                        <i class="fa fa-dolla" aria-hidden="true"></i>
-                    </span>
-                    <input class="form-control" type="text" placeholder="Cache amount (Gh₵)" ng-model="cacheAmount" ng-disabled="!order.length">
-                    
-                </div>
-                
-                <div class="inline-group col-md-6">
-                    <span class="btn btn-default" style="color: green;" ng-disabled="!order.length" ng-click="getChange()">{{getChange() | currency:'':true:'1.2-2'}}</span>
-                    <span class="btn btn-default" ng-click="clearOrder()" ng-disabled="!order.length">Clear</span>
-                    <span class="btn btn-danger" ng-click="checkout()" ng-disabled="!order.length">Checkout</span>
-                </div>
-              
+              <span class="btn btn-default" ng-click="clearOrder()" ng-disabled="!order.length">Clear</span>
+              <span class="btn btn-danger" ng-click="checkout()" ng-disabled="!order.length">Checkout</span>
             </div>
 
           </div>
-        
+        </div>
       </div>
     </div>
-     {% endverbatim %}
-      <!--<i class="fa fa-wifi fa-2x fa-fw" aria-hidden="true"></i>-->
-      <!--<img src="yellow3.gif" width="20"/>
-      <img src="off.gif" width="20"/>-->
-      <br><br>
-      <img src="{{ asset('LG_Blink.gif') }}" width="20"/>
-      <!--<img src="green.gif" width="20"/>-->
-    </div>
+  </div>
+
 </body>
+{% endverbatim %}
 </html>
