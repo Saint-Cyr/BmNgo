@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of Components of KingManager project
+ * This file is part of Components of BeezyManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) YAME Group <info@yamegroup.com>
+ * (c) TinzapaTech <mapoukacyr@yahoo.fr>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */
@@ -30,11 +30,55 @@ class StatisticHandlerTest extends WebTestCase
         $this->statisticHandler = $this->application->getKernel()->getContainer()->get('km.statistic_handler');
     }
     
-    public function testGetSale()
+    /*public function testGetSaleByMonth()
+    {
+        //Case 1: January is 100
+        $outPut1 = $this->statisticHandler->getSaleByMonth2(16);
+        $this->assertEquals($outPut1['nov'], 100);
+        
+    }*/
+    
+    public function testGetSaleByMonth()
+    {
+        //Case 1: January is 100
+        $outPut1 = $this->statisticHandler->getSaleByMonth(16);
+        $this->assertEquals($outPut1['jan'], 100);
+        //Case 2: Febrary is 200
+        $this->assertEquals($outPut1['feb'], 200);
+        //Case 2: March is 300
+        $this->assertEquals($outPut1['mar'], 300);
+        //Case 2: April is 400
+        $this->assertEquals($outPut1['apr'], 400);
+        //Case 2: May is 500
+        $this->assertEquals($outPut1['may'], 500);
+        //Case 2: May is 600
+        $this->assertEquals($outPut1['jun'], 600);
+        //Case 2: Febrary is 700
+        $this->assertEquals($outPut1['jul'], 700);
+        //Case 2: Febrary is 800
+        //$this->assertEquals($outPut1['aug'], 800);
+        //Case 2: Febrary is 900
+        //$this->assertEquals($outPut1['sep'], 900);
+        //Case 2: Febrary is 1000
+        $this->assertEquals($outPut1['oct'], 1000);
+        //Case 2: Febrary is 1100
+        $this->assertEquals($outPut1['nov'], 1230);
+        //Case 2: Febrary is 1200
+        $this->assertEquals($outPut1['dec'], 1200);
+        
+        $outPut2 = $this->statisticHandler->getSaleByMonth(15);
+        $this->assertEquals($outPut2['jan'], 1300);
+        $this->assertEquals($outPut2['feb'], 0);
+         $this->assertEquals($outPut2['mar'], 0);
+        
+    }
+
+
+    /*public function testGetSale()
     {
         //Case 1: get sale for all branches. (It have to be 1000.50 based on fixtures)
         $outPut1 = $this->statisticHandler->getSale(null, null);
-        $this->assertEquals($outPut1, 3000.50);
+        $this->assertEquals($outPut1, 12000.50);
         
         //Case 2: get sale for a branch
         //...
@@ -66,7 +110,7 @@ class StatisticHandlerTest extends WebTestCase
         //Get the branch
         $branch = $this->em->getRepository('KmBundle:Branch')->find(2);
         $outPut1 = $this->statisticHandler->getSaleByBranch($branch);
-        $this->assertEquals($outPut1, 2000);
+        $this->assertEquals($outPut1, 9800);
     }
     
     public function testGetProfitByBranch()
@@ -106,6 +150,6 @@ class StatisticHandlerTest extends WebTestCase
         $branch = $this->em->getRepository('KmBundle:Branch')->find(2);
         $outPut1 = $this->statisticHandler->getBalanceByBranch($branch);
         $this->assertEquals($outPut1, 0.00);
-    }
+    }*/
 }
 

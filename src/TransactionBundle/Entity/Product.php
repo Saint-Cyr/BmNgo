@@ -20,6 +20,12 @@ class Product
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $category;
 
     /**
      * @var string
@@ -157,5 +163,29 @@ class Product
     public function getWholeSalePrice()
     {
         return $this->wholeSalePrice;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \TransactionBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function setCategory(\TransactionBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \TransactionBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

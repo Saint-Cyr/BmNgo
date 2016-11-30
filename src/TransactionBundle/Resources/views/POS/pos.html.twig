@@ -255,7 +255,7 @@ app.controller('POSController', function ($scope, $http)
                     <span class="input-group-addon">
                         <i class="fa fa-dolla" aria-hidden="true"></i>
                     </span>
-                    <input class="form-control" type="text" placeholder="Cache amount (Gh₵)" ng-model="cacheAmount" ng-disabled="!order.length">
+                    <input class="form-control" type="text" placeholder="Cache amount (FCFA)" ng-model="cacheAmount" ng-disabled="!order.length">
                     
                 </div>
                 
@@ -278,6 +278,7 @@ app.controller('POSController', function ($scope, $http)
       <br><br>
       <img src="{{ asset('LG_Blink.gif') }}" width="20"/>
       <!--<img src="green.gif" width="20"/>-->
+      <a href="{{ path('transaction_pos2') }}"><span class="fa fa-list"></span></a>
     </div>
 </body>
 </html>

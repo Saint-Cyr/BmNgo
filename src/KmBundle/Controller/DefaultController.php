@@ -10,8 +10,11 @@ class DefaultController extends Controller
 {
     public function dashboardAction()
     {
-        //return new Response('------------Student profile information goes here --------------');
-        return $this->render('/admin/vendor_dashboard.html.twig');
+        //Get the statistic handler service
+        $statisticHandler = $this->get('km.statisticHandler');
+        //Get all the sale transaction amount for every month
+        $stransactions = $statisticHandler->getSaleByMonth();
+        return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions));
     }
     
     public function indexAction()

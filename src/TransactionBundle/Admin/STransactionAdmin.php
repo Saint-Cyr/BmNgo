@@ -49,6 +49,7 @@ class STransactionAdmin extends AbstractAdmin
             ->add('totalAmount')
             ->add('sales')
             ->add('branch')
+            ->add('createdAt')
         ;
     }
 

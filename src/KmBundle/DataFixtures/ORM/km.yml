@@ -6,10 +6,59 @@ TransactionBundle\Entity\Sale:
 
 TransactionBundle\Entity\STransaction:
     stransaction1:
-        totalAmount: 1000.50
+        totalAmount: 900.50
         branch: '@branch1'
     stransaction2:
         totalAmount: 2000
+        branch: '@branch2'
+    #Jan
+    stransaction3:
+        totalAmount: 100
+        branch: '@branch2'
+        #createdAt: <new \DateTime("now")>
+    #Feb
+    stransaction4:
+        totalAmount: 200
+        branch: '@branch2'
+    #Mar
+    stransaction5:
+        totalAmount: 300
+        branch: '@branch2'
+    #Apr
+    stransaction6:
+        totalAmount: 400
+        branch: '@branch2'
+    #May
+    stransaction7:
+        totalAmount: 500
+        branch: '@branch2'
+    #Jui
+    stransaction8:
+        totalAmount: 600
+        branch: '@branch2'
+    #Jul
+    stransaction9:
+        totalAmount: 700
+        branch: '@branch2'
+    #Aug
+    stransaction10:
+        totalAmount: 800
+        branch: '@branch2'
+    #Sep
+    stransaction11:
+        totalAmount: 900
+        branch: '@branch2'
+    #Oct
+    stransaction12:
+        totalAmount: 1000
+        branch: '@branch2'
+    #Nov
+    stransaction13:
+        totalAmount: 1100
+        branch: '@branch2'
+    #Dec
+    stransaction14:
+        totalAmount: 1200
         branch: '@branch2'
 
 KmBundle\Entity\Branch:

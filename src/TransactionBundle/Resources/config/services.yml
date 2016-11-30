@@ -20,3 +20,9 @@ services:
         arguments: [~, TransactionBundle\Entity\STransaction, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: admin, label: STransaction }
+
+    transaction.admin.category:
+        class: TransactionBundle\Admin\CategoryAdmin
+        arguments: [~, TransactionBundle\Entity\Category, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: admin, label: Category }

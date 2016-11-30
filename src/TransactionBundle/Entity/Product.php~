@@ -20,6 +20,12 @@ class Product
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $category;
 
     /**
      * @var string
@@ -34,13 +40,6 @@ class Product
      * @ORM\Column(name="barcode", type="string", length=255)
      */
     private $barcode;
-    
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="currency", type="string", length=255)
-     */
-    private $currency;
     
     /**
      * @var float
