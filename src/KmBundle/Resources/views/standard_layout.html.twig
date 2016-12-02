@@ -33,6 +33,7 @@ file that was distributed with this source code.
         {% block stylesheets %}
             {% for stylesheet in sonata_admin.adminPool.getOption('stylesheets', []) %}
                     <link rel="stylesheet" href="{{ asset(stylesheet) }}">
+                    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
             {% endfor %}
         {% endblock %}
 

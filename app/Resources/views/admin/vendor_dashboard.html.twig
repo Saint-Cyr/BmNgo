@@ -16,6 +16,7 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
   </head>
 
   <body class="nav-md">
@@ -218,6 +219,8 @@
             { "period": "May", "Total": {{ stransactions.may }} },
             { "period": "Jun", "Total": {{ stransactions.jun }} },
             { "period": "Jul", "Total": {{ stransactions.jul }} },
+            { "period": "Aug", "Total": {{ stransactions.aug }} },
+            { "period": "Sep", "Total": {{ stransactions.sep }} },
             { "period": "Oct", "Total": {{ stransactions.oct }} },
             { "period": "Nov", "Total": {{ stransactions.nov }} },
             { "period": "Dec", "Total": {{ stransactions.dec }} },

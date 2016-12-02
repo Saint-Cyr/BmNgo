@@ -7,22 +7,22 @@ services:
         class: TransactionBundle\Admin\SaleAdmin
         arguments: [~, TransactionBundle\Entity\Sale, TransactionBundle:SaleAdmin]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Sale }
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Sale }
 
     transaction.admin.product:
         class: TransactionBundle\Admin\ProductAdmin
         arguments: [~, TransactionBundle\Entity\Product, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Product }
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Product }
 
     transaction.admin.s_transaction:
         class: TransactionBundle\Admin\STransactionAdmin
         arguments: [~, TransactionBundle\Entity\STransaction, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: STransaction }
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: STransaction }
 
     transaction.admin.category:
         class: TransactionBundle\Admin\CategoryAdmin
         arguments: [~, TransactionBundle\Entity\Category, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Category }
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Category }

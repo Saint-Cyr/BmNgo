@@ -7,10 +7,10 @@ services:
         class: KmBundle\Admin\ExpenditureAdmin
         arguments: [~, KmBundle\Entity\Expenditure, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Expenditure }
+            - { name: sonata.admin, manager_type: orm, group: Admin, label: Expenditure }
 
     km.admin.branch:
         class: KmBundle\Admin\BranchAdmin
         arguments: [~, KmBundle\Entity\Branch, SonataAdminBundle:CRUD]
         tags:
-            - { name: sonata.admin, manager_type: orm, group: admin, label: Branch }
+            - { name: sonata.admin, manager_type: orm, group: Admin, label: Branch }

@@ -27,7 +27,7 @@ class ProductAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
+            ->add('image', null, array('template' => 'TransactionBundle:Default:list.html.twig'))
             ->add('name')
             ->add('unitPrice')
             ->add('barcode')
@@ -47,11 +47,13 @@ class ProductAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        //$option = (preg_match('/_edit$/', $this->getRequest()->get('_route'))) ? false : true;
         $formMapper
         ->with('General information', array('class' => 'col-md-8'))
             ->add('name')
             ->add('category')
             ->add('barcode')
+            ->add('file', 'file', array('required' => false))
         ->end()
         ->with('Pricing', array('class' => 'col-md-4'))
             ->add('unitPrice')
@@ -69,5 +71,22 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('unitPrice')
         ;
+    }
+    
+    public function prePersist($image)
+    {
+        $this->manageFileUpload($image);
+    }
+
+    public function preUpdate($image)
+    {
+        $this->manageFileUpload($image);
+    }
+
+    private function manageFileUpload($image)
+    {
+        if ($image->getFile()) {
+            $image->refreshUpdated();
+        }
     }
 }
