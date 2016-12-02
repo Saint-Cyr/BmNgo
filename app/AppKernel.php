@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new KmBundle\KmBundle(),
             new Hackzilla\BarcodeBundle\HackzillaBarcodeBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new UserBundle\UserBundle(),
         ];
 

@@ -91,19 +91,17 @@ class StatisticHandler
                 $months['jun'] = $months['jun'] + $st->getTotalAmount();
             }elseif ($m == 07 && $y == $year) {
                 $months['jul'] = $months['jul'] + $st->getTotalAmount();
-            }/*elseif($m == 08 && $y == $year){
-                $months['aug'] = $st->getTotalAmount();
-            }elseif ($m == 09 && $y == $year) {
-                $months['sep'] = $st->getTotalAmount();
-            }*/elseif($m == 10 && $y == $year){
+            }elseif($m == '08' && $y == $year){
+                $months['aug'] = $months['aug'] + $st->getTotalAmount();
+            }elseif ($m == '09' && $y == $year) {
+                $months['sep'] = $months['sep'] + $st->getTotalAmount();
+            }elseif($m == 10 && $y == $year){
                 $months['oct'] = $months['oct'] + $st->getTotalAmount();
             }elseif ($m == 11 && $y == $year) {
                 $months['nov'] = $months['nov'] + $st->getTotalAmount();
             }elseif($m == 12 && $y == $year){
                 $months['dec'] = $months['dec'] + $st->getTotalAmount();
             }
-            
-           
         }
         
         return $months;

@@ -3,5 +3,9 @@ km_homepage:
     defaults: { _controller: KmBundle:Default:index }
     
 km_dashboard:
-    path:    /
+    path:    /report
     defaults: { _controller: KmBundle:Default:dashboard }
+    
+km_documentation:
+    path:    /
+    defaults: { _controller: KmBundle:Default:front }

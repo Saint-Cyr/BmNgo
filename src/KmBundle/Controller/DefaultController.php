@@ -8,6 +8,17 @@ use Hackzilla\BarcodeBundle\Utility\Barcode;
 
 class DefaultController extends Controller
 {
+    public function frontAction()
+    {
+        //when logout, goes to the login page
+        //Get the authorization checker
+        $authChecker = $this->get('security.authorization_checker');
+        if(!$authChecker->isGranted("ROLE_SUPER_ADMIN")){
+            return $this->redirect($this->generateUrl('fos_user_security_login'));
+        }
+        return new Response('FRONT OF THE APP');
+    }
+
     public function dashboardAction()
     {
         //Get the statistic handler service

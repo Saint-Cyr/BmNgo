@@ -1,3 +1,10 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: UserBundle\Entity\User
+    registration:
+        form:
+            type: UserBundle\Form\RegistrationType
 fos_rest:
     param_fetcher_listener: true
     body_listener: true
@@ -24,14 +31,18 @@ sonata_admin:
     title_logo: images/logo.png
     title: BeezyManager
     dashboard:
-        #blocks:
-         #   - { position: left, type: sonata.admin.block.admin_list, settings: {groups: [Admin]} }
-            #- { position: right, type: sonata.admin.block.admin_list, settings: {groups: [Security]} }
+        blocks:
+            - { position: left, type: sonata.admin.block.admin_list, settings: {groups: [Transaction]} }
+            - { position: left, type: sonata.admin.block.admin_list, settings: {groups: [Admin]} }
+            - { position: right, type: sonata.admin.block.admin_list, settings: {groups: [Security]} }
+            
             
 sonata_block:
     default_contexts: [cms]
     blocks:
         sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.admin.block.search_result:
             contexts: [admin]
 
 imports:

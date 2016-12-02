@@ -22,3 +22,6 @@ _sonata_admin:
 transactions:
     type: rest
     resource: TransactionBundle:Api
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
