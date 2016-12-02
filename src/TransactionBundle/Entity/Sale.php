@@ -34,8 +34,7 @@ class Sale
      * @ORM\Column(name="profit", type="float", nullable=true)
      */
     private $profit;
-
-
+    
     /**
      * Get id
      *
