@@ -1,5 +1,50 @@
 TransactionBundle\Entity\Sale:
-    sale_{1..10}:
+    sale1:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale2:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale3:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale4:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale5:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale6:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale7:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale8:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale9:
+        amount: 10.23
+        product: '@product1'
+        stransaction: '@stransaction1'
+        
+    sale10:
         amount: 10.23
         product: '@product1'
         stransaction: '@stransaction1'
@@ -8,6 +53,7 @@ TransactionBundle\Entity\STransaction:
     stransaction1:
         totalAmount: 900.50
         branch: '@branch1'
+        createdAt: <(new \DateTime('01-10-2014'))>
     stransaction2:
         totalAmount: 2000
         branch: '@branch2'
@@ -66,6 +112,10 @@ KmBundle\Entity\Branch:
         name: BRANCH 1
     branch2:
         name: BRANCH 2
+    branch3:
+        name: BATA
+    branch4:
+        name: VALLEY
     
 KmBundle\Entity\Expenditure:
     expenditure1:
@@ -86,4 +136,47 @@ TransactionBundle\Entity\Product:
         name: Oxford French Dictionary
         unitPrice: 17.50
         wholeSalePrice: 8.00
+    product3:
+        name: Jus Top 0.35 L
+        unitPrice: 300
+        wholeSalePrice: 250
+    product4:
+        name: Jus Top 1.5 L
+        unitPrice: 300
+        wholeSalePrice: 250
+    product5:
+        name: Cle USB 2 GB
+        unitPrice: 2500
+        wholeSalePrice: 1500
+
+TransactionBundle\Entity\Stock:
+    stock1:
+        name: JUS TOP 0.35 L_B
+        value: 10
+        product: "@product3"
+        branch: "@branch3"
+    stock2:
+        name: JUS TOP 1.5 L_B
+        value: 5
+        product: "@product4"
+        branch: "@branch3"
+    stock3:
+        name: JUS TOP 1.5 L_B
+        value: 2
+        product: "@product3"
+        branch: "@branch4"
+    
+    stock3:
+        name: CLE USB 2 GB_B
+        value: 4
+        product: "@product5"
+        branch: "@branch3"
+        
+UserBundle\Entity\User:
+    super-admin:
+        username: super-admin
+        email: super-admin@domain.com
+        plainPassword: test
+        enabled: true
+        roles: [ROLE_ADMIN]
         

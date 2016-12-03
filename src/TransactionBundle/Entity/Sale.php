@@ -46,7 +46,7 @@ class Sale
     }
     
     public function __toString() {
-        return 'Sale object: '.$this->getId();
+        return $this->getProduct();
     }
     
     /**
@@ -56,6 +56,7 @@ class Sale
     
     /**
      * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\Product", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 

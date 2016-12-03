@@ -113,6 +113,7 @@ function isEmpty(obj) {
       
       //Data containing the response from the server
       var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sale', data);
+      alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
           alert(data);

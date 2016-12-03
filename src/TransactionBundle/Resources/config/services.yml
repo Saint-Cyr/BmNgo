@@ -26,3 +26,9 @@ services:
         arguments: [~, TransactionBundle\Entity\Category, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: Category }
+
+    transaction.admin.stock:
+        class: TransactionBundle\Admin\StockAdmin
+        arguments: [~, TransactionBundle\Entity\Stock, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Stock }

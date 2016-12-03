@@ -3,12 +3,12 @@
 /*
  * This file is part of Components of BeezyManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) YAME Group <info@yamegroup.com>
+ * (c) TinzapaTech <mapoukacyr@yahoo.fr>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */
 
-namespace Tests\TransactionBundle\Service;
+namespace Tests\KmBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -37,7 +37,7 @@ class InitFixturesTest extends WebTestCase
     
     public function testInit()
     {
-        $this->Init();
+        //$this->Init();
     }
     
     public function Init()

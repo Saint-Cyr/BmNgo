@@ -4,7 +4,7 @@ namespace TransactionBundle\Service;
 use TransactionBundle\Entity\STransaction;
 use TransactionBundle\Entity\Sale;
 use KmBundle\Entity\Branch;
-use FOS\RestBundle\View\View;
+//use FOS\RestBundle\View\View;
 
 class SaleHandler
 {
@@ -22,11 +22,18 @@ class SaleHandler
         $stransaction = new STransaction();
         $stransaction->setTotalAmount($inputData['total']);
         $stransaction->setBranch($branch);
+        //Link the employee to the transaction
+        //...
         
         //Loop over each sale
         foreach ($inputData['order'] as $s){
             //create an instance of a sale
             $sale = new Sale();
+            //Link the sale to the related product
+            $product = $this->em->getRepository('TransactionBundle:Product')->find($s['item']['id']);
+            $sale->setProduct($product);
+            //Call the defaultHandler service to update the stock
+            //...
             $sale->setAmount($s['totalPrice']);
             $sale->setStransaction($stransaction);
             $this->em->persist($sale);

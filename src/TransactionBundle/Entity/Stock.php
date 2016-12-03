@@ -20,6 +20,32 @@ class Stock
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     */
+    private $name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="integer")
+     */
+    private $value;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="stocks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="KmBundle\Entity\Branch", inversedBy="stocks")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $branch;
 
     /**
      * @var \DateTime
@@ -37,6 +63,15 @@ class Stock
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function decreaseValue()
+    {
+        $this->value = $this->value - 1;
+    }
+    
+    public function __construct() {
+        $this->setCreatedAt(new \DateTime("now"));
     }
 
     /**
@@ -61,5 +96,101 @@ class Stock
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Stock
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set value
+     *
+     * @param integer $value
+     *
+     * @return Stock
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Get value
+     *
+     * @return integer
+     */
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * Set product
+     *
+     * @param \TransactionBundle\Entity\Product $product
+     *
+     * @return Stock
+     */
+    public function setProduct(\TransactionBundle\Entity\Product $product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \TransactionBundle\Entity\Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set branch
+     *
+     * @param \KmBundle\Entity\Branch $branch
+     *
+     * @return Stock
+     */
+    public function setBranch(\KmBundle\Entity\Branch $branch)
+    {
+        $this->branch = $branch;
+
+        return $this;
+    }
+
+    /**
+     * Get branch
+     *
+     * @return \KmBundle\Entity\Branch
+     */
+    public function getBranch()
+    {
+        return $this->branch;
     }
 }

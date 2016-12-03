@@ -46,6 +46,11 @@ class Product
     private $image;
     
     /**
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="product")
+     */
+    private $stocks;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      * @ORM\JoinColumn(nullable=true)
      */
@@ -207,6 +212,17 @@ class Product
     {
         return $this->id;
     }
+    
+    public function totalStock()
+    {
+        $total = 0;
+        
+        foreach ($this->getStocks() as $stock){
+            $total = $total + $stock->getValue();
+        }
+        
+        return $total;
+    }
 
     /**
      * Set name
@@ -326,5 +342,46 @@ class Product
     public function getCategory()
     {
         return $this->category;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \TransactionBundle\Entity\Stock $stock
+     *
+     * @return Product
+     */
+    public function addStock(\TransactionBundle\Entity\Stock $stock)
+    {
+        $this->stocks[] = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \TransactionBundle\Entity\Stock $stock
+     */
+    public function removeStock(\TransactionBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }

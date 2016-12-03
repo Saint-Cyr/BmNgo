@@ -31,6 +31,7 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('unitPrice')
             ->add('barcode')
+            ->add('totalStock', null, array('label' => 'Total Stock'))
             ->add('category')
             ->add('_action', null, array(
                 'actions' => array(

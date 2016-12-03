@@ -19,7 +19,9 @@ class StatisticHandler
     {
         //Get all the saleTransaction and make the simple calculation
         $STransactions = $this->em->getRepository('TransactionBundle:STransaction')->findAll();
+        
         $total = 0;
+        
         foreach ($STransactions as $st){
             $total = $total + $st->getTotalAmount();
         }

@@ -1,4 +1,9 @@
 services:
+    
+    km.stock_handler:
+        class: KmBundle\Service\StockHandler
+        arguments: ["@doctrine.orm.entity_manager"]
+        
     km.statisticHandler:
         class: KmBundle\Service\StatisticHandler
         arguments: ["@doctrine.orm.entity_manager"]

@@ -27,6 +27,11 @@ class Branch
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="TransactionBundle\Entity\Stock", mappedBy="branch")
+     */
+    private $stocks;
 
     /**
      * @var \DateTime
@@ -177,5 +182,39 @@ class Branch
     public function getExpenditures()
     {
         return $this->expenditures;
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \TransactionBundle\Entity\Stock $stock
+     *
+     * @return Branch
+     */
+    public function addStock(\TransactionBundle\Entity\Stock $stock)
+    {
+        $this->stocks[] = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \TransactionBundle\Entity\Stock $stock
+     */
+    public function removeStock(\TransactionBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
     }
 }
