@@ -10,10 +10,12 @@ class SaleHandler
 {
     //To store the entity manager
     private $em;
+    private $stockHandler;
     
-    public function __construct($em) 
+    public function __construct($em, $stockHandler) 
     {
         $this->em = $em;
+        $this->stockHandler = $stockHandler;
     }
     
     public function processSaleTransaction(array $inputData, Branch $branch)
@@ -32,8 +34,8 @@ class SaleHandler
             //Link the sale to the related product
             $product = $this->em->getRepository('TransactionBundle:Product')->find($s['item']['id']);
             $sale->setProduct($product);
-            //Call the defaultHandler service to update the stock
-            //...
+            //Call the stocktHandler service to update the stock
+            $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt']);
             $sale->setAmount($s['totalPrice']);
             $sale->setStransaction($stransaction);
             $this->em->persist($sale);

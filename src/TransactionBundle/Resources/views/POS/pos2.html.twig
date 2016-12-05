@@ -113,14 +113,14 @@ function isEmpty(obj) {
       
       //Data containing the response from the server
       var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sale', data);
-      alert( "successfull message: " + JSON.stringify({data: data}));
+      
+      //alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
           alert(data);
           //alert( "successfull message: " + JSON.stringify({data: data}));
           //alert("Order total: $" + $scope.getSum() + "\n\nPayment received. Thanks. cache: " + $scope.cacheAmount + "change: " + $scope.getChange());
           $scope.order = [];
-          
       });
       
       outPut.error(function(data, status, header, config){
@@ -150,10 +150,15 @@ function isEmpty(obj) {
 
     <div class="row">
       <div class="col-sm-6">
-        <div class="well">
+        
         {% for category in categories %}
           <div class="box">
             <div class="text-info">{{ category.name }}</div>
+            <style>
+                .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                    background-color: #5e388f !important;
+                }
+            </style>
             <hr>
                 {% for p in category.products %}
                     <button class="buttons btn btn-primary" ng-click="add(food.{{ p.id }})">{{ p.name }}</button>
@@ -162,15 +167,18 @@ function isEmpty(obj) {
           <br></br>
           {% endfor %}
           {% verbatim %}
-
-        </div>
+        
           {% endverbatim %}
-          <a href="{{ path('transaction_pos') }}"><img src="{{ asset('barecode.jpg') }}" width="50" for="barcodeId"/></a>
+          <a href="{{ path('transaction_pos_barcode') }}"><img src="{{ asset('barecode.jpg') }}" width="50" for="barcodeId"/></a>
           {% verbatim %}
       </div>
-
       <div class="col-sm-6">
-        <div class="well">
+        
+        <style>
+            .panel > .panel-heading {
+                background-color: #5e388f;
+            }
+        </style>
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Order Summary</h3>
@@ -187,16 +195,16 @@ function isEmpty(obj) {
 
                   <div class="btn-group pull-right" role="group" aria-label="...">
                       <button type="button" class="btn btn-xs " ng-disabled="" ng-click="subtractItem(item, $index)">
-                        <span type="button" class="glyphicon glyphicon-minus"></span>
+                        <span type="button" class="fa fa-minus"></span>
                       </button>
                       <button type="button" class="btn  btn-xs" ng-click="addItem(item, $index)">
-                        <span class="glyphicon glyphicon-plus"></span>
+                        <span class="fa fa-plus"></span>
                       </button>
                        <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
-                        <span class="glyphicon glyphicon-trash"></span>
+                        <span class="fa fa-trash-o"></span>
                       </button>                     
                   </div>
-                  <div class="label label-success pull-right">FCFA {{item.totalPrice}}</div>
+                  <div class="label label-success pull-right">{{item.totalPrice}}</div>
                   <div class="label label-default pull-right">{{item.orderedItemCnt}}</div>
 
                 </li>
@@ -218,7 +226,7 @@ function isEmpty(obj) {
             </div>
 
           </div>
-        </div>
+        
       </div>
     </div>
   </div>

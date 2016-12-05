@@ -1,10 +1,6 @@
 transaction_product_list:
     path:     /product_list
     defaults: { _controller: TransactionBundle:Default:productList }
-
-transaction_pos:
-    path: /pos
-    defaults: { _controller: TransactionBundle:Default:pos }
     
 transaction_pos2:
     path: /pos2

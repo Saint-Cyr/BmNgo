@@ -46,11 +46,36 @@ class STransactionAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+        ->with('Products', array('class' => 'col-md-4'))
+            ->add('sales', 'sonata_type_collection', array(
+                'type_options' => array(
+                    'delete' => false,
+                    'delete_options' => array(
+                        'type' => 'hidden',
+                        'type_options' => array(
+                            'mapped' => false,
+                            'required' => false,
+                        )
+                    )
+                )
+            ), array(
+                'edit' => 'inline',
+                'inline' => 'table',
+                'sortable' => 'position',
+            ))
+        ->end()
+        ->with('Other', array('class' => 'col-md-4'))
+              ->add('totalAmount', null, array('label' => 'Total Cash'))
+              ->add('branch')
+        ->end()
+        ;
+        
+        /*$formMapper
             ->add('totalAmount')
             ->add('sales')
             ->add('branch')
             ->add('createdAt')
-        ;
+        ;*/
     }
 
     /**
@@ -63,5 +88,24 @@ class STransactionAdmin extends AbstractAdmin
             ->add('createdAt')
             ->add('totalAmount')
         ;
+    }
+    
+    
+    public function preUpdate($object) {
+        
+        foreach ($object->getSales() as $sale){
+            $sale->setSTransaction($object);
+        }
+        
+        parent::preUpdate($object);
+    }
+    
+    public function prePersist($object) {
+        
+        foreach ($object->getSales() as $sale){
+            $sale->setSTransaction($object);
+        }
+        
+        parent::preUpdate($object);
     }
 }

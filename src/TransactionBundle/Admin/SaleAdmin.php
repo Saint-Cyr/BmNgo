@@ -47,8 +47,7 @@ class SaleAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('amount')
-            ->add('stransaction')
+            ->add('product')
         ;
     }
 

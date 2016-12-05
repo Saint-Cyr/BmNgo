@@ -27,6 +27,12 @@ class User extends BaseUser
     protected $id;
     
     private $type;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="KmBundle\Entity\Branch", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $branch;
 
     /**
      * @var string
@@ -77,5 +83,29 @@ class User extends BaseUser
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set branch
+     *
+     * @param \KmBundle\Entity\Branch $branch
+     *
+     * @return User
+     */
+    public function setBranch(\KmBundle\Entity\Branch $branch)
+    {
+        $this->branch = $branch;
+
+        return $this;
+    }
+
+    /**
+     * Get branch
+     *
+     * @return \KmBundle\Entity\Branch
+     */
+    public function getBranch()
+    {
+        return $this->branch;
     }
 }

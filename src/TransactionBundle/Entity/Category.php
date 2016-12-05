@@ -22,7 +22,7 @@ class Category
     private $id;
     
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="category", cascade={"persist"})
      * 
      */
     private $products;

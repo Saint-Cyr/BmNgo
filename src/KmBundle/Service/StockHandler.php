@@ -19,13 +19,16 @@ class StockHandler
     /**
      * @param Branch | Product
      */
-    public function updateStock(Branch $branch, Product $product)
+    public function updateStock(Branch $branch, Product $product, $quantity)
     {
         foreach ($product->getStocks() as $stock){
             
             if($stock->getBranch()->getId() == $branch->getId()){
-                
-                $stock->decreaseValue();
+          
+                $stock->decreaseValue($quantity);
+                //Persist the change in the Database
+                $this->em->persist($stock);
+                $this->em->flush();
             }
         }
     }

@@ -46,7 +46,7 @@ class Sale
     }
     
     public function __toString() {
-        return $this->getProduct();
+        return $this->getProduct()->getName();
     }
     
     /**

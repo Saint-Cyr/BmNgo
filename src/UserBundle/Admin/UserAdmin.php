@@ -19,6 +19,7 @@ class UserAdmin extends AbstractAdmin
             ->add('username')
             ->add('email')
             ->add('enabled')
+            ->add('branch')
         ;
     }
 
@@ -30,6 +31,7 @@ class UserAdmin extends AbstractAdmin
         $listMapper
             ->add('username')
             ->add('email')
+            ->add('branch')
             ->add('enabled', null, array('editable' => true))
             ->add('lastLogin')
             ->add('_action', null, array(
@@ -70,7 +72,9 @@ class UserAdmin extends AbstractAdmin
             ->end()
                 
         ->with('Personal information', array('class' => 'col-md-4'))
-            ->add('name');
+            ->add('name')
+            ->add('branch')
+        ;
         
         
         if ($this->isGranted('EDIT')) {

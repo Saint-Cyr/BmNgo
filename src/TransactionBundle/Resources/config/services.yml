@@ -1,23 +1,29 @@
 services:
     transaction.sale_handler:
         class: TransactionBundle\Service\SaleHandler
-        arguments: ["@doctrine.orm.entity_manager"]
+        arguments: ["@doctrine.orm.entity_manager", "@km.stock_handler"]
         
+    transaction.admin.stock:
+        class: TransactionBundle\Admin\StockAdmin
+        arguments: [~, TransactionBundle\Entity\Stock, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Stock }
+            
+    transaction.admin.product:
+        class: TransactionBundle\Admin\ProductAdmin
+        arguments: [~, TransactionBundle\Entity\Product, SonataAdminBundle:CRUD]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Product }
+            
     transaction.admin.sale:
         class: TransactionBundle\Admin\SaleAdmin
         arguments: [~, TransactionBundle\Entity\Sale, TransactionBundle:SaleAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: Sale }
 
-    transaction.admin.product:
-        class: TransactionBundle\Admin\ProductAdmin
-        arguments: [~, TransactionBundle\Entity\Product, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Product }
-
     transaction.admin.s_transaction:
         class: TransactionBundle\Admin\STransactionAdmin
-        arguments: [~, TransactionBundle\Entity\STransaction, SonataAdminBundle:CRUD]
+        arguments: [~, TransactionBundle\Entity\STransaction, TransactionBundle:STransactionAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: STransaction }
 
@@ -26,9 +32,3 @@ services:
         arguments: [~, TransactionBundle\Entity\Category, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: Category }
-
-    transaction.admin.stock:
-        class: TransactionBundle\Admin\StockAdmin
-        arguments: [~, TransactionBundle\Entity\Stock, SonataAdminBundle:CRUD]
-        tags:
-            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Stock }

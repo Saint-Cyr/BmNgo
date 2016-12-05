@@ -25,11 +25,20 @@
   <body>
   <div class="container">    
         <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            
-            <div class="panel panel-info" >
+            <span style="margin-left: 190px;">
+                <img src="{{ asset('images/logo.png') }}" width="200px"  />
+            </span>
+            <style>
+                .panel > .panel-heading {
+                    background-color: #5e388f;
+                }
+                
+            </style>
+            <div class="panel panel-info">
                     <div class="panel-heading">
-                        <div class="panel-title">Sign In</div>
-                        <div style="float:right; font-size: 80%; position: relative; top:-10px"><a href="{{ path('fos_user_resetting_request') }}">Forgot password?</a></div>
+                        <div class="panel-title" style="color: white;">Sign In</div>
+                        <div style="float:right; font-size: 80%; position: relative; top:-10px">
+                            <a href="{{ path('fos_user_resetting_request') }}" style="color: white;">Forgot password?</a></div>
                     </div>     
 
                     <div style="padding-top:30px" class="panel-body" >
@@ -43,34 +52,42 @@
                                 
                                         <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                                        <input id="username" type="text" class="form-control" name="_username" value="{{ last_username }}" required="required" placeholder="mapoukacyr@yahoo.fr">                                        
+                                        <input id="username" type="text" class="form-control" name="_username" value="{{ last_username }}" 
+                                               required="required" placeholder="saint-cyr@tinzapatech.com" autofocus>                                        
                                     </div>
-                                        
-                                
+                                   
                             <div style="margin-bottom: 25px" class="input-group">
                                         <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                                         <input id="login-password" type="password" class="form-control" name="_password" placeholder="password">
                                     </div>
-                                    
-
+                                
                                 <div style="margin-top:10px" class="form-group">
                                     <!-- Button -->
 
                                     <div class="col-sm-12 controls">
-                                      <input id="btn-login" class="btn btn-success" type="submit" value="Login"/>
+                                        <style>
+                                            .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                                                background-color: #5e388f !important;
+                                            }
+                                        </style>
+                                        <button class="btn btn-primary" type="submit" name="btn_create_and_create">
+                                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                            Login
+                                        </button>
                                     </div>
-                                    
                                 </div>
                                 
                                 <div class="form-group">
                                     <div class="col-md-12 control">
                                         <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
-                                            Don't have an account! 
-                                        
-                                        <a href="#" onClick="$('#loginbox').hide(); $('#signupbox').show()">
-                                            Learn how to use BeezyManager (tutorial)
-                                        </a>
+                                            <div style="float:left; font-size: 80%; position: relative; top:-10px">
+                                                <a href="#" style="color: #320070;">User guide</a>
+                                            </div>
+                                            <div style="float:right; font-size: 80%; position: relative; top:-10px">
+                                                <a href="#" style="color: #320070;">© 2017 By Saint-Cyr MAPOUKA</a>
+                                            </div>
                                         </div>
+                                        
                                     </div>
                                 </div> 
                             </form>     

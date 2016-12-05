@@ -19,8 +19,15 @@ class DefaultController extends Controller
          * to keep compatibility with other formula so that when a customer want to upgrade, it make it easy for us. And we consider as
          * one branch the the very first one in the database also we'll make sure the prevent other registration of any other branch
          */
-        $mainBranch = $this->getDoctrine()->getManager()->getRepository('KmBundle:Branch')->find(1);
-        $saleHandler->processSaleTransaction($data, $mainBranch);
+        //$mainBranch = $this->getDoctrine()->getManager()->getRepository('KmBundle:Branch')->find(1);
+        //Get the user in order to get it related branch and use it 
+        $user = $this->getUser();
+        if(!$user){
+            $this->createNotFoundException("User not found.");
+        }
+        
+        $branch = $user->getBranch();
+        $saleHandler->processSaleTransaction($data, $branch);
         
         $response = new Response('Successfull transaction');
                             

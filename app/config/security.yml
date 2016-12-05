@@ -1,4 +1,7 @@
 security:
+    role_hierarchy:
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN]
+        
     encoders:
         FOS\UserBundle\Model\UserInterface: bcrypt
         
@@ -37,3 +40,6 @@ security:
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/register, role: ROLE_ADMIN }
         - { path: ^/report, role: ROLE_ADMIN }
+        - { path: ^/pos_barcode, role: ROLE_ADMIN }
+        - { path: ^/pos2, role: ROLE_ADMIN }
+        - { path: ^/pos, role: ROLE_ADMIN }

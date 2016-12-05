@@ -131,23 +131,30 @@ TransactionBundle\Entity\Product:
         name: Nexcare
         unitPrice: 130.00
         wholeSalePrice: 7.00
+        
     product2:
         barcode: 9780198610458
         name: Oxford French Dictionary
         unitPrice: 17.50
         wholeSalePrice: 8.00
+        
     product3:
         name: Jus Top 0.35 L
         unitPrice: 300
         wholeSalePrice: 250
+        category: "@category1"
+        
     product4:
         name: Jus Top 1.5 L
         unitPrice: 300
         wholeSalePrice: 250
+        category: "@category1"
+        
     product5:
         name: Cle USB 2 GB
         unitPrice: 2500
         wholeSalePrice: 1500
+        category: "@category2"
 
 TransactionBundle\Entity\Stock:
     stock1:
@@ -175,8 +182,16 @@ TransactionBundle\Entity\Stock:
 UserBundle\Entity\User:
     super-admin:
         username: super-admin
+        branch: "@branch3"
         email: super-admin@domain.com
         plainPassword: test
         enabled: true
         roles: [ROLE_ADMIN]
+        
+TransactionBundle\Entity\Category:
+    category1:
+        name: Fridge
+    category2:
+        name: Computer Accessory
+        
         

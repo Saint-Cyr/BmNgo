@@ -47,6 +47,7 @@ class CategoryAdmin extends AbstractAdmin
         $formMapper
         ->with('Detail', array('class' => 'col-md-6'))
             ->add('name')
+            ->add('products')
         ->end()
         ;
     }

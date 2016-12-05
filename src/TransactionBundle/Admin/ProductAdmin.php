@@ -18,6 +18,7 @@ class ProductAdmin extends AbstractAdmin
         $datagridMapper
             ->add('name')
             ->add('barcode')
+            ->add('category')
         ;
     }
 

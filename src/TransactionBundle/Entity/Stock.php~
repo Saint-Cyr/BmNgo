@@ -65,6 +65,11 @@ class Stock
         return $this->id;
     }
     
+    public function decreaseValue()
+    {
+        $this->value = $this->value - 1;
+    }
+    
     public function __construct() {
         $this->setCreatedAt(new \DateTime("now"));
     }
@@ -163,5 +168,29 @@ class Stock
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set branch
+     *
+     * @param \KmBundle\Entity\Branch $branch
+     *
+     * @return Stock
+     */
+    public function setBranch(\KmBundle\Entity\Branch $branch)
+    {
+        $this->branch = $branch;
+
+        return $this;
+    }
+
+    /**
+     * Get branch
+     *
+     * @return \KmBundle\Entity\Branch
+     */
+    public function getBranch()
+    {
+        return $this->branch;
     }
 }
