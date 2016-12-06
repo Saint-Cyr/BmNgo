@@ -167,26 +167,186 @@ app.controller('POSController', function ($scope, $http)
     }
 });
 
+//Script for the alert box
+    var ALERT_TITLE = "Beezy Manager";
+    var ALERT_BUTTON_TEXT = "Ok";
 
+    if(document.getElementById) {
+        window.alert = function(txt) {
+            createCustomAlert(txt);
+        }
+    }
+
+    function createCustomAlert(txt) {
+        d = document;
+
+        if(d.getElementById("modalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "modalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "alertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        h1 = alertObj.appendChild(d.createElement("h1"));
+        h1.appendChild(d.createTextNode(ALERT_TITLE));
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "closeBtn";
+        btn.appendChild(d.createTextNode(ALERT_BUTTON_TEXT));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() { removeCustomAlert();return false; }
+
+        alertObj.style.display = "block";
+
+    }
+
+    function removeCustomAlert() {
+        document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"));
+    }
   </script>
+  
+  <style>
+    #modalContainer {
+    background-color:rgba(0, 0, 0, 0.3);
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:10000;
+    background-image:url(tp.png); /* required by MSIE to prevent actions on lower z-index elements */
+    }
+
+    #alertBox {
+        position:relative;
+        width:300px;
+        min-height:100px;
+        margin-top:50px;
+        border:1px solid #666;
+        background-color:#fff;
+        background-repeat:no-repeat;
+        background-position:20px 30px;
+    }
+
+    #modalContainer > #alertBox {
+        position:fixed;
+    }
+
+    #alertBox h1 {
+        margin:0;
+        font:bold 0.9em verdana,arial;
+        background-color:#5e388f;
+        color:#FFF;
+        border-bottom:1px solid #000;
+        padding:2px 0 2px 5px;
+    }
+
+    #alertBox p {
+        font:0.7em verdana,arial;
+        height:50px;
+        padding-left:50px;
+        margin-left: auto;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    #alertBox #closeBtn {
+        display:block;
+        position:relative;
+        margin:5px auto;
+        padding:7px;
+        border:0 none;
+        width:70px;
+        font:0.7em verdana,arial;
+        text-transform:uppercase;
+        text-align:center;
+        color:#FFF;
+        background-color:#5e388f;
+        border-radius: 3px;
+        text-decoration:none;
+    }
+
+    /* unrelated styles */
+
+    #mContainer {
+        position:relative;
+        width:600px;
+        margin:auto;
+        padding:5px;
+        border-top:2px solid #000;
+        border-bottom:2px solid #000;
+        font:0.7em verdana,arial;
+    }
+
+    h1,h2 {
+        margin:0;
+        padding:4px;
+        font:bold 1.5em verdana;
+        border-bottom:1px solid #000;
+    }
+
+    code {
+        font-size:1.2em;
+        color:#069;
+    }
+
+    #credits {
+        position:relative;
+        margin:25px auto 0px auto;
+        width:350px; 
+        font:0.7em verdana;
+        border-top:1px solid #000;
+        border-bottom:1px solid #000;
+        height:90px;
+        padding-top:4px;
+    }
+
+    #credits img {
+        float:left;
+        margin:5px 10px 5px 0px;
+        border:1px solid #000000;
+        width:80px;
+        height:79px;
+    }
+
+    .important {
+        background-color:#F5FCC8;
+        padding:2px;
+    }
+
+    code span {
+        color:green;
+    }
+  </style>
 </head>
 
 
 
 <body data-ng-controller="POSController">
-        
   <div class="container">
+    <br>
     <div class="row">
       <div class="col-md-6">
         {% verbatim %}
-        <div class="jumbotron">
-            <h1 style="font-size: 120px; color: red;">{{getSum() | currency:' ':true:'1.2-2'}}</h1>
+        <hr>
+        <div class="jumbotron" style="margin-top: 21px;">
+            <span style="font-size: 120px; color: red;">{{getSum() | currency:' ':true:'1.2-2'}}</span>
         </div>
         <div class="jumboron">
         <div class="row">
             <form name="itemForm">
                   <input type="password" name="barcode"  style="opacity: 0;" id="barcodeId"
-                         ng-model="barcode" ng-model-options="{ debounce: 500 }" autofocus="true" ng-focus="focused()" ng-blur="blurred()"/>
+                    ng-model="barcode" ng-model-options="{ debounce: 500 }" autofocus="true" ng-focus="focused()" ng-blur="blurred()"/>
             <br/>
             </form>
 
@@ -207,7 +367,11 @@ app.controller('POSController', function ($scope, $http)
       </div>
       <br>
       <div class="col-md-6">
-        
+        <style>
+            .panel > .panel-heading {
+                background-color: #5e388f;
+            }
+        </style>
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Order Summary</h3>
@@ -252,6 +416,7 @@ app.controller('POSController', function ($scope, $http)
             </div>
             <div class="pull-right">
                 <br>
+                
                 <div class="input-group col-md-6">
                     <span class="input-group-addon">
                         <i class="fa fa-dolla" aria-hidden="true"></i>
@@ -259,7 +424,7 @@ app.controller('POSController', function ($scope, $http)
                     <input class="form-control" type="text" placeholder="Cache amount (FCFA)" ng-model="cacheAmount" ng-disabled="!order.length">
                     
                 </div>
-                
+            
                 <div class="inline-group col-md-6">
                     <span class="btn btn-default" style="color: green;" ng-disabled="!order.length" ng-click="getChange()">{{getChange() | currency:'':true:'1.2-2'}}</span>
                     <span class="btn btn-default" ng-click="clearOrder()" ng-disabled="!order.length">Clear</span>
@@ -277,9 +442,21 @@ app.controller('POSController', function ($scope, $http)
       <!--<img src="yellow3.gif" width="20"/>
       <img src="off.gif" width="20"/>-->
       <br><br>
-      <img src="{{ asset('LG_Blink.gif') }}" width="20"/>
+      
       <!--<img src="green.gif" width="20"/>-->
-      <a href="{{ path('transaction_pos2') }}"><span class="fa fa-list"></span></a>
+      <div class="col-md-12 control">
+            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                <div style="float:left; font-size: 120%; position: relative; top:-10px"> 
+                    <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true" style="color: #320070;"></i></a>   
+                    <a href="{{ path('transaction_pos2') }}"><i class="fa fa-bars" aria-hidden="true" style="color: #320070; margin-left: 6px;"></i></a>  
+                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true" style="color: #320070; margin-left: 6px;"></i></a>
+                    <img src="{{ asset('SR_Blink.gif') }}" width="20" style="margin-left:500px;"/>
+                </div>
+                <div style="float:right; font-size: 80%; position: relative; top:-10px">
+                    <a href="#" style="color: #320070;">© 2017 - Saint-Cyr MAPOUKA</a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

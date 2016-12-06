@@ -21,6 +21,6 @@ class ApiController extends Controller
         
         //return View::create(array('info' => 'user of verifier_token: '.$inputData['verifier_token'].' has been logged out successfully.'), 200);
         
-        return 'successfull transaction !';
+        return 'successfull transaction!';
     }
 }
