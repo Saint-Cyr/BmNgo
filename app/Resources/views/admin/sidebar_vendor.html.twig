@@ -3,43 +3,82 @@
         <div class="navbar nav_title" style="border: 0;">
             <a href="{{ path('km_homepage') }}" class="site_title"><img src="{{ asset('images/logo.png') }}" width="23px"/> <span>BeezyManager</span></a>
         </div>
-
         <div class="clearfix"></div>
 
         <!-- menu profile quick info -->
         <div class="profile">
             <div class="profile_pic">
-                <img src="{{ asset('images/2.jpg') }}" alt="..." class="img-circle profile_img">
+                <img src="{{ asset('assets/images/img.jpg') }}" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>Saint-Cyr</h2>
-                
+                <h2>John Doe</h2>
             </div>
-                    
         </div>
         <!-- /menu profile quick info -->
 
         <br />
 
         <!-- sidebar menu -->
-        
+        <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+                <h3>Options</h3>
+                <ul class="nav side-menu">
+                    <li><a><i class="fa fa-retweet"></i> Input / Output <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a>By Branch<span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="#level2_1">Branch 1</a>
+                                    </li>
+                                    <li><a href="#level2_2">Branch 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('gentelella_page', {'page': 'index2'}) }}">All</a></li>
+                        </ul>
+                    </li>
+                    <li><a><i class="fa fa-database"></i> Stock <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a>By Branch<span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="#level2_1">Branch 1</a>
+                                    </li>
+                                    <li><a href="#level2_2">Branch 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('gentelella_page', {'page': 'form_advanced'}) }}">All</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="{{ path('km_setting') }}"><i class="fa fa-wrench"></i> Setting </a>
+                    </li>
+                    <li><a><i class="fa fa-windows"></i> Support / Extra <span class="fa fa-chevron-down"></span></a>
+                        <ul class="nav child_menu">
+                            <li><a>Tutorials<span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="#level2_1">Seller</a>
+                                    </li>
+                                    <li><a href="#level2_2">Administrator</a>
+                                    </li>
+                                    <li><a href="#level2_2">Super-Administrator</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="{{ path('gentelella_page', {'page': 'form_advanced'}) }}">Contacts / Hotline</a></li>
+                            <li><a href="{{ path('gentelella_page', {'page': 'form_advanced'}) }}">© Copyright</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <p class="text-center small" style="border-top: 1px solid #444444; padding-top: 10px">
+                <a href="#" rel="noreferrer" target="_blank" style="font-size: 10px; color: white;">© 2017 - Saint-Cyr MAPOUKA</a>
+            </p>
+            
+        </div>
+        <!-- /sidebar menu -->
 
         <!-- /menu footer buttons -->
-        <!--<div class="sidebar-footer hidden-small">
-            <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-            </a>
-            <a data-toggle="tooltip" data-placement="top" title="Logout">
-                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-            </a>
-        </div>-->
+        
         <!-- /menu footer buttons -->
     </div>
 </div>

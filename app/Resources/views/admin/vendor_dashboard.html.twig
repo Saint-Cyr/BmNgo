@@ -31,9 +31,9 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Dashboard</h3>
+                <!--<h3>Dashboard</h3>-->
               </div>
-
+              
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
@@ -47,12 +47,102 @@
             </div>
             
             <div class="clearfix"></div>
-
+            <div class="row top_tiles">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
+                  <div class="count">179</div>
+                  <h3>Sale</h3>
+                  
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-line-chart"></i></div>
+                  <div class="count">179</div>
+                  <h3>Profit</h3>
+                  
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+                  <div class="count">179</div>
+                  <h3>Expenditure</h3>
+                </div>
+              </div>
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-anchor"></i></div>
+                  <div class="count">179</div>
+                  <h3>Balance</h3>
+                </div>
+              </div>
+            </div>
+            <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Button App Design</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+                    <p>Add the class <code>.btn .btn-app</code> tag</p>
+                    <a class="btn btn-app">
+                      <i class="fa fa-edit"></i> Edit
+                    </a>
+                    <a class="btn btn-app">
+                      <i class="fa fa-play"></i> Play
+                    </a>
+                    <a class="btn btn-app">
+                      <i class="fa fa-pause"></i> Pause
+                    </a>
+                    <a class="btn btn-app">
+                      <i class="fa fa-save"></i> Save
+                    </a>
+                    <a class="btn btn-app">
+                      <span class="badge bg-red">6</span>
+                      <i class="fa fa-bullhorn"></i> Notifications
+                    </a>
+                    <a class="btn btn-app">
+                      <i class="fa fa-repeat"></i> Repeat
+                    </a>
+                    <a class="btn btn-app">
+                      <span class="badge bg-green">211</span>
+                      <i class="fa fa-users"></i> Users
+                    </a>
+                    <a class="btn btn-app">
+                      <span class="badge bg-orange">32</span>
+                      <i class="fa fa-inbox"></i> Orders
+                    </a>
+                    <a class="btn btn-app">
+                      <span class="badge bg-orange">12</span>
+                      <i class="fa fa-envelope"></i> Inbox
+                    </a>
+                    <a class="btn btn-app">
+                      <span class="badge bg-blue">102</span>
+                      <i class="fa fa-heart-o"></i> Likes
+                    </a>
+                  </div>
+                </div>
             <div class="row">
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Transaction report <small></small></h2>
+                    <h2>Sale Transaction report <small></small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
@@ -146,23 +236,11 @@
                       <h3>Beezy Manager Ghana Ltd.</h3>
 
                       <ul class="list-unstyled user_data">
-                        <li><i class="fa fa-map-marker user-profile-icon"></i> Floors 10-12, Cruickshank Rd, Accra
-                        </li>
-
-                        <li>
-                          <i class="fa fa-briefcase user-profile-icon"></i> Telecom Company
-                        </li>
-
-                        <li class="m-top-xs">
-                          <i class="fa fa-external-link user-profile-icon"></i>
-                          <a href="#" target="_blank">www.beezymanager.com</a>
-                        </li>
+                        
                       </ul>
 
                       <!--<a class="btn btn-success"><i class="fa fa-edit m-right-xs"></i>Edit Profile</a>-->
                       <br />
-
-                      
 
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-12">
@@ -172,14 +250,13 @@
                       <div id="graph_bar" style="width:100%; height:280px;"></div>
                       <!-- end of user-activity-graph -->
 
-                      
-                        
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          
         </div>
         <!-- /page content -->
         {% include 'admin/footer.html.twig' %}

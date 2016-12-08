@@ -25,7 +25,16 @@ class DefaultController extends Controller
         $statisticHandler = $this->get('km.statisticHandler');
         //Get all the sale transaction amount for every month
         $stransactions = $statisticHandler->getSaleByMonth();
+        //return $this->render('/pages/form_buttons.html.twig');
+        //return $this->render('/pages/icons.html.twig');
+        //return $this->render('/pages/general_elements.html.twig');
+        //return $this->render('/pages/pricing_tables.html.twig');
         return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions));
+    }
+    
+    public function settingAction()
+    {
+        return $this->render('/pages/setting.html.twig');
     }
     
     public function indexAction()
