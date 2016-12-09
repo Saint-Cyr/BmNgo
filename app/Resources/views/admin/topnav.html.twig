@@ -5,8 +5,29 @@
             <div class="nav toggle">
                 <a id="menu_toggle"><i class="fa fa-bars"></i></a>
             </div>
-            <a href="{{ path('fos_user_security_logout') }}" style="margin-top: 10px;" class="btn btn-success">Logout</a>
-
+            <p></p>
+            <a href="{{ path('sonata_admin_dashboard') }}">
+                <style>
+                    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                        background-color: #5e388f !important;
+                    }
+                </style>
+                <button class="btn btn-primary" type="submit" name="btn_create_and_create">
+                    <i class="fa fa-dashboard" aria-hidden="true"></i>
+                    Dashboard B
+                </button>
+            </a>
+            <a href="{{ path('fos_user_security_logout') }}">
+                <style>
+                    .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                        background-color: #5e388f !important;
+                    }
+                </style>
+                <button class="btn btn-primary" type="submit" name="btn_create_and_create">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    Logout
+                </button>
+            </a>
             <ul class="nav navbar-nav navbar-right">
                 <li class="">
                     <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -21,25 +42,41 @@
                 <li role="presentation" class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-database"></i>
-                        <span class="badge bg-red">6</span>
+                        <span class="badge bg-red">4</span>
                     </a>
                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                     <li>
                       <a>
-                        <span class="badge bg-red">1</span>
+                        <span class="badge bg-red">0</span>
                         <span>
-                            <span style="font-size: 14px;">RAM format A4 </span><br>
-                          <i style="font-size: 13px;">- Valley -</i>
+                            <span style="font-size: 14px; color: red;">RAM format A4 </span><br>
                           <span class="time">45 mins ago</span>
                         </span>
                       </a>
                     </li>
                     <li>
                       <a>
-                        <span class="badge bg-yellow">2</span>
+                        <span class="badge bg-orange">1</span>
+                        <span>
+                            <span style="font-size: 14px;"> Manette Playstation </span><br>
+                          <span class="time">45 mins ago</span>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="badge">3</span>
+                        <span>
+                            <span style="font-size: 14px;">RAM format A4 </span><br>
+                          <span class="time">45 mins ago</span>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="badge">4</span>
                         <span>
                           <span style="font-size: 14px;">Casque MP3 </span><br>
-                          <i style="font-size: 13px;">- Bata Nlongkak -</i>
                           <span class="time">1 day ago</span>
                         </span>
                       </a>
@@ -47,7 +84,56 @@
                     <li>
                       <div class="text-center">
                         <a>
-                          <strong>See All Alerts</strong>
+                          <strong>All - BATA</strong>
+                          <i class="fa fa-angle-right"></i>
+                        </a>
+                      </div>
+                    </li>
+                    
+                  </ul>
+                    
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-database"></i>
+                        <span class="badge bg-green">!</span>
+                    </a>
+                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    
+                  </ul>
+                    
+                </li>
+                <li role="presentation" class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-warning"></i>
+                        <span class="badge bg-orange">3</span>
+                    </a>
+                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                    
+                    <li>
+                      <a>
+                        <span class="badge">-3</span>
+                        <span>
+                            <span style="font-size: 14px;">RAM format A4 </span><br>
+                            <span><i>- BATA -</i></span>
+                          <span class="time">45 mins ago</span>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <a>
+                        <span class="badge">-1</span>
+                        <span>
+                          <span style="font-size: 14px;">Casque MP3 </span><br>
+                          <span><i>- VALLEY -</i></span>
+                          <span class="time">1 day ago</span>
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="text-center">
+                        <a>
+                          <strong>All - BATA</strong>
                           <i class="fa fa-angle-right"></i>
                         </a>
                       </div>
