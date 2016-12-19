@@ -1,5 +1,8 @@
 services:
-    
+    km.barcode_handler:
+        class: KmBundle\Service\BarcodeHandler
+        arguments: ["@doctrine.orm.entity_manager"]
+        
     km.stock_handler:
         class: KmBundle\Service\StockHandler
         arguments: ["@doctrine.orm.entity_manager"]
