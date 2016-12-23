@@ -11,7 +11,7 @@ services:
             
     transaction.admin.product:
         class: TransactionBundle\Admin\ProductAdmin
-        arguments: [~, TransactionBundle\Entity\Product, SonataAdminBundle:CRUD]
+        arguments: [~, TransactionBundle\Entity\Product, TransactionBundle:ProductAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: Product }
             

@@ -28,7 +28,11 @@ var app = angular.module('myApp', []);
 app.controller('POSController', function ($scope, $http) {
     $scope.food = {
       {% for p in products %}
-            {{ p.id }} : {count: 1, id: {{ p.id }}, detail: "{{ p }}", price: {{ p.unitPrice }} },  
+            {% for stock in app.user.branch.stocks %}
+                        {% if stock.product.id == p.id %}
+                            {{ p.id }} : {count: 1, id: {{ p.id }}, detail: "{{ p }}", price: {{ p.unitPrice }} },
+                        {% endif %}
+            {% endfor %} 
       {% endfor %}
     };
     
@@ -321,7 +325,11 @@ function isEmpty(obj) {
             </style>
             <hr>
                 {% for p in category.products %}
-                    <button class="buttons btn btn-primary" ng-click="add(food.{{ p.id }})">{{ p.name }}</button>
+                    {% for stock in app.user.branch.stocks %}
+                        {% if stock.product.id == p.id %}
+                            <button class="buttons btn btn-primary" ng-click="add(food.{{ p.id }})">{{ p.name }}</button>
+                        {% endif %}
+                    {% endfor %}
                 {% endfor %}
           </div>
           <br></br>

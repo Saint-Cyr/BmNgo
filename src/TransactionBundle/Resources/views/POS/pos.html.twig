@@ -33,11 +33,14 @@ app.controller('POSController', function ($scope, $http)
     
     var data = {
         {% for p in products %}
-            "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24) }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
-        {% endfor %}
+            {% for stock in app.user.branch.stocks %}
+                        {% if stock.product.id == p.id %}
+                            "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24) }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
+                        {% endif %}
+            {% endfor %} 
+      {% endfor %}
   };
     
-        
     $scope.itemsCnt = 1;
     $scope.order = [];
     $scope.isDisabled = true;
@@ -397,7 +400,7 @@ app.controller('POSController', function ($scope, $http)
                       </button>
                       
                        <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
-                        <span class="fa fa-trash"></span>
+                        <span class="fa fa-trash-o"></span>
                       </button>                     
                   </div>
                   <div class="label label-success pull-right">{{item.totalPrice | currency:'FCFA ':true:'1.2-2'}}</div>

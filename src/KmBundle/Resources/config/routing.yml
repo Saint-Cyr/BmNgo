@@ -1,5 +1,5 @@
 km_homepage:
-    path:     /generate_barcode
+    path:     /generate_barcode/{barcode}
     defaults: { _controller: KmBundle:Default:index }
     
 km_dashboard:
@@ -9,3 +9,8 @@ km_dashboard:
 km_documentation:
     path:    /
     defaults: { _controller: KmBundle:Default:front }
+    
+sales: 
+  type: rest
+  resource:     "TransactionBundle:Api"
+  prefix:  api

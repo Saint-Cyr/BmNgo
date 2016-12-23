@@ -25,7 +25,7 @@ class DefaultController extends Controller
         $statisticHandler = $this->get('km.statisticHandler');
         //Get all the sale transaction amount for every month
         $stransactions = $statisticHandler->getSaleByMonth();
-        //return $this->render('/pages/icons.html.twig');
+        return $this->render('/gentelella/media_gallery.html.twig');
         //return $this->render('/pages/form_buttons.html.twig');
         //return $this->render('/pages/icons.html.twig');
         //return $this->render('/pages/general_elements.html.twig');
@@ -38,25 +38,26 @@ class DefaultController extends Controller
         return $this->render('/pages/setting.html.twig');
     }
     
-    public function indexAction()
+    public function indexAction($barcode)
     {
-        $code = '1751477849934';
-        //return $this->getBarCodeAction($code);
-        //return $this->barcodeZipAction($code);
-        //$data = base64_decode($this->getImage($code));
+        //Get the product from the DB in order to send it to the view
+        $em = $this->getDoctrine()->getManager();
         
-        $im = imagecreatefromstring($this->getImage($code));
-        imagepng($im, getcwd().'/barcode/1.png');
+        $product = $em->getRepository('TransactionBundle:Product')->findOneBy(array('barcode' => $barcode));
         
-        //return new Response('<img src="/opt/lampp/htdocs/KINGMANAGER/web/barcode/1.png" />');
-        return $this->render('TransactionBundle:Default:product_list.html.twig');
+        $im = imagecreatefromstring($this->getImage($barcode));
+        
+        imagepng($im, getcwd().'/barcode/'.$barcode.'.png');
+        
+        return $this->render('TransactionBundle:Default:barecode_list.html.twig', array('barecode' => $barcode,
+                                                                                        'product' => $product));  
     }
     
     public function getBarCodeAction($code)
     {
         $barcode = $this->get('hackzilla_barcode');
         $barcode->setMode(Barcode::MODE_PNG);
-
+        
         $headers = array(
             'Content-Type' => 'image/png',
             'Content-Disposition' => 'inline; filename="'.$code.'.png"'

@@ -1,3 +1,9 @@
 <td>
-    <img src="{{ asset('upload/product/'~object.image) }}" alt="{{ object.name }}" width="80px"/>
+    {% if (object.barcode) %}
+        <a href="{{ path('km_homepage', {'barcode':object.barcode}) }}" target="_blank">
+            <img src="{{ asset('upload/product/'~object.image) }}" alt="{{ object.name }}" style="width: 50px; height: 100px;"/>
+        </a>
+    {% else %}
+        <img src="{{ asset('upload/product/'~object.image) }}" alt="{{ object.name }}" style="width: 50px; height: 100px;"/>
+    {% endif %}
 </td>

@@ -127,7 +127,7 @@ KmBundle\Entity\Expenditure:
         
 TransactionBundle\Entity\Product:
     product1:
-        barcode: 051131995222
+        barcode: 2001300000002
         name: Nexcare
         unitPrice: 130.00
         wholeSalePrice: 7.00

@@ -58,8 +58,8 @@ class ProductAdmin extends AbstractAdmin
             ->add('file', 'file', array('required' => false))
         ->end()
         ->with('Pricing', array('class' => 'col-md-4'))
-            ->add('unitPrice')
-            ->add('wholeSalePrice')
+            ->add('unitPrice', null, array('required' => false))
+            ->add('wholeSalePrice', null, array('required' => false))
         ->end()
         ;
     }
@@ -73,6 +73,38 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('unitPrice')
         ;
+    }
+    
+    public function preValidate($object) {
+        parent::preValidate($object);
+        //If the unit sale price has not been field then initialize it
+        if(!$object->getUnitPrice()){
+            $object->setUnitPrice(0);
+        }
+        //If the whole sale price has not been field then initialize it
+        if(!$object->getWholeSalePrice()){
+            $object->setWholeSalePrice(0);
+        }
+    }
+    
+    public function getBatchActions()
+    {
+        // retrieve the default batch actions (currently only delete)
+        $actions = parent::getBatchActions();
+
+        if (
+          $this->hasRoute('edit') && $this->isGranted('EDIT') &&
+          $this->hasRoute('delete') && $this->isGranted('DELETE')
+            ) {
+            $actions['generate'] = array(
+                'label' => 'Regenerate BC',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
+
+        }
+
+        return $actions;
     }
     
     public function prePersist($image)

@@ -3,6 +3,10 @@
 namespace TransactionBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductAdminController extends CRUDController
 {
@@ -50,14 +54,16 @@ class ProductAdminController extends CRUDController
         $form = $this->admin->getForm();
         $form->setData($object);
         $form->handleRequest($request);
-        //By S@int-Cyr
-        //Get the barcodeHandler service
-        $barcodeHandler = $this->get('km.barcode_handler');
-        //Generate the barcode
-        $code = $barcodeHandler->generateBarcode();
-        $object->setBarcode($code);
+        
 
         if ($form->isSubmitted()) {
+            //By S@int-Cyr
+            //Get the barcodeHandler service
+            $barcodeHandler = $this->get('km.barcode_handler');
+            //Generate the barcode
+            $code = $barcodeHandler->generateBarcode();
+            
+            $object->setBarcode($code);
             //TODO: remove this check for 4.0
             if (method_exists($this->admin, 'preValidate')) {
                 $this->admin->preValidate($object);
@@ -125,5 +131,43 @@ class ProductAdminController extends CRUDController
             'form' => $view,
             'object' => $object,
         ), null);
+    }
+    
+   public function batchActionGenerate(ProxyQueryInterface $selectedModelQuery, Request $request = null)
+    {
+        if (!$this->admin->isGranted('EDIT') || !$this->admin->isGranted('DELETE')) {
+            throw new AccessDeniedException();
+        }
+
+        
+        $modelManager = $this->admin->getModelManager();
+
+        $selectedModels = $selectedModelQuery->execute();
+        
+        // do the merge work here
+        try {
+            foreach ($selectedModels as $selectedModel) {
+                //Get the barcodeHandler service
+                $barcodeHandler = $this->get('km.barcode_handler');
+                //Generate the barcode
+                $code = $barcodeHandler->generateBarcode();
+
+                $selectedModel->setBarcode($code);
+            }
+            
+            $modelManager->update($selectedModel);
+        } catch (\Exception $e) {
+            $this->addFlash('sonata_flash_error', 'flash_batch_activation_error');
+
+            return new RedirectResponse(
+                $this->admin->generateUrl('list', $this->admin->getFilterParameters())
+            );
+        }
+
+        $this->addFlash('sonata_flash_success', $this->get('translator')->trans(' successful operations !'));
+
+        return new RedirectResponse(
+            $this->admin->generateUrl('list', $this->admin->getFilterParameters())
+        );
     }
 }

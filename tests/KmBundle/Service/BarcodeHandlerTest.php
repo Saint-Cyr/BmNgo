@@ -38,6 +38,23 @@ class BarcodeHandlerTest extends WebTestCase
         $code = $barcodeHandler->generateBarcode();
         //case 1: check the length of the code ( it have to be 13 )
         $this->assertEquals(13, strlen($code));
-       
+        //Case 2: check the unicity of the generated code
+        $code1 = $barcodeHandler->generateBarcode();
+        $code2 = $barcodeHandler->generateBarcode();
+        $this->assertNotEquals($code1, $code2);
+        
+        $code1 = $barcodeHandler->generateBarcode();
+        $code2 = $barcodeHandler->generateBarcode();
+        $this->assertNotEquals($code1, $code2);
+        
+        $code1 = $barcodeHandler->generateBarcode();
+        $code2 = $barcodeHandler->generateBarcode();
+        $this->assertNotEquals($code1, $code2);
+        
+        $code1 = $barcodeHandler->generateBarcode();
+        $code2 = $barcodeHandler->generateBarcode();
+        $this->assertNotEquals($code1, $code2);
+        
+        
     }
 }
