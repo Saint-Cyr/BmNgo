@@ -49,7 +49,7 @@ class STransaction
     private $profit;
     
     /**
-     * @ORM\OneToMany(targetEntity="Sale", mappedBy="stransaction", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Sale", mappedBy="stransaction", cascade={"remove", "all"})
      */
     private $sales;
 

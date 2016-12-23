@@ -50,11 +50,14 @@ class StockAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-         ->with('Detail')
-            ->add('branch')
+         ->with('Detail', array('class' => 'col-md-6'))
             ->add('name', null, array('label' => 'Tag Name'))
-            ->add('value')
+            ->add('value', null, array('label' => 'Value ( Quantity )'))
+         ->end()
+        
+         ->with('Extra', array('class' => 'col-md-4'))
             ->add('product')
+            ->add('branch')
          ->end()
         ;
     }

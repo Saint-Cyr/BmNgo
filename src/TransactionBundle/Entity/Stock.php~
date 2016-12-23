@@ -65,9 +65,9 @@ class Stock
         return $this->id;
     }
     
-    public function decreaseValue()
+    public function decreaseValue($quantity)
     {
-        $this->value = $this->value - 1;
+        $this->value = $this->value - $quantity;
     }
     
     public function __construct() {

@@ -183,7 +183,7 @@ UserBundle\Entity\User:
     super-admin:
         username: super-admin
         branch: "@branch3"
-        email: super-admin@domain.com
+        email: mapoukacyr@yahoo.fr
         plainPassword: test
         enabled: true
         roles: [ROLE_ADMIN]

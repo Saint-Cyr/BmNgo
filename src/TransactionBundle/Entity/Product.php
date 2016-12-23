@@ -66,6 +66,13 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="locked", type="boolean")
+     */
+    private $locked;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="barcode", type="string", length=255, nullable=true, unique=true)
      */
     private $barcode;
@@ -383,5 +390,29 @@ class Product
     public function getStocks()
     {
         return $this->stocks;
+    }
+
+    /**
+     * Set locked
+     *
+     * @param boolean $locked
+     *
+     * @return Product
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        return $this->locked;
     }
 }

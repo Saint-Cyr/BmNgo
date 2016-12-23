@@ -20,6 +20,13 @@ class Sale
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var Integer
+     *
+     * @ORM\Column(name="quantity", type="integer", nullable=true)
+     */
+    private $quantity;
 
     /**
      * @var float
@@ -46,7 +53,7 @@ class Sale
     }
     
     public function __toString() {
-        return $this->getProduct();
+        return $this->getProduct()->getName();
     }
     
     /**

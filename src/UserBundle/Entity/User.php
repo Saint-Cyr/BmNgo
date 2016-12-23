@@ -26,6 +26,13 @@ class User extends BaseUser
      */
     protected $id;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     */
+    private $language;
+    
     private $type;
     
     /**
@@ -107,5 +114,29 @@ class User extends BaseUser
     public function getBranch()
     {
         return $this->branch;
+    }
+
+    /**
+     * Set language
+     *
+     * @param string $language
+     *
+     * @return User
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

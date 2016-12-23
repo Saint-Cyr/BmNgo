@@ -109,15 +109,14 @@ function isEmpty(obj) {
     $scope.checkout = function(index) {
       //S@int-Cyr edition start here
       //Data to be sent to the server (order[])
-      
-      var data = {
+      var data = {"data":{
           'id': 1,
           'order': $scope.order,
           'total': $scope.getSum(),
-      };
+    }};
       
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sale', data);
+      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sales/transactions', data);
       
       //alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server

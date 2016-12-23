@@ -32,8 +32,10 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('unitPrice')
             ->add('barcode')
+            
             ->add('totalStock', null, array('label' => 'Total Stock'))
             ->add('category')
+            ->add('locked')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -97,7 +99,13 @@ class ProductAdmin extends AbstractAdmin
           $this->hasRoute('delete') && $this->isGranted('DELETE')
             ) {
             $actions['generate'] = array(
-                'label' => 'Regenerate BC',
+                'label' => 'Reg. BC',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
+            
+            $actions['lockBarcode'] = array(
+                'label' => 'Lock BC',
                 'translation_domain' => 'SonataAdminBundle',
                 'ask_confirmation' => true
             );

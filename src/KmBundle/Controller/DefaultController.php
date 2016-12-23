@@ -25,7 +25,7 @@ class DefaultController extends Controller
         $statisticHandler = $this->get('km.statisticHandler');
         //Get all the sale transaction amount for every month
         $stransactions = $statisticHandler->getSaleByMonth();
-        return $this->render('/gentelella/media_gallery.html.twig');
+        //return $this->render('/gentelella/media_gallery.html.twig');
         //return $this->render('/pages/form_buttons.html.twig');
         //return $this->render('/pages/icons.html.twig');
         //return $this->render('/pages/general_elements.html.twig');
@@ -36,6 +36,16 @@ class DefaultController extends Controller
     public function settingAction()
     {
         return $this->render('/pages/setting.html.twig');
+    }
+    
+    public function BarcodeTestAction()
+    {
+        //Get the product from the DB in order to send it to the view
+        $em = $this->getDoctrine()->getManager();
+        //Get all the products
+        $products = $em->getRepository('TransactionBundle:Product')->findBy(array('locked' => false));
+        
+        return $this->render('TransactionBundle:Default:barecode_test.html.twig', array('products' => $products));
     }
     
     public function indexAction($barcode)

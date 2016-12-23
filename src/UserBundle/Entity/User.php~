@@ -26,6 +26,13 @@ class User extends BaseUser
      */
     protected $id;
     
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="language", type="string", length=255, nullable=true)
+     */
+    private $language;
+    
     private $type;
     
     /**
@@ -83,5 +90,29 @@ class User extends BaseUser
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set branch
+     *
+     * @param \KmBundle\Entity\Branch $branch
+     *
+     * @return User
+     */
+    public function setBranch(\KmBundle\Entity\Branch $branch)
+    {
+        $this->branch = $branch;
+
+        return $this;
+    }
+
+    /**
+     * Get branch
+     *
+     * @return \KmBundle\Entity\Branch
+     */
+    public function getBranch()
+    {
+        return $this->branch;
     }
 }

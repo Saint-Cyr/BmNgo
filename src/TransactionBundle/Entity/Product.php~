@@ -66,6 +66,13 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="locked", type="boolean")
+     */
+    private $locked;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="barcode", type="string", length=255, nullable=true, unique=true)
      */
     private $barcode;
