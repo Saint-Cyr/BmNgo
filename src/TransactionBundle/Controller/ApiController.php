@@ -29,7 +29,7 @@ class ApiController extends Controller
         
         $response = new Response($this->get('translator')->trans('Successfull transaction!'));
                             
-        $response->headers->set('Access-Control-Allow-Origin', 'http://localhost');
+        $response->headers->set('Access-Control-Allow-Origin', 'http://127.0.0.1');
         return $response;
         //return View::create(array('info' => 'user of verifier_token: '.$inputData['verifier_token'].' has been logged out successfully.'), 200);
         
