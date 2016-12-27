@@ -70,6 +70,16 @@ class Stock
         $this->value = $this->value - $quantity;
     }
     
+    public function __toString() {
+        
+        if($this->name){
+            return $this->name;
+        }
+        
+        return 'Stock';
+        
+    }
+    
     public function __construct() {
         $this->setCreatedAt(new \DateTime("now"));
     }

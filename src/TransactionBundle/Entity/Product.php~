@@ -391,4 +391,28 @@ class Product
     {
         return $this->stocks;
     }
+
+    /**
+     * Set locked
+     *
+     * @param boolean $locked
+     *
+     * @return Product
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        return $this->locked;
+    }
 }

@@ -315,22 +315,25 @@ function isEmpty(obj) {
       <div class="col-sm-6">
         
         {% for category in categories %}
-          <div class="box">
-            <div class="text-info">{{ category.name }}</div>
-            <style>
-                .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
-                    background-color: #5e388f !important;
-                }
-            </style>
-            <hr>
-                {% for p in category.products %}
-                    {% for stock in app.user.branch.stocks %}
-                        {% if stock.product.id == p.id %}
-                            <button class="buttons btn btn-primary" ng-click="add(food.{{ p.id }})">{{ p.name }}</button>
-                        {% endif %}
+            {% if category.displayed %}
+                <div class="box" style="margin-top: -38px;">
+                    <div class="text-info">{{ category.name }}</div>
+                    <style>
+                        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                            background-color: #5e388f !important;
+                        }
+                    </style>
+                    <hr>
+                    {% for p in category.products %}
+                        {% for stock in app.user.branch.stocks %}
+                            {% if stock.product.id == p.id %}
+                                <img src="{{ asset('upload/product/'~p.image) }}" style="width: 130px; height: 110px;"
+                                    ng-click="add(food.{{ p.id }})" alt="{{ p.name }}" class="img-thumbnail">
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
-                {% endfor %}
-          </div>
+                </div>
+            {% endif %}
           <br></br>
           {% endfor %}
           {% verbatim %}
@@ -356,8 +359,7 @@ function isEmpty(obj) {
               </div>
               <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in order">
-                  <span> {{item.item.detail}}</span>
-
+                  <span style="font-size: 23px;"> {{item.item.detail}}</span>
                   <div class="btn-group pull-right" role="group" aria-label="...">
                       <button type="button" class="btn btn-xs " ng-disabled="" ng-click="subtractItem(item, $index)">
                         <span type="button" class="fa fa-minus"></span>

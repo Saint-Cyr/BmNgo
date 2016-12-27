@@ -16,7 +16,8 @@ class DefaultController extends Controller
         if(!$authChecker->isGranted("ROLE_SUPER_ADMIN")){
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
-        return new Response('FRONT OF THE APP');
+        
+        return $this->render('KmBundle:Default:front.html.twig');
     }
 
     public function dashboardAction()
@@ -29,7 +30,6 @@ class DefaultController extends Controller
         //return $this->render('/pages/form_buttons.html.twig');
         //return $this->render('/pages/icons.html.twig');
         //return $this->render('/pages/general_elements.html.twig');
-        //return $this->render('/pages/pricing_tables.html.twig');
         return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions));
     }
     

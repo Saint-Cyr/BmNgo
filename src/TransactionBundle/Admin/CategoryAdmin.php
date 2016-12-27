@@ -29,6 +29,7 @@ class CategoryAdmin extends AbstractAdmin
             ->add('id')
             ->add('name')
             ->add('createdAt')
+            ->add('displayed', null, array('editable' => true))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -62,5 +63,15 @@ class CategoryAdmin extends AbstractAdmin
             ->add('name')
             ->add('createdAt')
         ;
+    }
+    
+    public function prePersist($category) {
+        parent::prePersist($category);
+        $this->preUpdate($category);
+    }
+    
+    public function preUpdate($category) {
+        parent::preUpdate($category);
+        $category->setProducts($category->getProducts());
     }
 }

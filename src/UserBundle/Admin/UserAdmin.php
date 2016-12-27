@@ -34,6 +34,7 @@ class UserAdmin extends AbstractAdmin
             ->add('branch')
             ->add('enabled', null, array('editable' => true))
             ->add('lastLogin')
+            ->add('roles')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -49,14 +50,18 @@ class UserAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $edition = (preg_match('/_edit$/', $this->getRequest()->get('_route'))) ? false : true;
         $typeContext = array();
         
-        if($this->isGranted('ROLE_SUPER_ADMIN')){
+        if($this->isGranted('ROLE_SUPER_ADMIN') && ($edition)){
             $typeContext['Super-Admin'] = 'super-admin';
             $typeContext['Administrator'] = 'administrator';
         }
         
-        $passwordRequired = (preg_match('/_edit$/', $this->getRequest()->get('_route'))) ? false : true;
+        if($this->isGranted('ROLE_ADMIN') && ($edition)){
+            $typeContext['Seller'] = 'seller';
+        }
+        
         $formMapper
             ->with('Connexion Information', array('class' => 'col-md-4'))
                 ->add('username')
@@ -64,7 +69,7 @@ class UserAdmin extends AbstractAdmin
                 ->add('plainPassword', 'repeated', array(
                         'type' => 'password',
                         'invalid_message' => 'The password fields must match.',
-                        'required' => $passwordRequired,
+                        'required' => $edition,
                         'first_options'  => array('label' => 'Password'),
                         'second_options' => array('label' => 'Repeat Password'),
                     ))
@@ -104,12 +109,15 @@ class UserAdmin extends AbstractAdmin
         $object->setEnabled(true);
         
         switch ($object->getType()){
-        case 'super-admin':
-            $object->setRoles(array('ROLE_SUPER_ADMIN'));
-        break;
-        case 'administrator':
-            $object->setRoles(array('ROLE_ADMIN'));
-        break;
+            case 'super-admin':
+                $object->setRoles(array('ROLE_SUPER_ADMIN'));
+            break;
+            case 'administrator':
+                $object->setRoles(array('ROLE_ADMIN'));
+            break;
+            case 'seller':
+                $object->setRoles(array('ROLE_SELLER'));
+            break;
         }
     }
 }

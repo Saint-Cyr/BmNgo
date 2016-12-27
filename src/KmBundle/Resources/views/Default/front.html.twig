@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>BeezyManager</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
+  </head>
+
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        <!-- page content -->
+        <div class="col-md-12">
+          <div class="col-middle">
+            <div class="text-center text-center">
+                <img src="{{ asset('images/logo.png') }}" style="width: 150px; height: 135px; margin-bottom: 23px;" />
+                </br>
+              <div class="row top_tiles">
+              <a href="{{ path('transaction_pos_barcode') }}">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
+                  <div class="count">POS 1</div>
+                  
+                </div>
+              </div>
+              </a>
+              <a href="{{ path('transaction_pos2') }}">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
+                  <div class="count">POS 2</div>
+                  
+                </div>
+              </div>
+              </a>
+              <a href="{{ path('admin_transaction_stransaction_create') }}">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
+                  <div class="count">POS 3</div>
+                  
+                </div>
+              </div>
+              </a>
+              <a href="#">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-8">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-cart-plus"></i></div>
+                  <div class="count" style="color: #bab8b8;">SOON </div>
+                  
+                </div>
+              </div>
+              </a>
+              <a href="{{ path('sonata_admin_dashboard') }}">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-bars"></i></div>
+                  <div class="count">D 1</div>
+                 
+                </div>
+              </div>
+              </a>
+              <a href="{{ path('km_dashboard') }}">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-line-chart"></i></div>
+                  <div class="count">D 2</div>
+                 
+                </div>
+              </div>
+              </a>
+              <a href="#">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-bars"></i></div>
+                  <div class="count" style="color: #bab8b8;">SOON</div>
+                 
+                </div>
+              </div>
+              </a>
+              <a href="#">
+              <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                  <div class="icon"><i class="fa fa-bars"></i></div>
+                  <div class="count" style="color: #bab8b8;">SOON</div>
+                 
+                </div>
+              </div>
+              </a>
+              
+            </div>
+            <hr>
+                <span style="color: white;">©</span>
+              <a href="#" style="color: white;"> 2017 - Saint-Cyr MAPOUKA</a>
+            </div>
+          </div>
+        </div>
+        <!-- /page content -->
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('assets/vendors/fastclick/lib/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('assets/vendors/nprogress/nprogress.js') }}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('assets/js/custom.min.js') }}"></script>
+  </body>
+</html>

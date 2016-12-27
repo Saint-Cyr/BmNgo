@@ -164,4 +164,28 @@ class Sale
     {
         return $this->product;
     }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Sale
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
 }

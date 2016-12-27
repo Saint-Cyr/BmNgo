@@ -52,7 +52,7 @@ class StockAdmin extends AbstractAdmin
         $formMapper
          ->with('Detail', array('class' => 'col-md-6'))
             ->add('name', null, array('label' => 'Tag Name'))
-            ->add('value', null, array('label' => 'Value ( Quantity )'))
+            ->add('value', null, array('label' => 'Value ( Quantity )', 'required' => false))
          ->end()
         
          ->with('Extra', array('class' => 'col-md-4'))
@@ -71,5 +71,13 @@ class StockAdmin extends AbstractAdmin
             ->add('id')
             ->add('createdAt')
         ;
+    }
+    
+    public function preValidate($object) {
+        parent::preValidate($object);
+        //Set the default value of the quantity to 0 if not input by the user
+        if(!$object->getValue()){
+            $object->setValue(0);
+        }
     }
 }

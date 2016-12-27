@@ -66,7 +66,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="locked", type="boolean")
+     * @ORM\Column(name="locked", type="boolean", nullable=true)
      */
     private $locked;
     
@@ -412,6 +412,16 @@ class Product
      * @return boolean
      */
     public function isLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean
+     */
+    public function getLocked()
     {
         return $this->locked;
     }

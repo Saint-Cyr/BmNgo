@@ -5,15 +5,16 @@
 <hr>
 <img src="{{ asset('image/logo.png') }}" style="width: 100px; height: 150px; margin-left: 173px; margin-bottom: 0px;" />    
 <h3 style="margin-left: 265px; color: #5e388f; "> BeezyManager </h3>
-
+<table style="width 100%">
 {% for p in products %}
-    
+        
     {% if loop % 3 == 0 %}
-        <hr>
+        <br>
     {% endif %}
     {{ p.name }}
     <img src="{{ asset('barcode/'~p.barcode~'.png') }}"  />
 {% endfor %}
+</table>
 <hr>
 
 

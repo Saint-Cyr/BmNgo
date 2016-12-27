@@ -33,6 +33,13 @@ class Category
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="displayed", type="boolean")
+     */
+    private $displayed;
 
     /**
      * @var \DateTime
