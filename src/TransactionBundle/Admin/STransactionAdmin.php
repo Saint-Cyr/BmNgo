@@ -67,6 +67,11 @@ class STransactionAdmin extends AbstractAdmin
         ->with('Other', array('class' => 'col-md-4'))
               ->add('totalAmount', null, array('label' => 'Total Cash'))
               ->add('branch')
+              ->add('createdAt', 'sonata_type_datetime_picker', array(
+                      'dp_side_by_side'  => true,
+                      'dp_use_current'   => false,
+                      'dp_use_seconds'   => false,
+              ))
         ->end()
         ;
         

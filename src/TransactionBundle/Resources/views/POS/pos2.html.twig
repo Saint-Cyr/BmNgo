@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
-
 <head>
-  <title>Point of Sale Interface</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>POS2</title>
   <!--<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
   <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
   
@@ -26,16 +26,16 @@
 var app = angular.module('myApp', []);
 
 app.controller('POSController', function ($scope, $http) {
+    $scope.disableIt = false;
     $scope.food = {
       {% for p in products %}
             {% for stock in app.user.branch.stocks %}
                         {% if stock.product.id == p.id %}
-                            {{ p.id }} : {count: 1, id: {{ p.id }}, detail: "{{ p }}", price: {{ p.unitPrice }} },
+                            {{ p.id }} : {count: 1, id: {{ p.id }}, detail: "{{ p.name|slice(0, 24)|e('js')|raw }}", price: {{ p.unitPrice }} },
                         {% endif %}
             {% endfor %} 
       {% endfor %}
     };
-    
     
     $scope.itemsCnt = 1;
     $scope.order = [];
@@ -107,23 +107,28 @@ function isEmpty(obj) {
     };*/
     
     $scope.checkout = function(index) {
+       //Prevent user to send a second request
+      
       //S@int-Cyr edition start here
       //Data to be sent to the server (order[])
+      var order2 = $scope.order.slice(0);
+      
       var data = {"data":{
           'id': 1,
-          'order': $scope.order,
+          'order': order2,
           'total': $scope.getSum(),
     }};
+
+    //Prevent user to send another request
+      $scope.order = '';
       
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);
-      
+      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sales/transactions', data);
       //alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
           alert(data);
-          //alert( "successfull message: " + JSON.stringify({data: data}));
-          //alert("Order total: $" + $scope.getSum() + "\n\nPayment received. Thanks. cache: " + $scope.cacheAmount + "change: " + $scope.getChange());
+          
           $scope.order = [];
       });
       
@@ -357,7 +362,7 @@ function isEmpty(obj) {
                 <img src="{{ asset('images/logo.png') }}" style="margin-left:150px;" width="150"/>
                 {% verbatim %}
               </div>
-              <ul class="list-group">
+            <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in order">
                   <span style="font-size: 23px;"> {{item.item.detail}}</span>
                   <div class="btn-group pull-right" role="group" aria-label="...">
@@ -367,7 +372,7 @@ function isEmpty(obj) {
                       <button type="button" class="btn  btn-xs" ng-click="addItem(item, $index)">
                         <span class="fa fa-plus"></span>
                       </button>
-                       <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
+                      <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
                         <span class="fa fa-trash-o"></span>
                       </button>                     
                   </div>
@@ -375,7 +380,7 @@ function isEmpty(obj) {
                   <div class="label label-default pull-right">{{item.orderedItemCnt}}</div>
 
                 </li>
-              </ul>
+            </ul>
                   
             </div>
             <div class="panel-footer" ng-show="order.length">
@@ -386,12 +391,10 @@ function isEmpty(obj) {
                 Do not let go of customer without taking payment !
               </div>
             </div>
-            
             <div class="pull-right">
               <span class="btn btn-default" ng-click="clearOrder()" ng-disabled="!order.length">Clear</span>
-              <span class="btn btn-danger" ng-click="checkout()" ng-disabled="!order.length">Checkout</span>
+              <span class="btn btn-danger" ng-click="checkout()" ng-disabled="(!order.length)">Checkout</span>
             </div>
-
           </div>
         
       </div>

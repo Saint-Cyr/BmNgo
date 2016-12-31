@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 
 <head>
-  <title>Point of Sale Interface</title>
+  <title>POS1</title>
   <!--<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
   <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
 
@@ -35,7 +35,7 @@ app.controller('POSController', function ($scope, $http)
         {% for p in products %}
             {% for stock in app.user.branch.stocks %}
                         {% if stock.product.id == p.id %}
-                            "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24) }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
+                            "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24)|e('js')|raw }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
                         {% endif %}
             {% endfor %} 
       {% endfor %}

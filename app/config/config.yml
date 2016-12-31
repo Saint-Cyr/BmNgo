@@ -84,6 +84,8 @@ framework:
 
 # Twig Configuration
 twig:
+    form_themes:
+            - 'SonataCoreBundle:Form:datepicker.html.twig'
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
 
