@@ -1,5 +1,97 @@
 security:
     role_hierarchy:
+        
+        ROLE_STOCK_READER:
+            - ROLE_TRANSACTION_ADMIN_STOCK_LIST
+            - ROLE_TRANSACTION_ADMIN_STOCK_VIEW
+            
+        ROLE_STOCK_EDITOR:
+            - ROLE_TRANSACTION_ADMIN_STOCK_EDIT
+            - ROLE_TRANSACTION_ADMIN_STOCK_CREATE
+            - ROLE_TRANSACTION_ADMIN_STOCK_DELETE
+            - ROLE_TRANSACTION_ADMIN_STOCK_EXPORT
+        
+        ROLE_CATEGORY_READER:
+            - ROLE_TRANSACTION_ADMIN_CATEGORY_LIST
+            - ROLE_TRANSACTION_ADMIN_CATEGORY_VIEW
+            
+        ROLE_CATEGORY_EDITOR:
+            - ROLE_TRANSACTION_ADMIN_CATEGORY_EDIT
+            - ROLE_TRANSACTION_ADMIN_CATEGORY_CREATE
+            - ROLE_TRANSACTION_ADMIN_CATEGORY_DELETE
+            - ROLE_TRANSACTION_ADMIN_CATEGORY_EXPORT
+        
+        ROLE_PRODUCT_READER:
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_LIST
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_VIEW
+            
+        ROLE_PRODUCT_EDITOR:
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_EDIT
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_CREATE
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_DELETE
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_EXPORT
+        
+        ROLE_SALE_READER:
+            - ROLE_TRANSACTION_ADMIN_SALE_LIST
+            - ROLE_TRANSACTION_ADMIN_SALE_VIEW
+            
+        ROLE_SALE_EDITOR:
+            - ROLE_TRANSACTION_ADMIN_SALE_EDIT
+            - ROLE_TRANSACTION_ADMIN_SALE_CREATE
+            - ROLE_TRANSACTION_ADMIN_SALE_DELETE
+            - ROLE_TRANSACTION_ADMIN_SALE_EXPORT
+            
+        ROLE_S_TRANSACTION_READER:
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_LIST
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_VIEW
+            
+        ROLE_S_TRANSACTION_EDITOR:
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_EDIT
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_CREATE
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_DELETE
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_EXPORT
+            
+        ROLE_EXPENDITURE_READER:
+            - ROLE_KM_ADMIN_EXPENDITURE_LIST
+            - ROLE_KM_ADMIN_EXPENDITURE_VIEW
+            
+        ROLE_EXPENDITURE_EDITOR:
+            - ROLE_KM_ADMIN_EXPENDITURE_EDIT
+            - ROLE_KM_ADMIN_EXPENDITURE_CREATE
+            - ROLE_KM_ADMIN_EXPENDITURE_DELETE
+            - ROLE_KM_ADMIN_EXPENDITURE_EXPORT
+        
+        ROLE_BRANCH_READER:
+            - ROLE_TRANSACTION_ADMIN_BRANCH_LIST
+            - ROLE_TRANSACTION_ADMIN_BRANCH_VIEW
+            
+        ROLE_BRANCH_EDITOR:
+            - ROLE_TRANSACTION_ADMIN_BRANCH_EDIT
+            - ROLE_TRANSACTION_ADMIN_BRANCH_CREATE
+            - ROLE_TRANSACTION_ADMIN_BRANCH_DELETE
+            - ROLE_TRANSACTION_ADMIN_BRANCH_EXPORT
+            
+        ROLE_SELLER:
+            - ROLE_PRODUCT_READER
+            - ROLE_STOCK_READER
+            - ROLE_CATEGORY_READER
+            - ROLE_S_TRANSACTION_READER
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_CREATE
+            - ROLE_TRANSACTION_ADMIN_SALE_CREATE
+        
+            
+        ROLE_ADMIN: 
+            - ROLE_SELLER
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_CREATE
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_EDIT
+            - ROLE_TRANSACTION_ADMIN_PRODUCT_EXPORT
+            - ROLE_CATEGORY_EDITOR
+            - ROLE_TRANSACTION_ADMIN_S_TRANSACTION_EDIT
+            - ROLE_EXPENDITURE_READER
+            - ROLE_KM_ADMIN_EXPENDITURE_EDIT
+            - ROLE_KM_ADMIN_EXPENDITURE_CREATE
+            - ROLE_USER_ADMIN_USER_LIST
+            
         ROLE_SUPER_ADMIN: [ROLE_ADMIN]
         
     encoders:
@@ -37,9 +129,8 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/, role: ROLE_ADMIN }
-        - { path: ^/register, role: ROLE_ADMIN }
+        - { path: ^/admin/, role: ROLE_SELLER }
         - { path: ^/report, role: ROLE_ADMIN }
-        - { path: ^/pos_barcode, role: ROLE_ADMIN }
-        - { path: ^/pos2, role: ROLE_ADMIN }
-        - { path: ^/pos, role: ROLE_ADMIN }
+        - { path: ^/pos_barcode, role: ROLE_SELLER }
+        - { path: ^/pos2, role: ROLE_SELLER }
+        - { path: ^/pos, role: ROLE_SELLER }

@@ -13,7 +13,7 @@ class DefaultController extends Controller
         //when logout, goes to the login page
         //Get the authorization checker
         $authChecker = $this->get('security.authorization_checker');
-        if(!$authChecker->isGranted("ROLE_SUPER_ADMIN")){
+        if(!$authChecker->isGranted("ROLE_SELLER")){
             return $this->redirect($this->generateUrl('fos_user_security_login'));
         }
         
