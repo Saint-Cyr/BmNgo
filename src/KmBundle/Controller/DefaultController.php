@@ -54,7 +54,9 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $product = $em->getRepository('TransactionBundle:Product')->findOneBy(array('barcode' => $barcode));
-        
+        if(!$product){
+            throw $this->createNotFoundException('product of barcode: '.$barcode.' does not exist in DB.');
+        }
         $im = imagecreatefromstring($this->getImage($barcode));
         
         imagepng($im, getcwd().'/barcode/'.$barcode.'.png');

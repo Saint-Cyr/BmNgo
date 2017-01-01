@@ -31,7 +31,7 @@ class StockAdmin extends AbstractAdmin
         $listMapper
             ->add('name')
             ->add('branch')
-            ->add('value')
+            ->add('value', null, array('editable' => true))
             ->add('product')
             ->add('createdAt')
             ->add('_action', null, array(

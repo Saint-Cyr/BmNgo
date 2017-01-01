@@ -48,6 +48,7 @@ class SaleAdmin extends AbstractAdmin
     {
         $formMapper
             ->add('product')
+            ->add('quantity', 'integer')
         ;
     }
 

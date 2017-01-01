@@ -183,7 +183,11 @@ class Product
      */
     public function getImage()
     {
-        return $this->getId().'.'.$this->image;
+        if((substr($this->image, -4) == 'jpeg')||(substr($this->image, -3) == 'jpg')||(substr($this->image, -3) == 'png')){
+            return $this->getId().'.'.$this->image;
+        }else{
+            return null;
+        }
     }
 
     /**

@@ -19,6 +19,7 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('barcode')
             ->add('category')
+            
         ;
     }
 
@@ -29,13 +30,12 @@ class ProductAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('image', null, array('template' => 'TransactionBundle:Default:list.html.twig'))
-            ->add('name')
-            ->add('unitPrice')
-            ->add('barcode')
-            
+            ->add('name', null, array('editable' => true))
+            ->add('unitPrice', 'decimal', array('editable' => true))
+            ->add('wholeSalePrice', 'decimal', array('editable' => true))
             ->add('totalStock', null, array('label' => 'Total Stock'))
             ->add('category')
-            ->add('locked')
+            ->add('locked', null, array('editable' => true))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -56,7 +56,6 @@ class ProductAdmin extends AbstractAdmin
         ->with('General information', array('class' => 'col-md-8'))
             ->add('name')
             ->add('category')
-            ->add('barcode')
             ->add('file', 'file', array('required' => false))
         ->end()
         ->with('Pricing', array('class' => 'col-md-4'))

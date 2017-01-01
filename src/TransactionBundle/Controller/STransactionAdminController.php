@@ -61,11 +61,22 @@ class STransactionAdminController extends CRUDController
             // persist if the form was valid and if in preview mode the preview was approved
             if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request))) {
                 //By S@int-Cyr
+                //Get the $stockHandler Service
+                $stockHandler = $this->get('km.stock_handler');
+                //Get the Branch from the User object
+                $branch = $this->getUser()->getBranch();
+                if(!$branch){
+                    $this->createNotFoundException('Branch not found.');
+                }
                 //hydrate each sale with the unitPrice of it related product
                 foreach ($object->getSales() as $sale){
                     $sale->setAmount($sale->getProduct()->getUnitPrice());
-                    //$object->addSales[] = $sale;
+                    //Update the stock
+                    $stockHandler->updateStock($branch, $sale->getProduct(), $sale->getQuantity());
                 }
+                //Link the STransaction to the contextual branch
+                $object->setBranch($branch);
+                //S@int-Cyr end
                 $this->admin->checkAccess('create', $object);
 
                 try {

@@ -123,7 +123,7 @@ function isEmpty(obj) {
       $scope.order = '';
       
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sales/transactions', data);
+      var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);
       //alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
@@ -332,8 +332,14 @@ function isEmpty(obj) {
                     {% for p in category.products %}
                         {% for stock in app.user.branch.stocks %}
                             {% if stock.product.id == p.id %}
-                                <img src="{{ asset('upload/product/'~p.image) }}" style="width: 130px; height: 110px;"
+                                {% if p.image == "" %}
+                                    <button class="btn btn-primary" ng-click="add(food.{{ p.id }})" style="width: 130px; height: 110px;">
+                                        {{ p }}
+                                    </button>
+                                {% else %}
+                                    <img src="{{ asset('upload/product/'~p.image) }}" style="width: 130px; height: 110px;"
                                     ng-click="add(food.{{ p.id }})" alt="{{ p.name }}" class="img-thumbnail">
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endfor %}

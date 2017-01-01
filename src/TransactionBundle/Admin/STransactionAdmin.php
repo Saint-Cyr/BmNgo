@@ -46,7 +46,7 @@ class STransactionAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-        ->with('Products', array('class' => 'col-md-4'))
+        ->with('Products', array('class' => 'col-md-6'))
             ->add('sales', 'sonata_type_collection', array(
                 'type_options' => array(
                     'delete' => false,

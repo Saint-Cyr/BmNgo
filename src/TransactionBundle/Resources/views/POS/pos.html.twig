@@ -121,12 +121,18 @@ app.controller('POSController', function ($scope, $http)
     
     $scope.checkout = function(index) {
       //S@int-Cyr edition start here
+      //S@int-Cyr edition start here
+      //Data to be sent to the server (order[])
+      var order2 = $scope.order.slice(0);
       //Data to be sent to the server (order[])
       var data = {"data":{
           'id': 1,
-          'order': $scope.order,
+          'order': order2,
           'total': $scope.getSum(),
     }};
+
+      //Prevent user to send another request
+      $scope.order = '';
       
       //Data containing the response from the server
       var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);

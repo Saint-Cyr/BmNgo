@@ -29,12 +29,12 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('username')
+            ->add('image', null, array('template' => 'UserBundle:Default:list.html.twig'))
+            ->add('name')
             ->add('email')
             ->add('branch')
             ->add('enabled', null, array('editable' => true))
             ->add('lastLogin')
-            ->add('roles')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -77,8 +77,11 @@ class UserAdmin extends AbstractAdmin
             ->end()
                 
         ->with('Personal information', array('class' => 'col-md-4'))
-            ->add('name')
+            
+            ->add('name', null, array('label' => 'Name (length must be more than 5)'))
             ->add('branch')
+            ->add('phoneNumber')
+            ->add('file', 'file', array('required' => false))
         ;
         
         
@@ -118,6 +121,22 @@ class UserAdmin extends AbstractAdmin
             case 'seller':
                 $object->setRoles(array('ROLE_SELLER'));
             break;
+        }
+    }
+    
+    public function prePersist($user)
+    {
+        $this->manageFileUpload($user);
+    }
+    
+    public function preUpdate($user) {
+        $this->manageFileUpload($user);
+    }
+
+    private function manageFileUpload($image)
+    {
+        if ($image->getFile()) {
+            $image->refreshUpdated();
         }
     }
 }

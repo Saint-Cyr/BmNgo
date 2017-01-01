@@ -27,7 +27,7 @@ class CategoryAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('name')
+            ->add('name', null, array('editable' => true))
             ->add('createdAt')
             ->add('displayed', null, array('editable' => true))
             ->add('_action', null, array(
