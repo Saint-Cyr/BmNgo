@@ -26,7 +26,13 @@ class STransaction
      * @ORM\JoinColumn(nullable=false)
      */
     private $branch;
-
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+    
     /**
      * @var \DateTime
      *
@@ -212,5 +218,29 @@ class STransaction
     public function getBranch()
     {
         return $this->branch;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return STransaction
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
