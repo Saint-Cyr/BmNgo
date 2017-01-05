@@ -32,6 +32,7 @@ class StockAdmin extends AbstractAdmin
             ->add('name')
             ->add('branch')
             ->add('value', null, array('editable' => true))
+            ->add('alertLevel', null, array('editable' => true))
             ->add('product')
             ->add('createdAt')
             ->add('_action', null, array(
@@ -57,6 +58,7 @@ class StockAdmin extends AbstractAdmin
         
          ->with('Extra', array('class' => 'col-md-4'))
             ->add('product')
+            ->add('alertLevel')
             ->add('branch')
          ->end()
         ;

@@ -36,6 +36,13 @@ class Stock
     private $value;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="alertLevel", type="integer")
+     */
+    private $alertLevel;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="stocks")
      * @ORM\JoinColumn(nullable=false)
      */

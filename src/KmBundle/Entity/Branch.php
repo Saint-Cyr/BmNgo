@@ -256,4 +256,21 @@ class Branch
     {
         return $this->users;
     }
+    
+    /**
+     * 
+     * @return list of stocks in alert zone
+     */
+    public function getAlertStocks()
+    {
+        $alertLevels = array();
+        
+        foreach($this->getStocks() as $stock){
+            if($stock->getAlertLevel() >= $stock->getValue()){
+                $alertLevels[] = $stock;
+            }
+        }
+        
+        return $alertLevels;
+    }
 }

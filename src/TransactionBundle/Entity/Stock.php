@@ -36,6 +36,13 @@ class Stock
     private $value;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="alertLevel", type="integer", nullable=true)
+     */
+    private $alertLevel;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Product", inversedBy="stocks")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -202,5 +209,29 @@ class Stock
     public function getBranch()
     {
         return $this->branch;
+    }
+
+    /**
+     * Set alertLevel
+     *
+     * @param integer $alertLevel
+     *
+     * @return Stock
+     */
+    public function setAlertLevel($alertLevel)
+    {
+        $this->alertLevel = $alertLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get alertLevel
+     *
+     * @return integer
+     */
+    public function getAlertLevel()
+    {
+        return $this->alertLevel;
     }
 }

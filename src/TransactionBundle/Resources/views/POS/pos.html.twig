@@ -30,6 +30,7 @@ app.controller('POSController', function ($scope, $http)
 {
     $scope.fileName = 'KINGMANAGER/web/1.jpg';
     $scope.focusImage = '';
+    $scope.gif = 'logo.png';
     
     var data = {
         {% for p in products %}
@@ -133,7 +134,7 @@ app.controller('POSController', function ($scope, $http)
 
       //Prevent user to send another request
       $scope.order = '';
-      
+      $scope.gif = 'gif1.gif';
       //Data containing the response from the server
       var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);
       //When successfull response comes from the server
@@ -142,7 +143,7 @@ app.controller('POSController', function ($scope, $http)
           //alert( "successfull message: " + JSON.stringify({data: data}));
           //alert("Order total: $" + $scope.getSum() + "\n\nPayment received. Thanks. cache: " + $scope.cacheAmount + "change: " + $scope.getChange());
           $scope.order = [];
-          
+          $scope.gif = 'logo.png';
       });
       
       outPut.error(function(data, status, header, config){
@@ -387,10 +388,8 @@ app.controller('POSController', function ($scope, $http)
               
             </div>
             <div class="panel-body" style="max-height:320px; overflow:auto;">
-              <div class="text-warning" ng-hide="order.length">
-                  {% endverbatim %}
-                <img src="{{ asset('images/logo.png') }}" style="margin-left:150px;" width="150"/>
-                {% verbatim %}
+              <div class="text-warning" ng-hide="order.length" ng-model="gif">
+                   <img src="/BeezyManager/web/images/{{ gif }}" style="margin-left:150px;" width="150"/>
               </div>
               
               <ul class="list-group">

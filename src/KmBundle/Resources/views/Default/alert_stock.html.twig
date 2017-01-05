@@ -1,0 +1,140 @@
+{% for branch in branches %}
+<li role="presentation" class="dropdown">
+    {% if branch.alertStocks|length > 0 %}
+        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-database"></i>
+            <span class="badge bg-red">{{ branch.alertStocks|length }}</span>
+        </a>
+    {% else %}
+        <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+            <i class="fa fa-database"></i>
+            <span class="badge bg-green">!</span>
+        </a>
+    {% endif %}
+    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+        {% for alertStock in branch.alertStocks %}
+                <li>
+                    <a>
+                        {% if alertStock.value <= 0 %}
+                            
+                                <style>
+                                        .myBlink{
+                                            animation: blinker 3s linear infinite;
+                                        }
+
+                                        @keyframes blinker{
+                                            50% {opacity: 0;}
+                                        }
+                                </style> 
+                            
+                            <span  {% if alertStock.value != 0 %}class="myBlink"{% endif %}>
+                                
+                                <span class="badge bg-red">{{ alertStock.value }}</span>
+                                
+                                <span {% if alertStock.value != 0 %}style="font-size: 14px; font-weight: bold; text-decoration: blink; color: red;"{% endif %}>{{ alertStock.product }} </span><br>
+                                <span class="time">45 mins ago</span>
+                            </span>
+                        {% elseif alertStock.value <= 2 %}
+                            <span class="badge bg-orange">{{ alertStock.value }}</span>
+                            <span>
+                                <span style="font-size: 14px;"> {{ alertStock.product }} </span><br>
+                              <span class="time">45 mins ago</span>
+                            </span>
+                        {% else %}
+                            <span class="badge bg">{{ alertStock.value }}</span>
+                            <span>
+                                <span style="font-size: 14px;"> {{ alertStock.product }} </span><br>
+                              <span class="time">45 mins ago</span>
+                            </span>
+                        {% endif %}
+                  </a>
+                </li>
+            {% endfor %}
+            
+            <!--<li>
+              <a>
+                <span class="badge bg-orange">1</span>
+                <span>
+                    <span style="font-size: 14px;"> Manette Playstation </span><br>
+                  <span class="time">45 mins ago</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a>
+                <span class="badge">3</span>
+                <span>
+                    <span style="font-size: 14px;">RAM format A4 </span><br>
+                  <span class="time">45 mins ago</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a>
+                <span class="badge">4</span>
+                <span>
+                  <span style="font-size: 14px;">Casque MP3 </span><br>
+                  <span class="time">1 day ago</span>
+                </span>
+              </a>
+            </li>-->
+            <li>
+              <div class="text-center">
+                <a>
+                  <strong>All - {{ branch }}</strong>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+              </div>
+            </li>
+      </ul>   
+</li>
+{% endfor %}
+<!--<li role="presentation" class="dropdown">
+    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-database"></i>
+        <span class="badge bg-green">!</span>
+    </a>
+    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
+    </ul>
+</li>-->
+
+<li role="presentation" class="dropdown">
+    <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+        <i class="fa fa-warning"></i>
+        <span class="badge bg-orange">3</span>
+    </a>
+    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+
+    <li>
+      <a>
+        <span class="badge">-3</span>
+        <span>
+            <span style="font-size: 14px;">RAM format A4 </span><br>
+            <span><i>- BATA -</i></span>
+          <span class="time">45 mins ago</span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <a>
+        <span class="badge">-1</span>
+        <span>
+          <span style="font-size: 14px;">Casque MP3 </span><br>
+          <span><i>- VALLEY -</i></span>
+          <span class="time">1 day ago</span>
+        </span>
+      </a>
+    </li>
+    <li>
+      <div class="text-center">
+        <a>
+          <strong>All - BATA</strong>
+          <i class="fa fa-angle-right"></i>
+        </a>
+      </div>
+    </li>
+
+  </ul>
+                    
+</li>

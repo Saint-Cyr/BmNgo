@@ -19,6 +19,15 @@ class DefaultController extends Controller
         
         return $this->render('KmBundle:Default:front.html.twig');
     }
+    
+    public function alertStockAction()
+    {
+        //Get all the branch
+        $em = $this->getDoctrine()->getManager();
+        $branches = $em->getRepository('KmBundle:Branch')->findAll();
+        
+        return $this->render('KmBundle:Default:alert_stock.html.twig', array('branches' => $branches));
+    }
 
     public function dashboardAction()
     {

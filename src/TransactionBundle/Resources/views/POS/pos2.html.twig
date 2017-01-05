@@ -27,6 +27,8 @@ var app = angular.module('myApp', []);
 
 app.controller('POSController', function ($scope, $http) {
     $scope.disableIt = false;
+    $scope.gif = 'logo.png';
+    
     $scope.food = {
       {% for p in products %}
             {% for stock in app.user.branch.stocks %}
@@ -122,18 +124,21 @@ function isEmpty(obj) {
     //Prevent user to send another request
       $scope.order = '';
       
+      $scope.gif = 'gif1.gif';
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);
+      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sales/transactions', data);
       //alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
           alert(data);
           
           $scope.order = [];
+          $scope.gif = 'logo.png';
       });
       
       outPut.error(function(data, status, header, config){
           alert('an error occur: cannot perform the transaction');
+          
       });
       //S@int-Cyr edition end here
       
@@ -363,10 +368,10 @@ function isEmpty(obj) {
               <h3 class="panel-title">Order Summary</h3>
             </div>
             <div class="panel-body" style="max-height:320px; overflow:auto;">
-              <div class="text-warning" ng-hide="order.length">
-                {% endverbatim %}
-                <img src="{{ asset('images/logo.png') }}" style="margin-left:150px;" width="150"/>
-                {% verbatim %}
+              <div class="text-warning" ng-hide="order.length" ng-model="gif">
+                
+                    <img src="/BeezyManager/web/images/{{ gif }}" style="margin-left:150px;" width="150"/>
+                
               </div>
             <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in order">

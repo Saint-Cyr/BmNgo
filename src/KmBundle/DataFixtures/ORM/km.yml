@@ -155,28 +155,57 @@ TransactionBundle\Entity\Product:
         unitPrice: 2500
         wholeSalePrice: 1500
         category: "@category2"
+    
+    product6:
+        name: Cle USB 4 GB
+        unitPrice: 4000
+        wholeSalePrice: 1500
+        
+    product7:
+        name: Casque MP3 Micro
+        unitPrice: 5000
+        wholeSalePrice: 3000
 
 TransactionBundle\Entity\Stock:
     stock1:
         name: JUS TOP 0.35 L_B
-        value: 10
+        value: 10000
+        alertLevel: 7
         product: "@product3"
         branch: "@branch3"
+        
     stock2:
         name: JUS TOP 1.5 L_B
         value: 5
+        alertLevel: 5
         product: "@product4"
         branch: "@branch3"
+        
     stock3:
-        name: JUS TOP 1.5 L_B
+        name: JUS TOP 1.5 L_V
         value: 2
         product: "@product3"
         branch: "@branch4"
     
-    stock3:
+    stock4:
         name: CLE USB 2 GB_B
         value: 4
+        alertLevel: 5
         product: "@product5"
+        branch: "@branch3"
+        
+    stock5:
+        name: CLE USB 4 GB_B
+        value: -1
+        alertLevel: 5
+        product: "@product6"
+        branch: "@branch3"
+        
+    stock6:
+        name: CASQUE MP3 MICRO_B
+        value: -3
+        alertLevel: 5
+        product: "@product7"
         branch: "@branch3"
         
 UserBundle\Entity\User:
@@ -186,7 +215,7 @@ UserBundle\Entity\User:
         email: mapoukacyr@yahoo.fr
         plainPassword: test
         enabled: true
-        roles: [ROLE_ADMIN]
+        roles: [ROLE_SUPER_ADMIN]
         
 TransactionBundle\Entity\Category:
     category1:
