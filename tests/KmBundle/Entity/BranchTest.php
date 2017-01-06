@@ -42,17 +42,4 @@ class BranchTest extends WebTestCase
         $this->assertEquals(count($alertStocks), 4);
         $this->assertEquals($alertStocks[0]->getName(), 'JUS TOP 1.5 L_B');
     }
-    
-    public function testGetAlertAlertNegativeStocks()
-    {
-        //Notice that one of the stock is decreasing by a script any time test is running
-        //Get the branch
-        $branch = $this->em->getRepository('KmBundle:Branch')->find(3);
-        //it have to be BATA
-        $this->assertEquals($branch->getName(), 'BATA');
-        //Get all the alertStocks from this branch
-        $alertStocks = $branch->getAlertNegativeStocks();
-        $this->assertEquals(count($alertStocks), 1);
-        $this->assertEquals($alertStocks[0]->getName(), 'JUS TOP 1.5 L_B');
-    }
 }

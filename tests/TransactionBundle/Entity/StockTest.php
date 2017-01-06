@@ -77,4 +77,20 @@ class StockTest extends WebTestCase
         $stock->setValue($stockInitValue);
         
     }
+    
+    public function testIsAlertStock()
+    {
+        $stock2 = $this->em->getRepository('TransactionBundle:Stock')->find(2);
+        //Make sure we are targetting the right stock from the fixture
+        $this->assertEquals($stock2->getValue(), 5);
+        $this->assertEquals($stock2->getName(), 'JUS TOP 1.5 L_B');
+        $this->assertTrue($stock2->isAlertStock());
+        
+        $stock2 = $this->em->getRepository('TransactionBundle:Stock')->find(5);
+        //Make sure we are targetting the right stock from the fixture
+        $this->assertEquals($stock2->getValue(), -1);
+        $this->assertEquals($stock2->getName(), 'CLE USB 4 GB_B');
+        $this->assertTrue($stock2->isAlertStock());
+        
+    }
 }

@@ -63,6 +63,32 @@ class StockAdmin extends AbstractAdmin
          ->end()
         ;
     }
+    
+    public function getBatchActions()
+    {
+        // retrieve the default batch actions (currently only delete)
+        $actions = parent::getBatchActions();
+
+        if (
+          $this->hasRoute('edit') && $this->isGranted('EDIT') &&
+          $this->hasRoute('delete') && $this->isGranted('DELETE')
+            ) {
+            $actions['resetValue'] = array(
+                'label' => 'Init. Value ',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
+            
+            $actions['resetAlert'] = array(
+                'label' => 'Init. Alert',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
+
+        }
+
+        return $actions;
+    }
 
     /**
      * @param ShowMapper $showMapper

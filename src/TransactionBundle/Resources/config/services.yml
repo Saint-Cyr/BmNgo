@@ -5,7 +5,7 @@ services:
         
     transaction.admin.stock:
         class: TransactionBundle\Admin\StockAdmin
-        arguments: [~, TransactionBundle\Entity\Stock, SonataAdminBundle:CRUD]
+        arguments: [~, TransactionBundle\Entity\Stock, TransactionBundle:StockAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: Stock }
             

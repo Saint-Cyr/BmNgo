@@ -1,7 +1,7 @@
 <td>
     {% if object.image == "" %}
-        <img src="{{ asset('/images/avatar.png') }}" alt="{{ object.name }}" width="80px"/>
+        <img src="{{ asset('/images/avatar.png') }}" alt="{{ object.name }}" width="80px" class="img circle profile_img"/>
     {% else %}
-        <img src="{{ asset('upload/images/user/'~object.image) }}" alt="{{ object.name }}" width="80px"/>
+        <img src="{{ asset('upload/images/user/'~object.image) }}" alt="{{ object.name }}" width="80px" class="img-circle"/>
     {% endif %}
 </td>

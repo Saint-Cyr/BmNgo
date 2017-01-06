@@ -72,6 +72,15 @@ class Stock
         return $this->id;
     }
     
+    public function isAlertStock()
+    {
+        if($this->getAlertLevel() >= $this->getValue()){
+            return true;
+        }
+        
+        return false;
+    }
+    
     public function decreaseValue($quantity)
     {
         $this->value = $this->value - $quantity;

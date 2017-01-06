@@ -25,8 +25,7 @@ class SaleHandler
         $stransaction->setTotalAmount($inputData['total']);
         $stransaction->setBranch($branch);
         //Link the employee to the transaction
-        //...
-        
+        //..
         //Loop over each sale
         foreach ($inputData['order'] as $s){
             //create an instance of a sale
@@ -35,6 +34,7 @@ class SaleHandler
             $product = $this->em->getRepository('TransactionBundle:Product')->find($s['item']['id']);
             $sale->setProduct($product);
             //Call the stocktHandler service to update the stock
+            //To do: update the date of alertStock if alert is going to be triggered
             $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt']);
             $sale->setAmount($s['totalPrice']);
             $sale->setStransaction($stransaction);

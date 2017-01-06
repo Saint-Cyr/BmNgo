@@ -27,6 +27,8 @@ class StockHandler
           
                 $stock->decreaseValue($quantity);
                 //Persist the change in the Database
+                //Update the property alertStockCreatedAt if there is alert
+                
                 $this->em->persist($stock);
                 $this->em->flush();
             }
