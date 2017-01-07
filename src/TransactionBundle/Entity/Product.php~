@@ -66,9 +66,16 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="locked", type="boolean")
+     * @ORM\Column(name="locked", type="boolean", nullable=true)
      */
     private $locked;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imagePos", type="boolean", nullable=true)
+     */
+    private $imagePos;
     
     /**
      * @var string
@@ -183,7 +190,11 @@ class Product
      */
     public function getImage()
     {
-        return $this->getId().'.'.$this->image;
+        if((substr($this->image, -4) == 'jpeg')||(substr($this->image, -3) == 'jpg')||(substr($this->image, -3) == 'png')){
+            return $this->getId().'.'.$this->image;
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -412,6 +423,16 @@ class Product
      * @return boolean
      */
     public function isLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean
+     */
+    public function getLocked()
     {
         return $this->locked;
     }

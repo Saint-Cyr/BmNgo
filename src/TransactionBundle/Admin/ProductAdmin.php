@@ -35,6 +35,7 @@ class ProductAdmin extends AbstractAdmin
             ->add('wholeSalePrice', 'decimal', array('editable' => true))
             ->add('totalStock', null, array('label' => 'Total Stock'))
             ->add('category')
+            ->add('imagePos', null, array('editable' => true))
             ->add('locked', null, array('editable' => true))
             ->add('_action', null, array(
                 'actions' => array(

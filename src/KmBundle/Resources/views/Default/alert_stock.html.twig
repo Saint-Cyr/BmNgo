@@ -12,7 +12,7 @@
         </a>
     {% endif %}
     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-        {% for alertStock in branch.alertStocks %}
+        {% for alertStock in branch.alertStocks|sortbyfield('value') %}
                 <li>
                     <a>
                         {% if alertStock.value <= 0 %}
@@ -32,19 +32,19 @@
                                 <span class="badge bg-red">{{ alertStock.value }}</span>
                                 
                                 <span {% if alertStock.value != 0 %}style="font-size: 14px; font-weight: bold; text-decoration: blink; color: red;"{% endif %}>{{ alertStock.product }} </span><br>
-                                <span class="time">45 mins ago</span>
+                                <span class="time">{{ alertStock.alertStockCreatedAt|ago }}</span>
                             </span>
                         {% elseif alertStock.value <= 2 %}
                             <span class="badge bg-orange">{{ alertStock.value }}</span>
                             <span>
                                 <span style="font-size: 14px;"> {{ alertStock.product }} </span><br>
-                              <span class="time">45 mins ago</span>
+                              <span class="time">{{ alertStock.alertStockCreatedAt|ago }}</span>
                             </span>
                         {% else %}
                             <span class="badge bg">{{ alertStock.value }}</span>
                             <span>
                                 <span style="font-size: 14px;"> {{ alertStock.product }} </span><br>
-                              <span class="time">45 mins ago</span>
+                              <span class="time">{{ alertStock.alertStockCreatedAt|ago }}</span>
                             </span>
                         {% endif %}
                   </a>

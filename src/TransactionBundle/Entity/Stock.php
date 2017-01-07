@@ -60,6 +60,13 @@ class Stock
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="alertStockCreatedAt", type="datetime", nullable=true)
+     */
+    private $alertStockCreatedAt;
 
 
     /**
@@ -75,6 +82,9 @@ class Stock
     public function isAlertStock()
     {
         if($this->getAlertLevel() >= $this->getValue()){
+            //Reset the alertStockCreatedAt
+            $this->setAlertStockCreatedAt(new \DateTime("now"));
+            
             return true;
         }
         
@@ -242,5 +252,29 @@ class Stock
     public function getAlertLevel()
     {
         return $this->alertLevel;
+    }
+
+    /**
+     * Set alertStockCreatedAt
+     *
+     * @param \DateTime $alertStockCreatedAt
+     *
+     * @return Stock
+     */
+    public function setAlertStockCreatedAt($alertStockCreatedAt)
+    {
+        $this->alertStockCreatedAt = $alertStockCreatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get alertStockCreatedAt
+     *
+     * @return \DateTime
+     */
+    public function getAlertStockCreatedAt()
+    {
+        return $this->alertStockCreatedAt;
     }
 }

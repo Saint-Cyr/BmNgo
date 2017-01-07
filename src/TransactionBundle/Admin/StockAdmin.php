@@ -34,7 +34,7 @@ class StockAdmin extends AbstractAdmin
             ->add('value', null, array('editable' => true))
             ->add('alertLevel', null, array('editable' => true))
             ->add('product')
-            ->add('createdAt')
+            ->add('alertStockCreatedAt')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),

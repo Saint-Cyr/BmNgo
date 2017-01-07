@@ -73,6 +73,13 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="imagePos", type="boolean", nullable=true)
+     */
+    private $imagePos;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="barcode", type="string", length=255, nullable=true, unique=true)
      */
     private $barcode;
@@ -428,5 +435,29 @@ class Product
     public function getLocked()
     {
         return $this->locked;
+    }
+
+    /**
+     * Set imagePos
+     *
+     * @param boolean $imagePos
+     *
+     * @return Product
+     */
+    public function setImagePos($imagePos)
+    {
+        $this->imagePos = $imagePos;
+
+        return $this;
+    }
+
+    /**
+     * Get imagePos
+     *
+     * @return boolean
+     */
+    public function getImagePos()
+    {
+        return $this->imagePos;
     }
 }

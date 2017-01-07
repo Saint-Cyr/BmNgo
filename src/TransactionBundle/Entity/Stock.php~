@@ -38,7 +38,7 @@ class Stock
     /**
      * @var string
      *
-     * @ORM\Column(name="alertLevel", type="integer")
+     * @ORM\Column(name="alertLevel", type="integer", nullable=true)
      */
     private $alertLevel;
     
@@ -60,6 +60,13 @@ class Stock
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="alertStockCreatedAt", type="datetime")
+     */
+    private $alertStockCreatedAt;
 
 
     /**
@@ -70,6 +77,17 @@ class Stock
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function isAlertStock()
+    {
+        if($this->getAlertLevel() >= $this->getValue()){
+            //Reset the alertStockCreatedAt
+            
+            return true;
+        }
+        
+        return false;
     }
     
     public function decreaseValue($quantity)
@@ -209,5 +227,29 @@ class Stock
     public function getBranch()
     {
         return $this->branch;
+    }
+
+    /**
+     * Set alertLevel
+     *
+     * @param integer $alertLevel
+     *
+     * @return Stock
+     */
+    public function setAlertLevel($alertLevel)
+    {
+        $this->alertLevel = $alertLevel;
+
+        return $this;
+    }
+
+    /**
+     * Get alertLevel
+     *
+     * @return integer
+     */
+    public function getAlertLevel()
+    {
+        return $this->alertLevel;
     }
 }

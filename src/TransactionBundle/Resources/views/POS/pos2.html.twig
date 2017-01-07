@@ -126,7 +126,7 @@ function isEmpty(obj) {
       
       $scope.gif = 'gif1.gif';
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);
+      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sales/transactions', data);
       //alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
@@ -326,7 +326,7 @@ function isEmpty(obj) {
         
         {% for category in categories %}
             {% if category.displayed %}
-                <div class="box" style="margin-top: -38px;">
+                <div class="box" style="margin-top: 2px;">
                     <div class="text-info">{{ category.name }}</div>
                     <style>
                         .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
@@ -337,7 +337,7 @@ function isEmpty(obj) {
                     {% for p in category.products %}
                         {% for stock in app.user.branch.stocks %}
                             {% if stock.product.id == p.id %}
-                                {% if p.image == "" %}
+                                {% if (p.image == "") or (not p.imagePos) %}
                                     <button class="btn btn-primary" ng-click="add(food.{{ p.id }})" style="width: 130px; height: 110px;">
                                         {{ p }}
                                     </button>
