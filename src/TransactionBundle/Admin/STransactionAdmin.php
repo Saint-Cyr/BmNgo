@@ -17,6 +17,7 @@ class STransactionAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('totalAmount')
+            ->add('createdAt', 'doctrine_orm_date', array('field_type'=>'sonata_type_date_picker',))
         ;
     }
 
@@ -72,6 +73,11 @@ class STransactionAdmin extends AbstractAdmin
                       'dp_use_current'   => false,
                       'dp_use_seconds'   => false,
               ))
+        ->end()
+        ->with('Transaction Type', array('class' => 'col-md-2'))
+             ->add('oneTime', 'sonata_type_choice_field_mask', array('choices' => array('yes' => 'Yes', 'no' => 'no'),
+                                                                      'map' => array('Yes' => array('totalAmount'),
+                                                                                     'No' => array('no'))))
         ->end()
         ;
         

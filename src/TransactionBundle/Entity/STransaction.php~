@@ -58,6 +58,11 @@ class STransaction
      * @ORM\OneToMany(targetEntity="Sale", mappedBy="stransaction", cascade={"remove", "all"})
      */
     private $sales;
+    
+    /**
+     * @ORM\Column(name="oneTime", type="boolean", nullable=true) 
+     */
+    private $oneTime;
 
     /**
      * Get id
@@ -67,6 +72,11 @@ class STransaction
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function isOneTime()
+    {
+        return $this;
     }
     
     public function __toString() {
@@ -218,5 +228,29 @@ class STransaction
     public function getBranch()
     {
         return $this->branch;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return STransaction
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

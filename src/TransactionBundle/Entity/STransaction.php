@@ -58,6 +58,8 @@ class STransaction
      * @ORM\OneToMany(targetEntity="Sale", mappedBy="stransaction", cascade={"remove", "all"})
      */
     private $sales;
+    
+    private $oneTime;
 
     /**
      * Get id
@@ -67,6 +69,11 @@ class STransaction
     public function getId()
     {
         return $this->id;
+    }
+    
+    public function isOneTime()
+    {
+        return $this;
     }
     
     public function __toString() {
@@ -242,5 +249,29 @@ class STransaction
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set oneTime
+     *
+     * @param boolean $oneTime
+     *
+     * @return STransaction
+     */
+    public function setOneTime($oneTime)
+    {
+        $this->oneTime = $oneTime;
+
+        return $this;
+    }
+
+    /**
+     * Get oneTime
+     *
+     * @return boolean
+     */
+    public function getOneTime()
+    {
+        return $this->oneTime;
     }
 }
