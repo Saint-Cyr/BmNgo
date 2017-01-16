@@ -1,52 +1,112 @@
+TransactionBundle\Entity\Product:
+    product1:
+        barcode: 2001300000002
+        name: Nexcare
+        unitPrice: 130.00
+        wholeSalePrice: 7.00
+        
+    product2:
+        barcode: 9780198610458
+        name: Oxford French Dictionary
+        unitPrice: 17.50
+        wholeSalePrice: 8.00
+        
+    product3:
+        name: Jus Top 0.35 L
+        unitPrice: 300
+        wholeSalePrice: 250
+        category: "@category1"
+        
+    product4:
+        name: Jus Top 1.5 L
+        unitPrice: 300
+        wholeSalePrice: 250
+        category: "@category1"
+        
+    product5:
+        name: Cle USB 2 GB
+        unitPrice: 2500
+        wholeSalePrice: 1500
+        category: "@category2"
+    
+    product6:
+        name: Cle USB 4 GB
+        unitPrice: 4000
+        wholeSalePrice: 1500
+        
+    product7:
+        name: Casque MP3 Micro
+        unitPrice: 5000
+        wholeSalePrice: 3000
+
 TransactionBundle\Entity\Sale:
     sale1:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
+        createdAt: <(new \DateTime('01-01-2008'))>
         
     sale2:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
+        createdAt: <(new \DateTime('01-01-2009'))>
+        profit: 25
         
     sale3:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
         
     sale4:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
         
     sale5:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
         
     sale6:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
         
     sale7:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
         
     sale8:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
         
     sale9:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
         stransaction: '@stransaction1'
         
     sale10:
-        amount: 10.23
         product: '@product1'
+        quantity: 1
+        amount: 10.23
+        stransaction: '@stransaction1'
+    
+    sale11:
+        product: '@product2'
+        quantity: 2
+        amount: 10.23
         stransaction: '@stransaction1'
 
 TransactionBundle\Entity\STransaction:
@@ -124,47 +184,6 @@ KmBundle\Entity\Expenditure:
     expenditure2:
         amount: 40.10
         branch: '@branch1'
-        
-TransactionBundle\Entity\Product:
-    product1:
-        barcode: 2001300000002
-        name: Nexcare
-        unitPrice: 130.00
-        wholeSalePrice: 7.00
-        
-    product2:
-        barcode: 9780198610458
-        name: Oxford French Dictionary
-        unitPrice: 17.50
-        wholeSalePrice: 8.00
-        
-    product3:
-        name: Jus Top 0.35 L
-        unitPrice: 300
-        wholeSalePrice: 250
-        category: "@category1"
-        
-    product4:
-        name: Jus Top 1.5 L
-        unitPrice: 300
-        wholeSalePrice: 250
-        category: "@category1"
-        
-    product5:
-        name: Cle USB 2 GB
-        unitPrice: 2500
-        wholeSalePrice: 1500
-        category: "@category2"
-    
-    product6:
-        name: Cle USB 4 GB
-        unitPrice: 4000
-        wholeSalePrice: 1500
-        
-    product7:
-        name: Casque MP3 Micro
-        unitPrice: 5000
-        wholeSalePrice: 3000
 
 TransactionBundle\Entity\Stock:
     stock1:

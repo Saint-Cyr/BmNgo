@@ -174,7 +174,7 @@ class STransaction
      * Set profit
      *
      * @param float $profit
-     *
+     * @deprecated since version 1.0_alpha
      * @return STransaction
      */
     public function setProfit()
@@ -200,7 +200,13 @@ class STransaction
      */
     public function getProfit()
     {
-        return $this->profit;
+        $profit = null;
+        
+        foreach ($this->getSales() as $sale){
+            $profit = $profit + $sale->getProfit();
+        }
+        
+        return $profit;
     }
 
     /**

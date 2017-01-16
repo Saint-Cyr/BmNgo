@@ -65,7 +65,7 @@ class User extends BaseUser
     
     /**
      * @ORM\ManyToOne(targetEntity="KmBundle\Entity\Branch", inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $branch;
 
@@ -274,7 +274,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setBranch(\KmBundle\Entity\Branch $branch)
+    public function setBranch(\KmBundle\Entity\Branch $branch = null)
     {
         $this->branch = $branch;
 

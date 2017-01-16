@@ -29,6 +29,7 @@ class ProductAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+                ->add('id')
             ->add('image', null, array('template' => 'TransactionBundle:Default:list.html.twig'))
             ->add('name', null, array('editable' => true))
             ->add('unitPrice', 'decimal', array('editable' => true))
@@ -52,11 +53,19 @@ class ProductAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        //The super-user have to be able to edit barcode
+        $disabled = true;
+        
+        if($this->isGranted('SUPER-ADMIN')){
+            $disabled = false;       
+        }
+        
         //$option = (preg_match('/_edit$/', $this->getRequest()->get('_route'))) ? false : true;
         $formMapper
         ->with('General information', array('class' => 'col-md-8'))
             ->add('name')
-            ->add('category')
+            ->add('category');
+            $formMapper->add('barcode', null, array('disabled' => $disabled))
             ->add('file', 'file', array('required' => false))
         ->end()
         ->with('Pricing', array('class' => 'col-md-4'))

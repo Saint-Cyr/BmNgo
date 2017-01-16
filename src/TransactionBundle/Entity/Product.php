@@ -45,6 +45,10 @@ class Product
      */
     private $image;
     
+    private $flyProfit;
+    
+    private $flyAmount;
+    
     /**
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="product")
      */
@@ -100,6 +104,11 @@ class Product
     
     public function __toString() {
         return $this->name;
+    }
+    
+    public function getProfit()
+    {
+        return $this->getUnitPrice() - $this->getWholeSalePrice();
     }
     
     /**
@@ -459,5 +468,53 @@ class Product
     public function getImagePos()
     {
         return $this->imagePos;
+    }
+
+    /**
+     * Set flyProfit
+     *
+     * @param string $flyProfit
+     *
+     * @return Product
+     */
+    public function setFlyProfit($flyProfit)
+    {
+        $this->flyProfit = $flyProfit;
+
+        return $this;
+    }
+
+    /**
+     * Get flyProfit
+     *
+     * @return string
+     */
+    public function getFlyProfit()
+    {
+        return $this->flyProfit;
+    }
+
+    /**
+     * Set flyAmount
+     *
+     * @param string $flyAmount
+     *
+     * @return Product
+     */
+    public function setFlyAmount($flyAmount)
+    {
+        $this->flyAmount = $flyAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get flyAmount
+     *
+     * @return string
+     */
+    public function getFlyAmount()
+    {
+        return $this->flyAmount;
     }
 }

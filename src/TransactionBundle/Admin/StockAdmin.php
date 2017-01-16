@@ -16,10 +16,12 @@ class StockAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
+            ->add('product.barcode')
             ->add('product')
-            ->add('branch')
             ->add('value')
+            ->add('alertLevel')
+            ->add('branch')
+            ->add('name')
         ;
     }
 

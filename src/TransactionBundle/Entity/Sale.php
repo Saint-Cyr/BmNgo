@@ -22,6 +22,13 @@ class Sale
     private $id;
     
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime", nullable=true)
+     */
+    private $createdAt;
+    
+    /**
      * @var Integer
      *
      * @ORM\Column(name="quantity", type="integer", nullable=true)
@@ -56,6 +63,14 @@ class Sale
         return $this->getProduct()->getName();
     }
     
+    public function __construct() {
+        
+        if(!$this->createdAt){
+            $this->setCreatedAt(new \DateTime("now"));
+        }
+        
+    }
+    
     /**
      * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\STransaction", inversedBy="sales", cascade={"persist"})
      */
@@ -76,7 +91,7 @@ class Sale
      */
     public function setAmount($amount)
     {
-        $this->amount = $amount;
+        $this->amount = $this->getQuantity() * $this->getProduct()->getUnitPrice();
 
         return $this;
     }
@@ -138,7 +153,7 @@ class Sale
      */
     public function getProfit()
     {
-        return $this->profit;
+        return $this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice();
     }
 
     /**
@@ -187,5 +202,29 @@ class Sale
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Sale
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

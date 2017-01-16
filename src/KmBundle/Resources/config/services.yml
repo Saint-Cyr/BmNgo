@@ -7,6 +7,10 @@ services:
         class: KmBundle\Service\StockHandler
         arguments: ["@doctrine.orm.entity_manager"]
         
+    km.report_handler:
+        class: KmBundle\Service\ReportHandler
+        arguments: ["@doctrine.orm.entity_manager"]
+        
     km.statisticHandler:
         class: KmBundle\Service\StatisticHandler
         arguments: ["@doctrine.orm.entity_manager"]

@@ -76,13 +76,13 @@ class UserAdmin extends AbstractAdmin
                 
             ->end()
                 
-        ->with('Personal information', array('class' => 'col-md-4'))
-            
-            ->add('name', null, array('label' => 'Name (length must be more than 5)'))
-            ->add('branch')
-            ->add('phoneNumber')
-            ->add('file', 'file', array('required' => false))
-        ;
+            ->with('Personal information', array('class' => 'col-md-4'))
+
+                ->add('name', null, array('label' => 'Name (length must be more than 5)'))
+                ->add('branch')
+                ->add('phoneNumber')
+                ->add('file', 'file', array('required' => false))
+            ;
         
         
         if ($this->isGranted('EDIT')) {

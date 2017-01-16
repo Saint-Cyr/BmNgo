@@ -30,6 +30,7 @@ class STransactionAdmin extends AbstractAdmin
             ->add('branch')
             ->add('sales')
             ->add('totalAmount')
+            ->add('profit')
             ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
@@ -80,13 +81,6 @@ class STransactionAdmin extends AbstractAdmin
                                                                                      'No' => array('no'))))
         ->end()
         ;
-        
-        /*$formMapper
-            ->add('totalAmount')
-            ->add('sales')
-            ->add('branch')
-            ->add('createdAt')
-        ;*/
     }
 
     /**

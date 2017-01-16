@@ -46,6 +46,20 @@ class Product
     private $image;
     
     /**
+     * @var string
+     *
+     * @ORM\Column(name="flyProfit", type="string", length=255, unique=false, nullable=true)
+     */
+    private $flyProfit;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="flyAmount", type="string", length=255, unique=false, nullable=true)
+     */
+    private $flyAmount;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="product")
      */
     private $stocks;
@@ -100,6 +114,11 @@ class Product
     
     public function __toString() {
         return $this->name;
+    }
+    
+    public function getProfit()
+    {
+        return $this->getUnitPrice() - $this->getWholeSalePrice();
     }
     
     /**
@@ -435,5 +454,29 @@ class Product
     public function getLocked()
     {
         return $this->locked;
+    }
+
+    /**
+     * Set imagePos
+     *
+     * @param boolean $imagePos
+     *
+     * @return Product
+     */
+    public function setImagePos($imagePos)
+    {
+        $this->imagePos = $imagePos;
+
+        return $this;
+    }
+
+    /**
+     * Get imagePos
+     *
+     * @return boolean
+     */
+    public function getImagePos()
+    {
+        return $this->imagePos;
     }
 }
