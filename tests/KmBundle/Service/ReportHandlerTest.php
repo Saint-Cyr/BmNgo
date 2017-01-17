@@ -55,10 +55,17 @@ class ReportHandlerTest extends WebTestCase
     public function testBuildReportAmanyProducts()
     {
         //Parameters
-        $initialDate = new \DateTime('-1 day');
-        $finalDate = new \DateTime('-2 day');
-        //$product = new Product;
-        $this->reportHandler->buildReportAmanyProducts(array());
+        $initialDate = new \DateTime('01-01-2008');
+        $finalDate = new \DateTime('01-01-2009');
+        $product1 = $this->em->getRepository('TransactionBundle:Product')->find(1);
+        $product2 = $this->em->getRepository('TransactionBundle:Product')->find(2);
+        
+        $unreportedProduct [] = $product1;
+        $unreportedProduct [] = $product2;
+        
+        //this is the set of some item for exple: Shop
+        $shop = $this->reportHandler->buildReportAmanyProducts($initialDate, $finalDate, $unreportedProduct);
+        
     }
     
     public function testRemoveOneProduct()
@@ -102,6 +109,36 @@ class ReportHandlerTest extends WebTestCase
         
         $result1 = $this->reportHandler->removeManyProducts($unreportedProducts, $productToBeUnreported);
         $this->assertEquals($result1, array($p1, $p2, $p3));
+    }
+    
+    public function testGetProfitOnFly()
+    {
+        $stransaction1 = $this->em->getRepository('TransactionBundle:STransaction')->findAll();
+        $result1 = $this->reportHandler->getProfitOnFly($stransaction1);
+        $this->assertEquals($result1, 5249.0);
+        
+        $stransaction1 = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
+        //$stransaction2 = $this->em->getRepository('TransactionBundle:STransaction')->find(3);
+        //$stransaction3 = $this->em->getRepository('TransactionBundle:STransaction')->find(4);
+        
+        $stransactions [] = $stransaction1;
+        //$stransactions [] = $stransaction2;
+        //$stransactions [] = $stransaction3;
+        
+        $result1 = $this->reportHandler->getProfitOnFly($stransactions);
+        $this->assertEquals($result1, 4000);
+    }
+    
+    public function testGetSaleAmountOnFly()
+    {
+        $stransaction1 = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
+        //$stransaction2 = $this->em->getRepository('TransactionBundle:STransaction')->find(3);
+        //$stransaction3 = $this->em->getRepository('TransactionBundle:STransaction')->find(4);
+        
+        $stransactions [] = $stransaction1;
+        
+        $result1 = $this->reportHandler->getSaleAmountOnFly($stransactions);
+        $this->assertEquals($result1, 10000);
     }
 }
 

@@ -29,11 +29,11 @@ class ProductAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-                ->add('id')
             ->add('image', null, array('template' => 'TransactionBundle:Default:list.html.twig'))
             ->add('name', null, array('editable' => true))
             ->add('unitPrice', 'decimal', array('editable' => true))
             ->add('wholeSalePrice', 'decimal', array('editable' => true))
+            ->add('profit')
             ->add('totalStock', null, array('label' => 'Total Stock'))
             ->add('category')
             ->add('imagePos', null, array('editable' => true))

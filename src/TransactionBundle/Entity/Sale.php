@@ -89,7 +89,7 @@ class Sale
      *
      * @return Sale
      */
-    public function setAmount($amount)
+    public function setAmount()
     {
         $this->amount = $this->getQuantity() * $this->getProduct()->getUnitPrice();
 
@@ -153,7 +153,7 @@ class Sale
      */
     public function getProfit()
     {
-        return $this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice();
+        return (($this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice()) * $this->getQuantity());
     }
 
     /**
@@ -190,7 +190,9 @@ class Sale
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
-
+        
+        $this->setAmount();
+        
         return $this;
     }
 

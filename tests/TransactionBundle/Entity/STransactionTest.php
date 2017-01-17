@@ -36,4 +36,10 @@ class STransactionTest extends WebTestCase
         $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(1);
         //$this->assertEquals($STransaction->getProfit(), 1230.00);
     }
+    
+    public function testGetTotalAmount()
+    {
+        $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
+        $this->assertEquals($STransaction->getTotalAmount(), 10000);
+    }
 }

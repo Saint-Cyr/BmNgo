@@ -28,6 +28,7 @@ class SaleAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('id')
             ->add('stransaction')
             ->add('amount')
             ->add('profit')

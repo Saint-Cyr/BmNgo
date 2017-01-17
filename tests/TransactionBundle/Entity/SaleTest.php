@@ -33,6 +33,11 @@ class SaleTest extends WebTestCase
     {
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
         $this->assertEquals($sale->getProfit(), 123);
+        
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(12);
+        $this->assertEquals($sale->getProfit(), 4000);
+        
+        
     }
     
     public function testGetAmount()

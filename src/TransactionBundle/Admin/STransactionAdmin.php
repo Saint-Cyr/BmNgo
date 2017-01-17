@@ -17,7 +17,7 @@ class STransactionAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('totalAmount')
-            ->add('createdAt', 'doctrine_orm_date', array('field_type'=>'sonata_type_date_picker',))
+            ->add('createdAt', 'doctrine_orm_date_range', array('field_type'=>'sonata_type_date_range_picker',))
         ;
     }
 
@@ -81,6 +81,26 @@ class STransactionAdmin extends AbstractAdmin
                                                                                      'No' => array('no'))))
         ->end()
         ;
+    }
+    
+    public function getBatchActions()
+    {
+        // retrieve the default batch actions (currently only delete)
+        $actions = parent::getBatchActions();
+
+        if (
+          $this->hasRoute('edit') && $this->isGranted('EDIT') &&
+          $this->hasRoute('delete') && $this->isGranted('DELETE')
+            ) {
+            $actions['report'] = array(
+                'label' => 'Gen. Report',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => false
+            );
+
+        }
+
+        return $actions;
     }
 
     /**

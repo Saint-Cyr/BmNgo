@@ -1,6 +1,6 @@
 TransactionBundle\Entity\Product:
     product1:
-        barcode: 2001300000002
+        barcode: 2002256910209
         name: Nexcare
         unitPrice: 130.00
         wholeSalePrice: 7.00
@@ -43,71 +43,78 @@ TransactionBundle\Entity\Sale:
     sale1:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         createdAt: <(new \DateTime('01-01-2008'))>
         
     sale2:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         createdAt: <(new \DateTime('01-01-2009'))>
-        profit: 25
         
     sale3:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         
     sale4:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         
     sale5:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         
     sale6:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         
     sale7:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         
     sale8:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         
     sale9:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
         
     sale10:
         product: '@product1'
         quantity: 1
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
     
     sale11:
         product: '@product2'
         quantity: 2
-        amount: 10.23
+        #amount: 10.23
         stransaction: '@stransaction1'
+        createdAt: <(new \DateTime('01-01-2009'))>
+        
+    sale12:
+        product: '@product5'
+        quantity: 4
+        #amount: 10.23
+        stransaction: '@stransaction2'
+        createdAt: <(new \DateTime('01-01-2010'))>
 
 TransactionBundle\Entity\STransaction:
     stransaction1:
@@ -225,6 +232,12 @@ TransactionBundle\Entity\Stock:
         value: -3
         alertLevel: 5
         product: "@product7"
+        branch: "@branch3"
+        
+    stock7:
+        value: 10
+        alertLevel: 3
+        product: "@product1"
         branch: "@branch3"
         
 UserBundle\Entity\User:

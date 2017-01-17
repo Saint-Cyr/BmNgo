@@ -37,6 +37,8 @@ class SaleHandler
             //Call the stocktHandler service to update the stock
             //To do: update the date of alertStock if alert is going to be triggered
             $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt']);
+            //Set the quantity
+            $sale->setQuantity($s['orderedItemCnt']);
             $sale->setAmount($s['totalPrice']);
             $sale->setStransaction($stransaction);
             $this->em->persist($sale);

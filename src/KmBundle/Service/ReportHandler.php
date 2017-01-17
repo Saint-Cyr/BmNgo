@@ -64,9 +64,9 @@ class ReportHandler
         return $product;
     }
     
-    public function buildReportAmanyProducts(array $unreportedProducts)
+    public function buildReportAmanyProducts(\DateTime $initialDate, \DateTime $finalDate, array $unreportedProducts)
     {
-        
+        return null;
     }
     
     /*
@@ -95,5 +95,27 @@ class ReportHandler
         );
         
         return $unreportedProducts;
+    }
+    
+    public function getProfitOnFly(array $stransactions)
+    {
+        $profit = null;
+        
+        foreach ($stransactions as $st){
+            $profit = $profit + $st->getProfit();
+        }
+        
+        return $profit;
+    }
+    
+    public function getSaleAmountOnFly(array $stransactions)
+    {
+        $saleAmount = null;
+        
+        foreach ($stransactions as $st){
+            $saleAmount = $saleAmount + $st->getTotalAmount();
+        }
+        
+        return $saleAmount;
     }
 }

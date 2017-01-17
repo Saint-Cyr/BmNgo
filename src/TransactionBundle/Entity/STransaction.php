@@ -125,7 +125,14 @@ class STransaction
      */
     public function getTotalAmount()
     {
-        return $this->totalAmount;
+        $totalAmount = null;
+        
+        foreach ($this->getSales() as $sale){
+            
+            $totalAmount = $totalAmount + $sale->getAmount();
+        }
+        
+        return $totalAmount;
     }
     /**
      * Constructor

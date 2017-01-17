@@ -3,6 +3,10 @@
 namespace TransactionBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
+use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpFoundation\Request;
 
 class STransactionAdminController extends CRUDController
 {
@@ -137,4 +141,50 @@ class STransactionAdminController extends CRUDController
             'object' => $object,
         ), null);
     }
+    
+    public function batchActionReport(ProxyQueryInterface $selectedModelQuery, Request $request = null)
+    {
+        if (!$this->admin->isGranted('EDIT') || !$this->admin->isGranted('DELETE')) {
+            throw new AccessDeniedException();
+        }
+
+        
+        $modelManager = $this->admin->getModelManager();
+
+        $saleTransactions = $selectedModelQuery->execute();
+        
+        //Get the reportHandler service
+        $reportHandler = $this->get('km.report_handler');
+        
+        $totalSaleAmount = $reportHandler->getSaleAmountOnFly($saleTransactions);
+        $totalProfit = $reportHandler->getProfitOnFly($saleTransactions);
+        
+        return $this->render('TransactionBundle:Default:report_b.html.twig', array('saleTransactions' => $saleTransactions,
+                                                                                   'totalSaleAmount' => $totalSaleAmount,
+                                                                                    'totalProfit' => $totalProfit,));
+        
+        //return $this->redirect($this->generateUrl('km_report_b', array('saleTransactions' => $saleTransactions)));
+        // do the merge work here
+        try {
+            foreach ($selectedModels as $selectedModel) {
+                //Generate the report 
+            }
+            
+            $modelManager->update($selectedModel);
+        } catch (\Exception $e) {
+            $this->addFlash('sonata_flash_error', 'flash_batch_activation_error');
+
+            return new RedirectResponse(
+                $this->admin->generateUrl('list', $this->admin->getFilterParameters())
+            );
+        }
+
+        $this->addFlash('sonata_flash_success', $this->get('translator')->trans(' successful operations !'));
+
+        return new RedirectResponse(
+            $this->admin->generateUrl('list', $this->admin->getFilterParameters())
+        );
+    }
+    
+    
 }

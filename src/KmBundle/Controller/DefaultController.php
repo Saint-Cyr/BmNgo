@@ -38,8 +38,13 @@ class DefaultController extends Controller
         //return $this->render('/gentelella/media_gallery.html.twig');
         //return $this->render('/pages/form_buttons.html.twig');
         //return $this->render('/pages/icons.html.twig');
-        //return $this->render('/pages/general_elements.html.twig');
+        //return $this->render('/pages/invoice.html.twig');
         return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions));
+    }
+    
+    public function reportBAction()
+    {
+        return $this->render('TransactionBundle:Default:report_b.html.twig');
     }
     
     public function settingAction()
