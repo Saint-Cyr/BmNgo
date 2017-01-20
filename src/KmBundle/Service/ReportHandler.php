@@ -5,6 +5,7 @@ namespace KmBundle\Service;
 use KmBundle\Entity\Branch;
 use TransactionBundle\Entity\Product;
 use TransactionBundle\Entity\Stock;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class ReportHandler
 {
@@ -29,20 +30,25 @@ class ReportHandler
     public function getReportA(\DateTime $initialDate, \DateTime $finalDate, array $productToBeReported, array $productToBeUnreported)
     {
         $reportedProducts = array();
-        $unreportedProducts = array();
-        
+        //Base on configuration, some product must not be part of the report but for now it's null;
+        $unreportedProducts = $productToBeUnreported;
+        //Group all the reported product before put them in the output variable
+        $temp = array();
         foreach ($productToBeReported as $p){
             //Build the reportA for this particular product and push it in the output variable ($reportedProducts)
-            //$reportedProducts = $this->buildReportAoneProduct($initialDate, $finalDate, $p)
+            $temp[] = $this->buildReportAoneProduct($initialDate, $finalDate, $p);
             //Remove this product from the list of unreportedProduct
-            //$this->removeOneProduct($unreportedProducts, $p);
-            //Remove the products that must not be considered in the report
-            //$this->removeManyProducts($unreportedProducts, $productToBeUnreported);
-            //Build the last column of the table of the report with the unselected products 
-            //(that are not part of $productToBeUnreported)
-            //$reportedProducts['other'] = $this->buildReportAmanyProducts($unreportedProducts);
-            return $reportedProducts;
+            $this->removeOneProduct($unreportedProducts, $p);
         }
+        
+        $reportedProducts['reported'] = $temp;
+        //Remove the products that must not be considered in the report
+        $this->removeManyProducts($unreportedProducts, $productToBeUnreported);
+        //Build the last column of the table of the report with the unselected products 
+        //(that are not part of $productToBeUnreported)
+        $reportedProducts['other'] = $this->buildReportAmanyProducts($initialDate, $finalDate, $unreportedProducts);
+        
+        return $reportedProducts;
     }
     
     public function buildReportAoneProduct(\DateTime $initialDate, \DateTime $finalDate, Product $product)
@@ -64,9 +70,30 @@ class ReportHandler
         return $product;
     }
     
+    /*
+     * @return array of hydrated products with all the nacessary information like amount, profit,...
+     */
     public function buildReportAmanyProducts(\DateTime $initialDate, \DateTime $finalDate, array $unreportedProducts)
     {
-        return null;
+        $results = array();
+        
+        foreach ($unreportedProducts as $up){
+            $sales = $this->em->getRepository('TransactionBundle:Sale')
+                      ->getSaleFromTo($initialDate, $finalDate, $up);
+            
+            $profit = null;
+            $amount = null;
+
+            foreach ($sales as $s){
+                $profit = $profit + $s->getProfit();
+                $amount = $amount + $s->getAmount();
+            }
+
+            $up->setFlyProfit($profit);
+            $up->setFlyAmount($amount);
+        }
+        
+        return $unreportedProducts;
     }
     
     /*

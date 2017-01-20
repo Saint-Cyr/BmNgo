@@ -14,6 +14,10 @@ km_documentation:
     path:    /
     defaults: { _controller: KmBundle:Default:front }
     
+km_report_a:
+    path:    /report_a
+    defaults: { _controller: KmBundle:Default:reportA }
+    
 km_report_b:
     path:    /report_b
     defaults: { _controller: KmBundle:Default:reportB }

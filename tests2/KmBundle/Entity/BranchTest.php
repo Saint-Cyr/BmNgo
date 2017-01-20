@@ -3,7 +3,7 @@
 /*
  * This file is part of Components of KingManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) YAME Group <info@yamegroup.com>
+ * (c) TinzapaTech <mapoukacyr@yahoo.com>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */
@@ -13,7 +13,7 @@ namespace Tests\TransactionBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProductTest extends WebTestCase
+class BranchTest extends WebTestCase
 {
     private $em;
     private $application;
@@ -30,10 +30,16 @@ class ProductTest extends WebTestCase
         $this->saleHandler = $this->application->getKernel()->getContainer()->get('transaction.sale_handler');
     }
     
-    public function testGetProfit()
+    public function testGetAlertStocks()
     {
-        //Get a sale from the fixtures
-        $p = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        //$this->assertEquals($p->getProfit(), 123.0);
+        //Notice that one of the stock is decreasing by a script any time test is running
+        //Get the branch
+        $branch = $this->em->getRepository('KmBundle:Branch')->find(3);
+        //it have to be BATA
+        $this->assertEquals($branch->getName(), 'BATA');
+        //Get all the alertStocks from this branch
+        $alertStocks = $branch->getAlertStocks();
+        $this->assertEquals(count($alertStocks), 4);
+        $this->assertEquals($alertStocks[0]->getName(), 'JUS TOP 1.5 L_B');
     }
 }

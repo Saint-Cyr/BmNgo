@@ -22,8 +22,8 @@ class Category
     private $id;
     
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category", cascade={"persist"}, orphanRemoval=true)
-     * @ORM\OrderBy({"id" = "ASC"})
+     * @ORM\ManyToMany(targetEntity="TransactionBundle\Entity\Product", inversedBy="categories")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $products;
 
@@ -62,17 +62,6 @@ class Category
     public function __construct() {
         $this->setCreatedAt(new \DateTime("now"));
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    public function setProducts($products)
-    {
-        if (count($products) > 0) {
-            foreach ($products as $p) {
-                $this->addProduct($p);
-            }
-        }
-
-        return $this;
     }
     
     public function __toString() {
@@ -128,43 +117,6 @@ class Category
     }
 
     /**
-     * Add product
-     *
-     * @param \TransactionBundle\Entity\Product $product
-     *
-     * @return Category
-     */
-    public function addProduct(\TransactionBundle\Entity\Product $product)
-    {
-        $product->setCategory($this);
-        
-        $this->products->add($product);
-        
-        //$this->products[] = $product;
-        //return $this;
-    }
-
-    /**
-     * Remove product
-     *
-     * @param \TransactionBundle\Entity\Product $product
-     */
-    public function removeProduct(\TransactionBundle\Entity\Product $product)
-    {
-        $this->products->removeElement($product);
-    }
-
-    /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProducts()
-    {
-        return $this->products;
-    }
-
-    /**
      * Set displayed
      *
      * @param boolean $displayed
@@ -186,5 +138,39 @@ class Category
     public function getDisplayed()
     {
         return $this->displayed;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \TransactionBundle\Entity\Product $product
+     *
+     * @return Category
+     */
+    public function addProduct(\TransactionBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \TransactionBundle\Entity\Product $product
+     */
+    public function removeProduct(\TransactionBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

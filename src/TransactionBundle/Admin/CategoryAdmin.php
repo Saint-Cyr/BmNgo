@@ -72,6 +72,9 @@ class CategoryAdmin extends AbstractAdmin
     
     public function preUpdate($category) {
         parent::preUpdate($category);
-        $category->setProducts($category->getProducts());
+        /*foreach ($category->getProducts() as $p){
+            $category->addProduct($p);
+        }*/
+        
     }
 }

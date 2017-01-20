@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class SaleAdmin extends AbstractAdmin
+class CategoryAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -16,9 +16,7 @@ class SaleAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('amount')
-            ->add('stransaction')
-            ->add('profit')
+            ->add('name')
         ;
     }
 
@@ -29,12 +27,9 @@ class SaleAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('stransaction')
-            ->add('product')
-            ->add('amount')
-            ->add('profit')
-            ->add('quantity')
+            ->add('name', null, array('editable' => true))
             ->add('createdAt')
+            ->add('displayed', null, array('editable' => true))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -51,8 +46,10 @@ class SaleAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('product')
-            ->add('quantity', 'integer')
+        ->with('Detail', array('class' => 'col-md-6'))
+            ->add('name')
+            ->add('products')
+        ->end()
         ;
     }
 
@@ -63,7 +60,18 @@ class SaleAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('amount')
+            ->add('name')
+            ->add('createdAt')
         ;
+    }
+    
+    public function prePersist($category) {
+        parent::prePersist($category);
+        $this->preUpdate($category);
+    }
+    
+    public function preUpdate($category) {
+        parent::preUpdate($category);
+        $category->setProducts($category->getProducts());
     }
 }

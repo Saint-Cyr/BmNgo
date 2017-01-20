@@ -35,31 +35,7 @@ class StockHandlerTest extends WebTestCase
      */
     public function testUpdateStock()
     {
-        //Get the product and the stock
-        $product = $this->em->getRepository('TransactionBundle:Product')->find(3);
-        //it have to be Jus Top 0.35 L and it related stock
-        $this->assertEquals($product->getName(), 'Jus Top 0.35 L');
-        //Get the branch
-        $branch = $this->em->getRepository('KmBundle:Branch')->find(3);
-        //it have to be BATA
-        $this->assertEquals($branch->getName(), 'BATA');
-        $stocks = $product->getStocks();
-        //Get the stockHandler service
-        $stockHandler = $this->application->getKernel()->getContainer()->get('km.stock_handler');
         
-        //Case where the quantity of the product is 1
-        $quantity = 1;
-        //Get the initial value of the stock in order to test the change made by the stockHandler service
-        $stock = $this->em->getRepository('TransactionBundle:Stock')->find(1);
-        $stockInitValue  = $stock->getValue();
-        $stockHandler->updateStock($branch, $product, $quantity);
-        $this->assertEquals($stock->getValue(), ($stockInitValue - $quantity));
-        
-        //Case where the quantity of the product is 2
-        $quantity = 2;
-        $stockInitValue  = $stock->getValue();
-        $stockHandler->updateStock($branch, $product, $quantity);
-        $this->assertEquals($stock->getValue(), ($stockInitValue - $quantity));
     }
 }
 

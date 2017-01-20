@@ -53,12 +53,6 @@ class Product
      * @ORM\OneToMany(targetEntity="Stock", mappedBy="product")
      */
     private $stocks;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $category;
 
     /**
      * @var string
@@ -91,14 +85,20 @@ class Product
     /**
      * @var float
      *
-     * @ORM\Column(name="unitPrice", type="float")
+     * @ORM\Column(name="unitPrice", type="float", nullable=true)
      */
     private $unitPrice;
     
     /**
+     * @ORM\ManyToMany(targetEntity="TransactionBundle\Entity\Category", mappedBy="products")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $categories;
+    
+    /**
      * @var float
      *
-     * @ORM\Column(name="WholeSalePrice", type="float")
+     * @ORM\Column(name="WholeSalePrice", type="float", nullable=true)
      */
     private $wholeSalePrice;
     
@@ -282,7 +282,7 @@ class Product
      *
      * @return Product
      */
-    public function setUnitPrice($unitPrice)
+    public function setUnitPrice($unitPrice = null)
     {
         $this->unitPrice = $unitPrice;
 
@@ -330,7 +330,7 @@ class Product
      *
      * @return Product
      */
-    public function setWholeSalePrice($wholeSalePrice)
+    public function setWholeSalePrice($wholeSalePrice = null)
     {
         $this->wholeSalePrice = $wholeSalePrice;
 
@@ -346,36 +346,14 @@ class Product
     {
         return $this->wholeSalePrice;
     }
-
-    /**
-     * Set category
-     *
-     * @param \TransactionBundle\Entity\Category $category
-     *
-     * @return Product
-     */
-    public function setCategory(\TransactionBundle\Entity\Category $category = null)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \TransactionBundle\Entity\Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
+    
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -516,5 +494,39 @@ class Product
     public function getFlyAmount()
     {
         return $this->flyAmount;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \TransactionBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function addCategory(\TransactionBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \TransactionBundle\Entity\Category $category
+     */
+    public function removeCategory(\TransactionBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }

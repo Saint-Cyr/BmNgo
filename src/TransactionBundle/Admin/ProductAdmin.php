@@ -18,7 +18,7 @@ class ProductAdmin extends AbstractAdmin
         $datagridMapper
             ->add('name')
             ->add('barcode')
-            ->add('category')
+            ->add('categories')
             
         ;
     }
@@ -35,7 +35,7 @@ class ProductAdmin extends AbstractAdmin
             ->add('wholeSalePrice', 'decimal', array('editable' => true))
             ->add('profit')
             ->add('totalStock', null, array('label' => 'Total Stock'))
-            ->add('category')
+            ->add('categories')
             ->add('imagePos', null, array('editable' => true))
             ->add('locked', null, array('editable' => true))
             ->add('_action', null, array(
@@ -64,7 +64,7 @@ class ProductAdmin extends AbstractAdmin
         $formMapper
         ->with('General information', array('class' => 'col-md-8'))
             ->add('name')
-            ->add('category');
+            ->add('categories');
             $formMapper->add('barcode', null, array('disabled' => $disabled))
             ->add('file', 'file', array('required' => false))
         ->end()

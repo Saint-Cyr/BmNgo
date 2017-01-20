@@ -89,9 +89,13 @@ class Sale
      *
      * @return Sale
      */
-    public function setAmount()
+    public function setAmount($amount = null)
     {
-        $this->amount = $this->getQuantity() * $this->getProduct()->getUnitPrice();
+        if(!$amount){
+            $this->amount = $this->getQuantity() * $this->getProduct()->getUnitPrice();
+        }else{
+            $this->amount = $amount;
+        }
 
         return $this;
     }

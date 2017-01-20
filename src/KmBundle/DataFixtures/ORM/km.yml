@@ -38,6 +38,37 @@ TransactionBundle\Entity\Product:
         name: Casque MP3 Micro
         unitPrice: 5000
         wholeSalePrice: 3000
+        
+    product8:
+        name: Chemise cartonier
+        unitPrice: 100
+        wholeSalePrice: 75
+        
+    product9:
+        name: Papier carton
+        unitPrice: 100
+        wholeSalePrice: 50
+        
+    product10:
+        name: Sylo
+        unitPrice: 100
+        wholeSalePrice: 40
+        
+    product11:
+        name: Scanner
+        unitPrice: 250
+        wholeSalePrice: 0
+        
+    product12:
+        name: Plastification
+        unitPrice: 250
+        wholeSalePrice: 0
+        
+    product13:
+        name: Photocopy
+        unitPrice: 25
+        wholeSalePrice: 0
+    
 
 TransactionBundle\Entity\Sale:
     sale1:
@@ -115,6 +146,54 @@ TransactionBundle\Entity\Sale:
         #amount: 10.23
         stransaction: '@stransaction2'
         createdAt: <(new \DateTime('01-01-2010'))>
+        
+    sale13:
+        product: '@product8'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction15'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale14:
+        product: '@product9'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale15:
+        product: '@product10'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale16:
+        product: '@product8'
+        quantity: 1
+        #amount: 10.23
+        stratedAt: <(new \DateTime('01-01-1999'))>
+        
+    sale17:
+        product: '@product9'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale18:
+        product: '@product10'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale19:
+        product: '@product11'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
 
 TransactionBundle\Entity\STransaction:
     stransaction1:
@@ -172,7 +251,15 @@ TransactionBundle\Entity\STransaction:
     #Dec
     stransaction14:
         totalAmount: 1200
-        branch: '@branch2'
+        branch: '@branch3'
+    
+    stransaction15:
+        totalAmount: 1200
+        branch: '@branch3'
+        
+    stransaction16:
+        totalAmount: 1200
+        branch: '@branch3'
 
 KmBundle\Entity\Branch:
     branch1:

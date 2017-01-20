@@ -22,8 +22,8 @@ class Category
     private $id;
     
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category", cascade={"persist", "remove", "all"})
-     * 
+     * @ORM\ManyToMany(targetEntity="TransactionBundle\Entity\Product", inversedBy="categories")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $products;
 
@@ -37,7 +37,7 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="displayed", type="boolean")
+     * @ORM\Column(name="displayed", type="boolean", nullable=true)
      */
     private $displayed;
 
@@ -61,6 +61,7 @@ class Category
     
     public function __construct() {
         $this->setCreatedAt(new \DateTime("now"));
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function __toString() {
@@ -116,36 +117,26 @@ class Category
     }
 
     /**
-     * Add product
+     * Set displayed
      *
-     * @param \TransactionBundle\Entity\Product $product
+     * @param boolean $displayed
      *
      * @return Category
      */
-    public function addProduct(\TransactionBundle\Entity\Product $product)
+    public function setDisplayed($displayed)
     {
-        $this->products[] = $product;
+        $this->displayed = $displayed;
 
         return $this;
     }
 
     /**
-     * Remove product
+     * Get displayed
      *
-     * @param \TransactionBundle\Entity\Product $product
+     * @return boolean
      */
-    public function removeProduct(\TransactionBundle\Entity\Product $product)
+    public function getDisplayed()
     {
-        $this->products->removeElement($product);
-    }
-
-    /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProducts()
-    {
-        return $this->products;
+        return $this->displayed;
     }
 }

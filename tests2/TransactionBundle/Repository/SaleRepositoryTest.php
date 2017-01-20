@@ -3,7 +3,7 @@
 /*
  * This file is part of Components of KingManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) YAME Group <info@yamegroup.com>
+ * (c) TinzapaTech <mapoukacyr@yahoo.fr>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */
@@ -13,7 +13,7 @@ namespace Tests\TransactionBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProductTest extends WebTestCase
+class SaleRepositoryTest extends WebTestCase
 {
     private $em;
     private $application;
@@ -27,13 +27,22 @@ class ProductTest extends WebTestCase
         
         $this->application = new Application(static::$kernel);
         $this->em = $this->application->getKernel()->getContainer()->get('doctrine.orm.entity_manager');
-        $this->saleHandler = $this->application->getKernel()->getContainer()->get('transaction.sale_handler');
+        $this->reportHandler = $this->application->getKernel()->getContainer()->get('km.report_handler');
     }
     
-    public function testGetProfit()
+    public function testGetSaleFromTo()
     {
-        //Get a sale from the fixtures
-        $p = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        //$this->assertEquals($p->getProfit(), 123.0);
+        //Parameters
+        $initialDate = new \DateTime('01-01-2008');
+        $finalDate = new \DateTime('01-01-2009');
+        $product = $this->em->getRepository('TransactionBundle:Product')->find(1);
+        
+        $sales = $this->em->getRepository('TransactionBundle:Sale')
+                          ->getSaleFromTo($initialDate, $finalDate, $product);
+        $this->assertEquals(count($sales), 2);
+        
+        foreach ($sales as $s){
+            $this->assertEquals($s->getProduct()->getName(), 'Nexcare');
+        }
     }
 }

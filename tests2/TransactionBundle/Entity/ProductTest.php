@@ -34,6 +34,6 @@ class ProductTest extends WebTestCase
     {
         //Get a sale from the fixtures
         $p = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        //$this->assertEquals($p->getProfit(), 123.0);
+        $this->assertEquals($p->getProfit(), 123.0);
     }
 }

@@ -3,17 +3,16 @@
 /*
  * This file is part of Components of KingManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) YAME Group <info@yamegroup.com>
+ * (c) TizampaTech <mapoukacyr@yahoo.fr>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */
-
 namespace Tests\TransactionBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProductTest extends WebTestCase
+class SaleTest extends WebTestCase
 {
     private $em;
     private $application;
@@ -32,8 +31,18 @@ class ProductTest extends WebTestCase
     
     public function testGetProfit()
     {
-        //Get a sale from the fixtures
-        $p = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        //$this->assertEquals($p->getProfit(), 123.0);
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
+        $this->assertEquals($sale->getProfit(), 123);
+        
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(12);
+        $this->assertEquals($sale->getProfit(), 4000);
+        
+        
+    }
+    
+    public function testGetAmount()
+    {
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
+        $this->assertEquals($sale->getAmount(), 130);
     }
 }

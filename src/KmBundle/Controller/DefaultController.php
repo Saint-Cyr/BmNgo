@@ -42,6 +42,11 @@ class DefaultController extends Controller
         return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions));
     }
     
+    public function reportAAction()
+    {
+        return $this->render('TransactionBundle:Default:report_a.html.twig');
+    }
+    
     public function reportBAction()
     {
         return $this->render('TransactionBundle:Default:report_b.html.twig');

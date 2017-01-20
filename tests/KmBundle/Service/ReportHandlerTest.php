@@ -32,113 +32,77 @@ class ReportHandlerTest extends WebTestCase
     
     public function testGetReportA()
     {
-        //Parameters
-        $initialDate = new \DateTime('01-01-17');
-        $finalDate = new \DateTime('15-01-17');
+        $initDate = new \DateTime('01-01-2008');
+        $finitDate = new \DateTime('01-01-2011');
         
-        $result1 = $this->reportHandler->getReportA($initialDate, $finalDate, [], []);
-        $this->assertEquals($result1, '');
+        $category1 = $this->em->getRepository('TransactionBundle:Category')->find(1);
+        $category2 = $this->em->getRepository('TransactionBundle:Category')->find(2);
+        
+        $this->assertEquals($category1->getName(), 'Boutique');
+        $this->assertEquals($category2->getName(), 'Secretariat');
+        //As doctrine array is not supported we have to build a standard array
+        $boutique = array();
+        
+        foreach ($category1->getProducts() as $product){
+            $boutique[] = $product;
+        }
+        
+        $secretariat = array();
+        
+        foreach ($category2->getProducts() as $product){
+            $secretariat[] = $product;
+        }
+        
+        $outPut1 = $this->reportHandler->getReportA($initDate, $finitDate, $secretariat, $boutique);
+        //There are 1 array for reported product / services like Plastification, Scanner, ...and 1 array for Boutique (other)
+        $this->assertEquals(count($outPut1), 2);
+        //There are only 3 products in Boutique
+        $this->assertEquals(count($outPut1['other']), 3);
+        //Check each one of the product of the shop
+        $this->assertEquals($outPut1['other'][0]->getName(), 'CD Simple');
+        $this->assertEquals($outPut1['other'][1]->getName(), 'DVD');
+        $this->assertEquals($outPut1['other'][2]->getName(), 'Manette 4500');
+        //Check sale & profit amount for each one
+        $this->assertEquals($outPut1['other'][0]->getFlyAmount(), 150);
+        $this->assertEquals($outPut1['other'][0]->getFlyProfit(), 50);
+        $this->assertEquals($outPut1['other'][1]->getFlyAmount(), 900);
+        $this->assertEquals($outPut1['other'][1]->getFlyProfit(), 450);
+        $this->assertEquals($outPut1['other'][2]->getFlyAmount(), 4500);
+        $this->assertEquals($outPut1['other'][2]->getFlyProfit(), 2500);
+        
+        //There are six services in Secretariat
+        $this->assertEquals(count($outPut1['reported']), 6);
+        //Check each one of the 6 service of the secretariat
+        $this->assertEquals($outPut1['reported'][0]->getName(), 'Plastification');
+        $this->assertEquals($outPut1['reported'][1]->getName(), 'Scanner');
+        $this->assertEquals($outPut1['reported'][2]->getName(), 'Photo44');
+        $this->assertEquals($outPut1['reported'][3]->getName(), 'Photocopy');
+        $this->assertEquals($outPut1['reported'][4]->getName(), 'Internet');
+        $this->assertEquals($outPut1['reported'][5]->getName(), 'Serigraphy');
+        //Check sale & profit amount for each one
+        $this->assertEquals($outPut1['reported'][0]->getFlyAmount(), 750);
+        $this->assertEquals($outPut1['reported'][0]->getFlyProfit(), 0);
+        
     }
     
     public function testBuildReportAoneProduct()
     {
-        //Parameters
-        $initialDate = new \DateTime('01-01-2008');
-        $finalDate = new \DateTime('01-01-2009');
-        $product = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        $product = $this->reportHandler->buildReportAoneProduct($initialDate, $finalDate, $product);
         
-        $this->assertEquals($product->getFlyProfit(), 246);
-        $this->assertEquals($product->getFlyAmount(), 260);
     }
     
     public function testBuildReportAmanyProducts()
     {
-        //Parameters
-        $initialDate = new \DateTime('01-01-2008');
-        $finalDate = new \DateTime('01-01-2009');
-        $product1 = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        $product2 = $this->em->getRepository('TransactionBundle:Product')->find(2);
         
-        $unreportedProduct [] = $product1;
-        $unreportedProduct [] = $product2;
-        
-        //this is the set of some item for exple: Shop
-        $shop = $this->reportHandler->buildReportAmanyProducts($initialDate, $finalDate, $unreportedProduct);
-        
-    }
-    
-    public function testRemoveOneProduct()
-    {
-        //List of product that must not be reported
-        $p1 = new Product();
-        $p2 = new Product();
-        $p3 = new Product();
-        $p3->setBarcode('1');
-        
-        $unreportedProducts = array($p1, $p2, $p3);
-        $toBeRemoved = new Product;
-        $toBeRemoved->setBarcode('1');
-        $result1 = $this->reportHandler->removeOneProduct($unreportedProducts, $toBeRemoved);
-        $this->assertEquals($result1, array($p1, $p2));
-    }
-    
-    public function testRemoveManyProducts()
-    {
-        //List of product that must not be reported
-        $p1 = new Product();
-        $p2 = new Product();
-        $p3 = new Product();
-        
-        $p1->setBarcode('1');
-        $p2->setBarcode('2');
-        $p3->setBarcode('3');
-        
-        //List of product that must not be reported
-        $p4 = new Product();
-        $p5 = new Product();
-        $p6 = new Product();
-        
-        $p4->setBarcode('4');
-        $p5->setBarcode('5');
-        $p6->setBarcode('6');
-        
-        $unreportedProducts = array($p1, $p2, $p3, $p4, $p5, $p6);
-        
-        $productToBeUnreported = array($p4, $p5, $p6);
-        
-        $result1 = $this->reportHandler->removeManyProducts($unreportedProducts, $productToBeUnreported);
-        $this->assertEquals($result1, array($p1, $p2, $p3));
     }
     
     public function testGetProfitOnFly()
     {
-        $stransaction1 = $this->em->getRepository('TransactionBundle:STransaction')->findAll();
-        $result1 = $this->reportHandler->getProfitOnFly($stransaction1);
-        $this->assertEquals($result1, 5249.0);
         
-        $stransaction1 = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
-        //$stransaction2 = $this->em->getRepository('TransactionBundle:STransaction')->find(3);
-        //$stransaction3 = $this->em->getRepository('TransactionBundle:STransaction')->find(4);
-        
-        $stransactions [] = $stransaction1;
-        //$stransactions [] = $stransaction2;
-        //$stransactions [] = $stransaction3;
-        
-        $result1 = $this->reportHandler->getProfitOnFly($stransactions);
-        $this->assertEquals($result1, 4000);
     }
     
     public function testGetSaleAmountOnFly()
     {
-        $stransaction1 = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
-        //$stransaction2 = $this->em->getRepository('TransactionBundle:STransaction')->find(3);
-        //$stransaction3 = $this->em->getRepository('TransactionBundle:STransaction')->find(4);
         
-        $stransactions [] = $stransaction1;
-        
-        $result1 = $this->reportHandler->getSaleAmountOnFly($stransactions);
-        $this->assertEquals($result1, 10000);
     }
 }
 

@@ -13,7 +13,7 @@ namespace Tests\TransactionBundle\Service;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProductTest extends WebTestCase
+class STransactionTest extends WebTestCase
 {
     private $em;
     private $application;
@@ -32,8 +32,14 @@ class ProductTest extends WebTestCase
     
     public function testGetProfit()
     {
-        //Get a sale from the fixtures
-        $p = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        //$this->assertEquals($p->getProfit(), 123.0);
+        //Get a STransaction from the fixtures
+        $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(1);
+        //$this->assertEquals($STransaction->getProfit(), 1230.00);
+    }
+    
+    public function testGetTotalAmount()
+    {
+        $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
+        $this->assertEquals($STransaction->getTotalAmount(), 10000);
     }
 }
