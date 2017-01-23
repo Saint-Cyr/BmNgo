@@ -19,6 +19,7 @@ class StockAdmin extends AbstractAdmin
             ->add('product.barcode')
             ->add('product')
             ->add('value')
+            ->add('tracked')
             ->add('alertLevel')
             ->add('branch')
             ->add('name')
@@ -31,11 +32,14 @@ class StockAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('name')
+            ->add('tracked', null, array('editable' => true))
             ->add('branch')
             ->add('value', null, array('editable' => true))
             ->add('alertLevel', null, array('editable' => true))
             ->add('product')
+            ->add('stocked')
+            ->add('destocked')
+            ->add('updateOther')
             ->add('alertStockCreatedAt')
             ->add('_action', null, array(
                 'actions' => array(
@@ -63,6 +67,10 @@ class StockAdmin extends AbstractAdmin
             ->add('alertLevel')
             ->add('branch')
          ->end()
+         ->with('Extra', array('class' => 'col-md-4'))
+            ->add('tracked')
+            ->add('alertLevel') 
+         ->end()
         ;
     }
     
@@ -86,6 +94,12 @@ class StockAdmin extends AbstractAdmin
                 'translation_domain' => 'SonataAdminBundle',
                 'ask_confirmation' => true
             );
+            
+            $actions['UntrackTrack'] = array(
+                'label' => 'Untrack/Track',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
 
         }
 
@@ -98,16 +112,61 @@ class StockAdmin extends AbstractAdmin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
-            ->add('createdAt')
+        ->with('Detail', array('class' => 'col-md-6'))
+            ->add('value', null, array('label' => 'Qantity:', 'required' => false))
+            ->add('name', null, array('label' => 'Tag Name'))
+         ->end()
+        
+         ->with('Extra', array('class' => 'col-md-4'))
+            ->add('product')
+            ->add('alertLevel')
+            ->add('branch')
+         ->end()
         ;
     }
     
-    public function preValidate($object) {
+    public function preValidate($object) 
+    {
         parent::preValidate($object);
         //Set the default value of the quantity to 0 if not input by the user
         if(!$object->getValue()){
             $object->setValue(0);
         }
+    }
+    
+    public function preUpdate($newObject) {
+        parent::preUpdate($newObject);
+        //$em = $this->getModelManager()->getEntityManager($this->getClass());
+        $em = $this->getConfigurationPool()->getContainer()->get('doctrine')->getManager();
+        $user = $this->getConfigurationPool()->getContainer()->get('security.token_storage')->getToken()->getUser();
+        
+        $originalObject = $em->getUnitOfWork()->getOriginalEntityData($newObject);
+        //var_dump($originalObject['value']);exit;
+        //Case stock is added
+        if($newObject->getValue() > $originalObject['value']){
+            $newObject->setStocked(true);
+            $newObject->setStockedAt(new \DateTime("now"));
+            $newObject->setStockedValue($newObject->getValue() - $originalObject['value']);
+            
+            if($user->getName()){
+                $newObject->setUpdateOther($user->getName());
+            }else{
+                $newObject->setUpdateOther($user->getUsername());
+            }
+            
+        }
+        //Case of destokation
+        if($newObject->getValue() < $originalObject['value']){
+            $newObject->setDestocked(true);
+            $newObject->setDestockedAt(new \DateTime("now"));
+            $newObject->setDestockedValue($originalObject['value'] - $newObject->getValue());
+            
+            if($user->getName()){
+                $newObject->setUpdateOther($user->getName());
+            }else{
+                $newObject->setUpdateOther($user->getUsername());
+            }
+        }
+        
     }
 }

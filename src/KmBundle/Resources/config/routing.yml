@@ -22,6 +22,10 @@ km_report_b:
     path:    /report_b
     defaults: { _controller: KmBundle:Default:reportB }
     
+km_validate_update_stock:
+    path: /validate_update_stock/{update}
+    defaults: { _controller: KmBundle:Default:validateUpdateStock }
+    
 sales: 
   type: rest
   resource:     "TransactionBundle:Api"

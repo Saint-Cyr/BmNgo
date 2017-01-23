@@ -1,0 +1,97 @@
+<div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+            <li class="dropdown messages-menu">
+              <!-- Menu toggle button -->
+              
+            </li>
+            <!-- /.messages-menu -->
+            {% if stocked|length != 0 %}
+            <!-- Notifications Menu -->
+            <li class="dropdown notifications-menu">
+              <!-- Menu toggle button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-success">+{{ stocked|length }}</span>
+              </a>
+              <ul class="dropdown-menu">
+                
+                <li>
+                  <!-- Inner Menu: contains the notifications -->
+                  <ul class="menu">
+                    {% for stock in stocked %}
+                    <li><!-- start notification -->
+                      <a href="#">
+                          <span class="label label-success">+{{ stock.stockedValue }}</span> {{ stock.product.name }}<br>
+                        <i style="padding-left: 45px;">{{ stock.stockedAt|ago }}</i> <b>- {{ stock.updateOther }} -</b> 
+                      </a>
+                    </li>
+                    {% endfor %}
+                    <!-- end notification -->
+                  </ul>
+                </li>
+                    <li class="footer">
+                        <a href="{{ path('km_validate_update_stock', {'update':1}) }}">
+                            <style>
+                                .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                                    background-color: #5e388f !important;
+                                }
+                            </style>
+                            <button class="btn btn-primary" type="submit" name="btn_create_and_create">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                Seen
+                            </button>
+                        </a>
+                    </li>
+                
+              </ul>
+            </li>
+            {% endif %}
+            {% if destocked|length != 0 %}
+            <li class="dropdown notifications-menu">
+              <!-- Menu toggle button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-danger">-{{ destocked|length }}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <!-- Inner Menu: contains the notifications -->
+                  <ul class="menu">
+                    {% for stock in destocked %}
+                        <li><!-- start notification -->
+                          <a href="#">
+                              <span class="label label-danger">-{{ stock.destockedValue }}</span> {{ stock.product.name }}<br>
+                              <i style="padding-left: 45px;">{{ stock.destockedAt | ago }}</i> <b>- {{ stock.updateOther }} -</b> 
+                          </a>
+                        </li>
+                    {% endfor %}
+                    <!-- end notification -->
+                  </ul>
+                </li>
+                <li class="footer">
+                    <a href="{{ path('km_validate_update_stock', {'update':0}) }}">
+                            <style>
+                                .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                                    background-color: #5e388f !important;
+                                }
+                            </style>
+                            <button class="btn btn-primary" type="submit" name="btn_create_and_create">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                Seen
+                            </button>
+                    </a>
+                </li>
+              </ul>
+            </li>
+            {% endif %}
+            <!-- Tasks Menu -->
+            <li class="dropdown tasks-menu">
+              <!-- Menu Toggle Button -->
+              
+              
+            </li>
+            <!-- User Account Menu -->
+            
+          </ul>
+        </div>

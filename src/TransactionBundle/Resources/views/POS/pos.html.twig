@@ -20,6 +20,7 @@
 
   <link rel="stylesheet" href="{{ asset('style.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
+  <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
   <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
   <script>
       // Code goes here
@@ -35,7 +36,7 @@ app.controller('POSController', function ($scope, $http)
     var data = {
         {% for p in products %}
             {% for stock in app.user.branch.stocks %}
-                        {% if stock.product.id == p.id %}
+                        {% if stock.product.id == p.id and stock.tracked %}
                             "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24)|e('js')|raw }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
                         {% endif %}
             {% endfor %} 
@@ -344,6 +345,27 @@ app.controller('POSController', function ($scope, $http)
 
 <body data-ng-controller="POSController">
   <div class="container">
+    <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+        
+        {{ render(controller('KmBundle:Default:stockUpdate')) }}
+        <!-- /.navbar-custom-menu -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
     <br>
     <div class="row">
       <div class="col-md-6">

@@ -124,21 +124,21 @@ TransactionBundle\Entity\Sale:
         quantity: 1
         amount: 500
         stransaction: '@stransaction2'
-        #createdAt: <(new \DateTime('01-01-2011'))>
+        createdAt: <(new \DateTime('01-01-2011'))>
         
     sale8:
         product: '@product5'
         quantity: 1
         amount: 1000
         stransaction: '@stransaction2'
-        #createdAt: <(new \DateTime('01-01-2011'))>
+        createdAt: <(new \DateTime('01-01-2011'))>
         
     sale9:
         product: '@product5'
         quantity: 1
         amount: 2000
         stransaction: '@stransaction2'
-        #createdAt: <(new \DateTime('01-01-2011'))>
+        createdAt: <(new \DateTime('01-01-2011'))>
         
     sale10:
         product: '@product6'
@@ -158,9 +158,41 @@ TransactionBundle\Entity\Sale:
 UserBundle\Entity\User:
     super-admin:
         username: super-admin
+        name: Saint-Cyr
         branch: "@branch1"
         email: mapoukacyr@yahoo.fr
         plainPassword: test
         enabled: true
         roles: [ROLE_SUPER_ADMIN]
+        
+TransactionBundle\Entity\Stock:
+    stock1:
+        value: 10
+        alertLevel: 3
+        product: "@product1"
+        branch: "@branch1"
+        tracked: true
+        stocked: true
+        
+    stock2:
+        value: 0
+        alertLevel: 1
+        product: "@product2"
+        branch: "@branch1"
+        tracked: true
+        destocked: true
+        
+    stock3:
+        value: -1
+        alertLevel: 2
+        product: "@product3"
+        branch: "@branch1"
+        tracked: true
+        
+    stock4:
+        value: null
+        alertLevel: null
+        product: "@product4"
+        branch: "@branch1"
+        tracked: "false"
         

@@ -1,5 +1,8 @@
+<link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
+
 {% for branch in branches %}
-<li role="presentation" class="dropdown">
+
+<li class="dropdown notifications-menu">
     {% if branch.alertStocks|length > 0 %}
         <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-database"></i>
@@ -11,10 +14,13 @@
             <span class="badge bg-green">!</span>
         </a>
     {% endif %}
-    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-        {% for alertStock in branch.alertStocks|sortbyfield('value') %}
-                <li>
-                    <a>
+    <ul class="dropdown-menu">
+      <li>
+        <!-- Inner Menu: contains the notifications -->
+        <ul class="menu">
+          {% for alertStock in branch.alertStocks|sortbyfield('value') %}
+              <li>
+                    <a href="{{ path('admin_transaction_stock_edit', {'id': alertStock.id}) }}">
                         {% if alertStock.value <= 0 %}
                             
                                 <style>
@@ -31,8 +37,9 @@
                                 
                                 <span class="badge bg-red">{{ alertStock.value }}</span>
                                 
-                                <span {% if alertStock.value != 0 %}style="font-size: 14px; font-weight: bold; text-decoration: blink; color: red;"{% endif %}>{{ alertStock.product }} </span><br>
-                                <span class="time">{{ alertStock.alertStockCreatedAt|ago }}</span>
+                                <span {% if alertStock.value != 0 %}style="font-size: 14px; font-weight: bold; text-decoration: blink; color: red;"{% endif %}>{{ alertStock.product }} </span>
+                                <br>
+                                <span class="time"  style="padding-left: 5px; font-style: italic;">{{ alertStock.alertStockCreatedAt|ago }}</span>
                             </span>
                         {% elseif alertStock.value <= 2 %}
                             <span class="badge bg-orange">{{ alertStock.value }}</span>
@@ -43,52 +50,23 @@
                         {% else %}
                             <span class="badge bg">{{ alertStock.value }}</span>
                             <span>
-                                <span style="font-size: 14px;"> {{ alertStock.product }} </span><br>
+                              <span style="font-size: 14px;"> {{ alertStock.product }} </span><br>
                               <span class="time">{{ alertStock.alertStockCreatedAt|ago }}</span>
                             </span>
                         {% endif %}
                   </a>
                 </li>
-            {% endfor %}
-            
-            <!--<li>
-              <a>
-                <span class="badge bg-orange">1</span>
-                <span>
-                    <span style="font-size: 14px;"> Manette Playstation </span><br>
-                  <span class="time">45 mins ago</span>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a>
-                <span class="badge">3</span>
-                <span>
-                    <span style="font-size: 14px;">RAM format A4 </span><br>
-                  <span class="time">45 mins ago</span>
-                </span>
-              </a>
-            </li>
-            <li>
-              <a>
-                <span class="badge">4</span>
-                <span>
-                  <span style="font-size: 14px;">Casque MP3 </span><br>
-                  <span class="time">1 day ago</span>
-                </span>
-              </a>
-            </li>-->
-            <li>
-              <div class="text-center">
-                <a>
-                  <strong>All - {{ branch }}</strong>
-                  <i class="fa fa-angle-right"></i>
-                </a>
-              </div>
-            </li>
-      </ul>   
+           {% endfor %}
+          
+          
+          <!-- end notification -->
+        </ul>
+      </li>
+      <li class="footer"><a href="#"><span style="font-weight: bold;">{{ branch }}</span></a></li>
+    </ul>
 </li>
 {% endfor %}
+
 <!--<li role="presentation" class="dropdown">
     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
         <i class="fa fa-database"></i>

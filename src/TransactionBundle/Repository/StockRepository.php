@@ -10,4 +10,31 @@ namespace TransactionBundle\Repository;
  */
 class StockRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getStocked($branch)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+            ->from('TransactionBundle:Stock', 's')
+            ->where('s.stocked = :stocked')
+            ->andWhere('s.branch = :branch')
+            ->setParameter('branch', $branch)
+            ->setParameter('stocked', true);
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
+    
+    public function getDestocked($branch)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+            ->from('TransactionBundle:Stock', 's')
+            ->where('s.destocked = :destocked')
+            ->andWhere('s.branch = :branch')
+            ->setParameter('branch', $branch)
+            ->setParameter('destocked', true);
+
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
 }

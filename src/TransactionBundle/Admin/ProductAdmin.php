@@ -102,7 +102,7 @@ class ProductAdmin extends AbstractAdmin
     {
         // retrieve the default batch actions (currently only delete)
         $actions = parent::getBatchActions();
-
+       
         if (
           $this->hasRoute('edit') && $this->isGranted('EDIT') &&
           $this->hasRoute('delete') && $this->isGranted('DELETE')

@@ -27,28 +27,62 @@ class ReportHandler
      * it build a table with a flexible number of culumn where each culumn can represent a product or a set of
      * product. See the Super-admin Guid for more information
      */
-    public function getReportA(\DateTime $initialDate, \DateTime $finalDate, array $productToBeReported, array $productToBeUnreported)
+    public function getReportA(\DateTime $initialDate, \DateTime $finalDate, array $productToBeReported = null, array $productToBeUnreported = null)
     {
         $reportedProducts = array();
         //Base on configuration, some product must not be part of the report but for now it's null;
         $unreportedProducts = $productToBeUnreported;
         //Group all the reported product before put them in the output variable
         $temp = array();
-        foreach ($productToBeReported as $p){
-            //Build the reportA for this particular product and push it in the output variable ($reportedProducts)
-            $temp[] = $this->buildReportAoneProduct($initialDate, $finalDate, $p);
-            //Remove this product from the list of unreportedProduct
-            $this->removeOneProduct($unreportedProducts, $p);
+        if($productToBeReported){
+            foreach ($productToBeReported as $p){
+                //Build the reportA for this particular product and push it in the output variable ($reportedProducts)
+                $temp[] = $this->buildReportAoneProduct($initialDate, $finalDate, $p);
+                //Remove this product from the list of unreportedProduct
+                $this->removeOneProduct($unreportedProducts, $p);
+            }
+        }else{
+            $temp = null;
         }
-        
-        $reportedProducts['reported'] = $temp;
+        //Build the total for sale and profit for both E1 & E2
+        $reportedProducts['E2_SALE'] = $this->getTotalSale($temp);
+        $reportedProducts['E2_PROFIT'] = $this->getTotalProfit($temp);
+        $reportedProducts['E2'] = $temp;
         //Remove the products that must not be considered in the report
         $this->removeManyProducts($unreportedProducts, $productToBeUnreported);
         //Build the last column of the table of the report with the unselected products 
         //(that are not part of $productToBeUnreported)
-        $reportedProducts['other'] = $this->buildReportAmanyProducts($initialDate, $finalDate, $unreportedProducts);
+        $reportedProducts['E1'] = $this->buildReportAmanyProducts($initialDate, $finalDate, $unreportedProducts);
+        $reportedProducts['E1_SALE'] = $this->getTotalSale($reportedProducts['E1']);
+        $reportedProducts['E1_PROFIT'] = $this->getTotalProfit($reportedProducts['E1']);
         
         return $reportedProducts;
+    }
+    
+    public function getTotalSale($products)
+    {
+        $sale = null;
+        if($products){
+            
+            foreach($products as $p){
+                $sale = $sale + $p->getFlyAmount();
+            }
+        }
+        
+        return $sale;
+    }
+    
+    public function getTotalProfit($products)
+    {
+        $profit = null;
+        if($products){
+            
+            foreach($products as $p){
+                $profit = $profit + $p->getFlyProfit();
+            }
+        }
+        
+        return $profit;
     }
     
     public function buildReportAoneProduct(\DateTime $initialDate, \DateTime $finalDate, Product $product)
@@ -73,25 +107,27 @@ class ReportHandler
     /*
      * @return array of hydrated products with all the nacessary information like amount, profit,...
      */
-    public function buildReportAmanyProducts(\DateTime $initialDate, \DateTime $finalDate, array $unreportedProducts)
+    public function buildReportAmanyProducts(\DateTime $initialDate, \DateTime $finalDate, array $unreportedProducts = null)
     {
         $results = array();
-        
-        foreach ($unreportedProducts as $up){
-            $sales = $this->em->getRepository('TransactionBundle:Sale')
-                      ->getSaleFromTo($initialDate, $finalDate, $up);
-            
-            $profit = null;
-            $amount = null;
+        if($unreportedProducts){
+            foreach ($unreportedProducts as $up){
+                $sales = $this->em->getRepository('TransactionBundle:Sale')
+                          ->getSaleFromTo($initialDate, $finalDate, $up);
 
-            foreach ($sales as $s){
-                $profit = $profit + $s->getProfit();
-                $amount = $amount + $s->getAmount();
+                $profit = null;
+                $amount = null;
+
+                foreach ($sales as $s){
+                    $profit = $profit + $s->getProfit();
+                    $amount = $amount + $s->getAmount();
+                }
+
+                $up->setFlyProfit($profit);
+                $up->setFlyAmount($amount);
             }
-
-            $up->setFlyProfit($profit);
-            $up->setFlyAmount($amount);
         }
+        
         
         return $unreportedProducts;
     }
@@ -99,11 +135,14 @@ class ReportHandler
     /*
      * Remove a product in the array of products
      */
-    public function removeOneProduct(array $unreportedProducts, Product $product)
+    public function removeOneProduct(array $unreportedProducts = null, Product $product)
     {
-        foreach ($unreportedProducts as $key => $value){
-            if($value == $product){
-                array_splice($unreportedProducts, $key, 1);
+        if($unreportedProducts){
+            
+            foreach ($unreportedProducts as $key => $value){
+                if($value == $product){
+                    array_splice($unreportedProducts, $key, 1);
+                }
             }
         }
         
@@ -113,13 +152,16 @@ class ReportHandler
     /*
      * Remove a set of product from the list of unreported products
      */
-    public function removeManyProducts(array $unreportedProducts, array $productsToBeUnreported)
-    {   
-        $unreportedProducts = array_udiff($unreportedProducts, $productsToBeUnreported,
+    public function removeManyProducts(array $unreportedProducts = null, array $productsToBeUnreported = null)
+    {
+        if($unreportedProducts){
+            
+            $unreportedProducts = array_udiff($unreportedProducts, $productsToBeUnreported,
                 function($object_a, $object_b){
                     return $object_a->getBarcode() - $object_b->getBarcode();
                 }
-        );
+            );
+        }
         
         return $unreportedProducts;
     }

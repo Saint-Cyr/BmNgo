@@ -31,9 +31,51 @@ class Stock
     /**
      * @var string
      *
-     * @ORM\Column(name="value", type="integer")
+     * @ORM\Column(name="updateOther", type="string", length=255, nullable=true)
+     */
+    private $updateOther;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="value", type="integer", nullable=true)
      */
     private $value;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="stockedValue", type="integer", nullable=true)
+     */
+    private $stockedValue;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destockedValue", type="integer", nullable=true)
+     */
+    private $destockedValue;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="stocked", type="boolean", nullable=true)
+     */
+    private $stocked;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="tracked", type="boolean", nullable=true)
+     */
+    private $tracked;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="destocked", type="boolean", nullable=true)
+     */
+    private $destocked;
     
     /**
      * @var string
@@ -60,6 +102,20 @@ class Stock
      * @ORM\Column(name="createdAt", type="datetime")
      */
     private $createdAt;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="stockedAt", type="datetime", nullable=true)
+     */
+    private $stockedAt;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="destockedAt", type="datetime", nullable=true)
+     */
+    private $destockedAt;
     
     /**
      * @var \DateTime
@@ -276,5 +332,207 @@ class Stock
     public function getAlertStockCreatedAt()
     {
         return $this->alertStockCreatedAt;
+    }
+
+    /**
+     * Set stocked
+     *
+     * @param boolean $stocked
+     *
+     * @return Stock
+     */
+    public function setStocked($stocked)
+    {
+        $this->stocked = $stocked;
+
+        return $this;
+    }
+
+    /**
+     * Get stocked
+     *
+     * @return boolean
+     */
+    public function getStocked()
+    {
+        return $this->stocked;
+    }
+
+    /**
+     * Set destocked
+     *
+     * @param boolean $destocked
+     *
+     * @return Stock
+     */
+    public function setDestocked($destocked)
+    {
+        $this->destocked = $destocked;
+
+        return $this;
+    }
+
+    /**
+     * Get destocked
+     *
+     * @return boolean
+     */
+    public function getDestocked()
+    {
+        return $this->destocked;
+    }
+
+    /**
+     * Set tracked
+     *
+     * @param boolean $tracked
+     *
+     * @return Stock
+     */
+    public function setTracked($tracked)
+    {
+        $this->tracked = $tracked;
+
+        return $this;
+    }
+
+    /**
+     * Get tracked
+     *
+     * @return boolean
+     */
+    public function isTracked()
+    {
+        return $this->tracked;
+    }
+
+    /**
+     * Set updateOther
+     *
+     * @param string $updateOther
+     *
+     * @return Stock
+     */
+    public function setUpdateOther($updateOther)
+    {
+        $this->updateOther = $updateOther;
+
+        return $this;
+    }
+
+    /**
+     * Get updateOther
+     *
+     * @return string
+     */
+    public function getUpdateOther()
+    {
+        return $this->updateOther;
+    }
+
+    /**
+     * Get tracked
+     *
+     * @return boolean
+     */
+    public function getTracked()
+    {
+        return $this->tracked;
+    }
+
+    /**
+     * Set stockedValue
+     *
+     * @param integer $stockedValue
+     *
+     * @return Stock
+     */
+    public function setStockedValue($stockedValue)
+    {
+        $this->stockedValue = $stockedValue;
+
+        return $this;
+    }
+
+    /**
+     * Get stockedValue
+     *
+     * @return integer
+     */
+    public function getStockedValue()
+    {
+        return $this->stockedValue;
+    }
+
+    /**
+     * Set destockedValue
+     *
+     * @param integer $destockedValue
+     *
+     * @return Stock
+     */
+    public function setDestockedValue($destockedValue)
+    {
+        $this->destockedValue = $destockedValue;
+
+        return $this;
+    }
+
+    /**
+     * Get destockedValue
+     *
+     * @return integer
+     */
+    public function getDestockedValue()
+    {
+        return $this->destockedValue;
+    }
+
+    /**
+     * Set stockedAt
+     *
+     * @param \DateTime $stockedAt
+     *
+     * @return Stock
+     */
+    public function setStockedAt($stockedAt)
+    {
+        $this->stockedAt = $stockedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get stockedAt
+     *
+     * @return \DateTime
+     */
+    public function getStockedAt()
+    {
+        return $this->stockedAt;
+    }
+
+    /**
+     * Set destockedAt
+     *
+     * @param \DateTime $destockedAt
+     *
+     * @return Stock
+     */
+    public function setDestockedAt($destockedAt)
+    {
+        $this->destockedAt = $destockedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get destockedAt
+     *
+     * @return \DateTime
+     */
+    public function getDestockedAt()
+    {
+        return $this->destockedAt;
     }
 }

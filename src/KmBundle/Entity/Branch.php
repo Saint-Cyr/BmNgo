@@ -266,7 +266,7 @@ class Branch
         $alertLevels = array();
         
         foreach($this->getStocks() as $stock){
-            if($stock->getAlertLevel() >= $stock->getValue()){
+            if($stock->getAlertLevel() >= $stock->getValue() && $stock->isTracked()){
                 $alertLevels[] = $stock;
             }
         }

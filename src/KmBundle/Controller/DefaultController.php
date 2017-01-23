@@ -28,7 +28,21 @@ class DefaultController extends Controller
         
         return $this->render('KmBundle:Default:alert_stock.html.twig', array('branches' => $branches));
     }
-
+    
+    public function stockUpdateAction()
+    {
+        //Get all the branch
+        $em = $this->getDoctrine()->getManager();
+        //Get the branch
+        $branch = $this->getUser()->getBranch();
+        //Get all the updated stock
+        $stocked = $em->getRepository('TransactionBundle:Stock')->getStocked($branch);
+        $destocked = $em->getRepository('TransactionBundle:Stock')->getDestocked($branch);
+        
+        return $this->render('KmBundle:Default:stock_update.html.twig',
+                array('stocked' => $stocked, 'destocked' => $destocked));
+    }
+    
     public function dashboardAction()
     {
         //Get the statistic handler service
@@ -42,8 +56,30 @@ class DefaultController extends Controller
         return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions));
     }
     
+    public function validateUpdateStockAction($update)
+    {
+        $em = $this->getDoctrine()->getManager();
+        //Case of stockage
+        if($update == 1){
+            $stocked = $em->getRepository('TransactionBundle:Stock')->findBy(array('stocked' => true));
+            foreach ($stocked as $stock){
+                $stock->setStocked(false);
+            }
+        }else{
+            $destocked = $em->getRepository('TransactionBundle:Stock')->findBy(array('destocked' => true));
+            foreach ($destocked as $stock){
+                $stock->setDestocked(false);
+            }
+        }
+        
+        $em->flush();
+        
+        return $this->redirect($this->generateUrl('transaction_pos_barcode'));
+    }
+    
     public function reportAAction()
     {
+        return $this->render('/pages/tables.html.twig');
         return $this->render('TransactionBundle:Default:report_a.html.twig');
     }
     
