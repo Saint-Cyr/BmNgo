@@ -72,12 +72,17 @@ class STransactionAdminController extends CRUDController
                 if(!$branch){
                     $this->createNotFoundException('Branch not found.');
                 }
+                //If no user selected, use the current one
+                if(!$object->getUser()){
+                    $object->setUser($this->getUser());   
+                }
                 //hydrate each sale with the unitPrice of it related product
                 foreach ($object->getSales() as $sale){
-                    $sale->setAmount($sale->getProduct()->getUnitPrice());
                     //Update the stock
                     $stockHandler->updateStock($branch, $sale->getProduct(), $sale->getQuantity());
                 }
+                //$object->setTotalAmount($object->getTotalAmount())
+                
                 //Link the STransaction to the contextual branch
                 $object->setBranch($branch);
                 //S@int-Cyr end
@@ -140,6 +145,23 @@ class STransactionAdminController extends CRUDController
             'form' => $view,
             'object' => $object,
         ), null);
+    }
+    
+    public function batchActionDelete(ProxyQueryInterface $selectedModelQuery, Request $request = null)
+    {
+        if (!$this->admin->isGranted('EDIT') || !$this->admin->isGranted('DELETE')) {
+            throw new AccessDeniedException();
+        }
+
+        
+        $modelManager = $this->admin->getModelManager();
+
+        $saleTransactions = $selectedModelQuery->execute();
+        
+        $this->addFlash('sonata_flash_info', 'Removing Sale transaction is not allowed for technical reason see the documentation for more information');
+        return new RedirectResponse(
+            $this->admin->generateUrl('list', $this->admin->getFilterParameters())
+        );
     }
     
     public function batchActionReport(ProxyQueryInterface $selectedModelQuery, Request $request = null)

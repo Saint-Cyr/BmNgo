@@ -3,6 +3,7 @@
 namespace TransactionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * STransaction
@@ -43,7 +44,7 @@ class STransaction
     /**
      * @var float
      *
-     * @ORM\Column(name="totalAmount", type="float")
+     * @ORM\Column(name="totalAmount", type="float", nullable=true)
      */
     private $totalAmount;
     
@@ -78,6 +79,32 @@ class STransaction
     
     public function __toString() {
         return 'STransaction object: '.$this->getId();
+    }
+    
+    /**
+     * @Assert\IsTrue(message = "Sale is not valid")
+     */
+    public function isSaleValid()
+    {
+        $response = true;
+        
+        foreach($this->getSales() as $sale){
+            
+            foreach ($sale->getProduct()->getStocks() as $stock){
+                
+                if((!$stock->isTracked() && $sale->getQuantity()) ||
+                    (!$stock->isTracked() && !$sale->getAmount())  ||
+                    ($stock->isTracked() && !$sale->getQuantity())) 
+                    //($stock->isTracked() && $sale->getAmount()))
+                    {
+                    $response = false;
+               
+                }
+            }
+            
+        }
+        
+        return $response;
     }
 
     /**

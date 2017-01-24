@@ -19,7 +19,6 @@ class STransactionTest extends WebTestCase
     private $application;
     private $saleHandler;
 
-
     public function setUp()
     {
         static::$kernel = static::createKernel();

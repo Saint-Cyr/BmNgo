@@ -31,10 +31,13 @@ class ProductAdmin extends AbstractAdmin
         $listMapper
             ->add('image', null, array('template' => 'TransactionBundle:Default:list.html.twig'))
             ->add('name', null, array('editable' => true))
-            ->add('unitPrice', 'decimal', array('editable' => true))
-            ->add('wholeSalePrice', 'decimal', array('editable' => true))
-            ->add('profit')
-            ->add('totalStock', null, array('label' => 'Total Stock'))
+            ->add('unitPrice', 'decimal', array('editable' => true));
+            if($this->isGranted('ROLE_SUPER_ADMIN')){
+                $listMapper->add('wholeSalePrice', 'decimal', array('editable' => true))
+                           ->add('profit');
+            }
+            
+            $listMapper->add('totalStock', null, array('label' => 'Total Stock'))
             ->add('categories')
             ->add('imagePos', null, array('editable' => true))
             ->add('locked', null, array('editable' => true))

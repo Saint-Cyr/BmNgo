@@ -3,6 +3,7 @@
 namespace TransactionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Sale
@@ -50,6 +51,18 @@ class Sale
     private $profit;
     
     /**
+     * @Assert\Valid
+     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\STransaction", inversedBy="sales", cascade={"persist"})
+     */
+    private $stransaction;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\Product", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+    
+    /**
      * Get id
      *
      * @return int
@@ -70,17 +83,6 @@ class Sale
         }
         
     }
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\STransaction", inversedBy="sales", cascade={"persist"})
-     */
-    private $stransaction;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\Product", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $product;
 
     /**
      * Set amount

@@ -137,7 +137,7 @@ app.controller('POSController', function ($scope, $http)
       $scope.order = '';
       $scope.gif = 'gif1.gif';
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);
+      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sales/transactions', data);
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
           alert(data);

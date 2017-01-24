@@ -11,11 +11,13 @@ class SaleHandler
     //To store the entity manager
     private $em;
     private $stockHandler;
+    private $tokenStorage;
     
-    public function __construct($em, $stockHandler) 
+    public function __construct($em, $stockHandler, $tokenStorage) 
     {
         $this->em = $em;
         $this->stockHandler = $stockHandler;
+        $this->tokenStorage = $tokenStorage;
     }
     
     public function processSaleTransaction(array $inputData, Branch $branch)
@@ -25,6 +27,8 @@ class SaleHandler
         $stransaction->setTotalAmount($inputData['total']);
         $stransaction->setBranch($branch);
         //Link the employee to the transaction
+        $user = $this->tokenStorage->getToken()->getUser();
+        $stransaction->setUser($user);
         
         //Loop over each sale
         foreach ($inputData['order'] as $s){

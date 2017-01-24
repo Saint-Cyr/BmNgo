@@ -37,7 +37,7 @@ class InitFixturesTest extends WebTestCase
     
     public function testInit()
     {
-        $this->Init();
+        //$this->Init();
     }
     
     public function Init()

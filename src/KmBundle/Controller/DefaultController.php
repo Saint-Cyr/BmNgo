@@ -79,8 +79,8 @@ class DefaultController extends Controller
     
     public function reportAAction()
     {
-        return $this->render('/pages/tables.html.twig');
-        return $this->render('TransactionBundle:Default:report_a.html.twig');
+        return $this->render('/pages/form.html.twig');
+        //return $this->render('TransactionBundle:Default:report_a.html.twig');
     }
     
     public function reportBAction()

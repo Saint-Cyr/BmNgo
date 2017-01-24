@@ -165,6 +165,15 @@ UserBundle\Entity\User:
         enabled: true
         roles: [ROLE_SUPER_ADMIN]
         
+    admin:
+        username: admin
+        name: Sharom
+        branch: "@branch1"
+        email: admin@domain.com
+        plainPassword: test
+        enabled: true
+        roles: [ROLE_ADMIN]
+        
 TransactionBundle\Entity\Stock:
     stock1:
         value: 10
@@ -194,5 +203,26 @@ TransactionBundle\Entity\Stock:
         alertLevel: null
         product: "@product4"
         branch: "@branch1"
-        tracked: "false"
+        tracked: false
+        
+    stock5:
+        value: null
+        alertLevel: null
+        product: "@product5"
+        branch: "@branch1"
+        tracked: false
+        
+    stock6:
+        value: null
+        alertLevel: null
+        product: "@product6"
+        branch: "@branch1"
+        tracked: false
+        
+    stock7:
+        value: null
+        alertLevel: null
+        product: "@product7"
+        branch: "@branch1"
+        tracked: false
         

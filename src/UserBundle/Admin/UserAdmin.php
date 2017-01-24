@@ -129,8 +129,15 @@ class UserAdmin extends AbstractAdmin
         $this->manageFileUpload($user);
     }
     
+    public function __construct($code, $class, $baseControllerName, $manager = null) {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->userManager = $manager;
+    }
+    
     public function preUpdate($user) {
         $this->manageFileUpload($user);
+        $this->userManager->updateCanonicalFields($user);
+        $this->userManager->updatePassword($user);
     }
 
     private function manageFileUpload($image)
