@@ -32,3 +32,9 @@ services:
         arguments: [~, TransactionBundle\Entity\Category, SonataAdminBundle:CRUD]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: Category }
+
+    transaction.admin.report:
+        class: TransactionBundle\Admin\ReportAdmin
+        arguments: [~, TransactionBundle\Entity\Report, TransactionBundle:ReportAdmin]
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Transaction, label: Report }

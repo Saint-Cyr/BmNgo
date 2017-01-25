@@ -23,8 +23,9 @@
     <div class="container body">
       <div class="main_container">
         
-          
+          {% if(is_granted('ROLE_SUPER_ADMIN')) %}
           {% include 'admin/sidebar_vendor.html.twig' %}
+          {% endif %}
           {% include 'admin/topnav.html.twig' %}
 
         
@@ -73,7 +74,9 @@
                                 <th>Qty</th>
                                 <th>Product</th>
                                 <th>Sale (FCFA)</th>
+                                {% if(is_granted('ROLE_SUPER_ADMIN')) %}
                                 <th>Profit (FCFA)</th>
+                                {% endif %}
                                 <th>Transaction ID#</th>
                                 <!--<th style="width: 59%">Description</th>-->
                               </tr>
@@ -86,7 +89,9 @@
                                 <td>{{ sale.quantity }}</td>
                                 <td>{{ sale.product }}</td>
                                 <td>{{ sale.amount }}</td>
+                                {% if(is_granted('ROLE_SUPER_ADMIN')) %}
                                 <td>{{ sale.profit }}</td>
+                                {% endif %}
                                 <td>{{ sale.stransaction.id }}</td>
                               </tr>
                               {% endfor %}
@@ -112,10 +117,12 @@
                                   <th>Total Sale (FCFA):</th>
                                   <td>{{ totalSaleAmount }}</td>
                                 </tr>
+                                {% if(is_granted('ROLE_SUPER_ADMIN')) %}
                                 <tr>
                                   <th>Total Profit (FCFA):</th>
                                   <td style="font-size: 15px; color: green;">{{ totalProfit }}</td>
                                 </tr>
+                                {% endif %}
                                 <tr>
                                   <th>Transaction number:</th>
                                   <td style="font-size: 15px; color:black;">{{ saleTransactions|length }}</td>

@@ -13,181 +13,229 @@
     <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
-    
-    <!-- Custom styling plus plugins -->
-    
-    <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
+    <!-- iCheck -->
+    <link href="{{ asset('assets/vendors/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
     <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
   </head>
 
+  <body class="nav-md">
+    <div class="container body">
+      <div class="main_container">
+        {% include 'admin/sidebar_vendor.html.twig' %}
+        {% include 'admin/topnav.html.twig' %}
+        <!-- page content -->
+        <div class="right_col" role="main">
+          <div class="">
+            <div class="clearfix"></div>
 
-<body onload="window.print();">
-<div class="wrapper">
-  <!-- Main content -->
-  <section class="invoice">
-    <!-- title row -->
-    <div class="row">
-      
-      <div class="col-xs-12">
-        <h2 class="page-header">
-          <img src="{{ asset('images/1.gif') }}" style="width: 100%; height: 100px; padding-top: -2px;"/>
-        </h2>
-      </div>
-      <!-- /.col -->
-    </div>
-    
-    <!-- info row -->
-    <div class="row invoice-info">
-      <div class="col-sm-4 invoice-col">
-        From
-        <address>
-          <strong>Admin, Inc.</strong><br>
-        </address>
-      </div>
-      <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-        To
-        <address>
-          <strong>John Doe</strong><br>
-         
-        </address>
-      </div>
-      <!-- /.col -->
-      <div class="col-sm-4 invoice-col">
-        <b>Invoice #007612</b><br>
-        <br>
-        
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
+            <div class="row">
 
-    <!-- Table row -->
-    <div class="row">
-      <div class="col-xs-12 table-responsive">
-        <table class="table table-striped">
-          <thead>
-          <tr>
-            <th>Qty</th>
-            <th>Product</th>
-            <th>Serial #</th>
-            <th>Description</th>
-            <th>Subtotal</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr>
-            <td>1</td>
-            <td>Call of Duty</td>
-            <td>455-981-221</td>
-            <td>El snort testosterone trophy driving gloves handsome</td>
-            <td>$64.50</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Need for Speed IV</td>
-            <td>247-925-726</td>
-            <td>Wes Anderson umami biodiesel</td>
-            <td>$50.00</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Monsters DVD</td>
-            <td>735-845-642</td>
-            <td>Terry Richardson helvetica tousled street art master</td>
-            <td>$10.70</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Grown Ups Blue Ray</td>
-            <td>422-568-642</td>
-            <td>Tousled lomo letterpress</td>
-            <td>$25.99</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Grown Ups Blue Ray</td>
-            <td>422-568-642</td>
-            <td>Tousled lomo letterpress</td>
-            <td>$25.99</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Grown Ups Blue Ray</td>
-            <td>422-568-642</td>
-            <td>Tousled lomo letterpress</td>
-            <td>$25.99</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Grown Ups Blue Ray</td>
-            <td>422-568-642</td>
-            <td>Tousled lomo letterpress</td>
-            <td>$25.99</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Grown Ups Blue Ray</td>
-            <td>422-568-642</td>
-            <td>Tousled lomo letterpress</td>
-            <td>$25.99</td>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>Grown Ups Blue Ray</td>
-            <td>422-568-642</td>
-            <td>Tousled lomo letterpress</td>
-            <td>$25.99</td>
-          </tr>
-          
-          </tbody>
-        </table>
-      </div>
-      <!-- /.col -->
-    </div>
-    <!-- /.row -->
+              <!--<div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Report A (General) <small>From: 23/01/16 To: 30/01/2017</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    
+                    <div class="clearfix"></div>
+                  </div>
 
-    <div class="row">
-      <!-- accepted payments column -->
-      <div class="col-xs-6">
+                  <div class="x_content">
 
-        <p class="text-muted well well-sm no-shadow" style="margin-top: 10px; font-style: italic;">
-        	&ldquo;  Thank you for doing business with us ! Look forward to see you next time.&rdquo;
-        </p>
-        <img src="{{ asset('images/3.jpg') }}" style="width: 300px; padding-bottom: -12px;" />
-        <h2 style="padding-top: 12px; padding-left: 80px; text-decoration: underline;">The Seller</h2>
-      </div>
-      <!-- /.col -->
-      <div class="col-xs-6">
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                            <th>
+                              <input type="checkbox" id="check-all" class="flat">
+                            </th>
+                            <th class="column-title">Photo 4x4 </th>
+                            <th class="column-title">Internet</th>
+                            <th class="column-title">Impression</th>
+                            <th class="column-title">Photocopy</th>
+                            <th class="column-title">Photocopy couleur</th>
+                            <th class="column-title">Plastification</th>
+                            <th class="column-title">Scan</th>
+                            <th class="column-title">Telephone </th>
+                            <th class="column-title">Saisie </th>
+                            <th class="column-title">Autre </th>
+                            
+                            </th>
+                            <th class="bulk-actions" colspan="7">
+                              <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                            </th>
+                          </tr>
+                        </thead>
 
-        <div class="table-responsive">
-          <table class="table">
-            <tr>
-              <th style="width:50%">Subtotal:</th>
-              <td>$250.30</td>
-            </tr>
-            <tr>
-              <th>Tax (9.3%)</th>
-              <td>$10.34</td>
-            </tr>
-            <tr>
-              <th>Shipping:</th>
-              <td>$5.80</td>
-            </tr>
-            <tr>
-              <th>Total:</th>
-              <td>$265.24</td>
-            </tr>
-          </table>
+                        <tbody>
+                          <tr class="even pointer">
+                            <td class="a-center ">
+                              <input type="checkbox" class="flat" name="table_records">
+                            </td>
+                            <td class=" ">25000</td>
+                            <td class=" ">135000</td>
+                            <td class=" ">82000</td>
+                            <td class=" ">64750</td>
+                            <td class=" ">13800</td>
+                            <td class=" ">11400</td>
+                            <td class=" ">22350</td>
+                            <td class=" ">33780</td>
+                            <td class=" ">36700</td>
+                            <td class="a-right a-right ">189900</td>
+                            
+                            </td>
+                          </tr>
+                          
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>-->
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                      <h2>Report A (General) <small>From:<b> {{ initDate|date('d-m-Y') }}</b> To: <b>{{ finitDate|date('d-m-Y') }}</b></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    
+                    <div class="clearfix"></div>
+                  </div>
+
+                  <div class="x_content">
+
+                    <div class="table-responsive">
+                      <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                          <tr class="headings">
+                            <th>
+                              <input type="checkbox" id="check-all" class="flat">
+                            </th>
+                            <th class="column-title">Product / Service </th>
+                            <th class="column-title">Sale (FCFA)</th>
+                            <th class="column-title">Profit  (FCFA)</th>
+                            
+                            
+                            </th>
+                            <th class="bulk-actions" colspan="7">
+                              <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                        {% for result in results.E2 %}
+                          <tr class="even pointer">
+                            <td class="a-center ">
+                              <input type="checkbox" class="flat" name="table_records">
+                            </td>
+                            
+                            <td class=" ">{{ result.name }}</td>
+                            <td class=" ">{{ result.flyAmount }}</td>
+                            <td class=" ">{{ result.flyProfit }}</td>
+                            
+                            
+                          </tr>
+                          
+                        {% endfor %}
+                        <tr class="even pointer">
+                            <td class="a-center ">
+                              <input type="checkbox" class="flat" name="table_records">
+                            </td>
+                            
+                            <td class=" ">{{ results.E2_LABEL }}</td>
+                            <td class=" ">{{ results.E1_SALE }}</td>
+                            <td class=" ">{{ results.E1_PROFIT }}</td>
+                            
+                            
+                          </tr>
+                        </tbody>
+                        
+                      </table>
+                      <div class="x_content">
+                              <div class="">
+                                <div class="pricing_features">
+                                  <ul class="list-unstyled text-left">
+                                    <li><i class="fa fa-cart-plus text-success"></i> Sale : <strong> {{ results.E1_SALE  + results.E2_SALE }}</strong></li>
+                                    <li><i class="fa fa-line-chart text-success"></i> Profit : <strong> {{ results.E1_PROFIT  + results.E2_PROFIT }}</strong></li>
+                                    <!--<li><i class="fa fa-sort-amount-desc text-danger"></i> Expenditure : <strong> 47500</strong></li>-->
+                                  </ul>
+                                </div>
+                              </div>
+                              
+                            </div>
+                      <div class="col-md-3 col-sm-6 col-xs-12">
+                          
+                          <!--<div class="pricing">
+                            <div class="title" style="background-color: #5e388f; height: 50px;">
+                              
+                              <h3>Summary</h3>
+                            </div>-->
+                            
+                          </div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
         </div>
-        <img src="{{ asset('images/31.png') }}" style="padding-top: 20px; padding-left: 80px;"/>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+          <div class="pull-right">
+            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+          </div>
+          <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
       </div>
-      <!-- /.col -->
     </div>
-    <!-- /.row -->
-  </section>
-  <!-- /.content -->
-</div>
-<!-- ./wrapper -->
-</body>
+
+    <!-- jQuery -->
+    <script src="{{ asset('assets/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('assets/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('assets/vendors/fastclick/lib/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('assets/vendors/nprogress/nprogress.js') }}"></script>
+    <!-- iCheck -->
+    <script src="{{ asset('assets/vendors/iCheck/icheck.min.js') }}"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('assets/js/custom.min.js') }}"></script>
+  </body>
 </html>

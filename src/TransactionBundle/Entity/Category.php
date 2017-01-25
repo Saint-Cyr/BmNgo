@@ -59,6 +59,16 @@ class Category
         return $this->id;
     }
     
+    public function getSimpleArray()
+    {
+        $products = null;
+        foreach ($this->getProducts() as $p){
+            $products[] = $p;
+        }
+        
+        return $products;
+    }
+    
     public function __construct() {
         $this->setCreatedAt(new \DateTime("now"));
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();

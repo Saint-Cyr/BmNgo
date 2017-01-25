@@ -7,6 +7,7 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 class STransactionAdmin extends AbstractAdmin
 {
@@ -131,8 +132,8 @@ class STransactionAdmin extends AbstractAdmin
         $actions = parent::getBatchActions();
 
         if (
-          $this->hasRoute('edit') && $this->isGranted('EDIT') &&
-          $this->hasRoute('delete') && $this->isGranted('DELETE')
+          $this->hasRoute('edit') && $this->isGranted('EDIT') //&&
+          //$this->hasRoute('delete') && $this->isGranted('DELETE')
             ) {
             $actions['report'] = array(
                 'label' => 'Gen. Report',
@@ -180,6 +181,11 @@ class STransactionAdmin extends AbstractAdmin
             }
             
         }
+    }
+    
+    public function configureRoutes(RouteCollection $collection) {
+        parent::configureRoutes($collection);
+        $collection->remove('delete');
     }
     
     public function prePersist($object) {

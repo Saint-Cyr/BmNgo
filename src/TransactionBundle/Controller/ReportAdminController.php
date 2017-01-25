@@ -3,21 +3,9 @@
 namespace TransactionBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
-use Sonata\AdminBundle\Datagrid\ProxyQueryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\HttpFoundation\Request;
 
-class STransactionAdminController extends CRUDController
+class ReportAdminController extends CRUDController
 {
-    
-    /**
-     * Create action.
-     *
-     * @return Response
-     *
-     * @throws AccessDeniedException If access is not granted
-     */
     public function createAction()
     {
         $request = $this->getRequest();
@@ -65,13 +53,16 @@ class STransactionAdminController extends CRUDController
             // persist if the form was valid and if in preview mode the preview was approved
             if ($isFormValid && (!$this->isInPreviewMode($request) || $this->isPreviewApproved($request))) {
                 //By S@int-Cyr
-                //Get the $stockHandler Service
-                $stockHandler = $this->get('km.stock_handler');
-                //Get the Branch from the User object
-                $branch = $this->getUser()->getBranch();
-                if(!$branch){
-                    $this->createNotFoundException('Branch not found.');
-                }
+                $reportHandler = $this->get('km.report_handler');
+                
+                $results = $reportHandler->getReportA($object->getInitDate(), $object->getFinitDate(),
+                                 $object->getE1()->getSimpleArray(), $object->getE2()->getSimpleArray());
+                $results['E1_LABEL'] = $object->getE1()->getName();
+                $results['E2_LABEL'] = $object->getE2()->getName();
+                
+                return $this->render('TransactionBundle:Default:report_a.html.twig', array('results' => $results, 'initDate' => $object->getInitDate(),
+                                                                                           'finitDate' => $object->getFinitDate()));
+                
                 //If no user selected, use the current one
                 if(!$object->getUser()){
                     $object->setUser($this->getUser());   
@@ -146,67 +137,5 @@ class STransactionAdminController extends CRUDController
             'object' => $object,
         ), null);
     }
-    
-    public function batchActionDelete(ProxyQueryInterface $selectedModelQuery, Request $request = null)
-    {
-        if (!$this->admin->isGranted('EDIT') || !$this->admin->isGranted('DELETE')) {
-            throw new AccessDeniedException();
-        }
 
-        
-        $modelManager = $this->admin->getModelManager();
-
-        $saleTransactions = $selectedModelQuery->execute();
-        
-        $this->addFlash('sonata_flash_info', 'Removing Sale transaction is not allowed for technical reason see the documentation for more information');
-        return new RedirectResponse(
-            $this->admin->generateUrl('list', $this->admin->getFilterParameters())
-        );
-    }
-    
-    public function batchActionReport(ProxyQueryInterface $selectedModelQuery, Request $request = null)
-    {
-        /*if (!$this->admin->isGranted('EDIT') || !$this->admin->isGranted('DELETE')) {
-            throw new AccessDeniedException();
-        }*/
-
-        
-        $modelManager = $this->admin->getModelManager();
-
-        $saleTransactions = $selectedModelQuery->execute();
-        
-        //Get the reportHandler service
-        $reportHandler = $this->get('km.report_handler');
-        
-        $totalSaleAmount = $reportHandler->getSaleAmountOnFly($saleTransactions);
-        $totalProfit = $reportHandler->getProfitOnFly($saleTransactions);
-        
-        return $this->render('TransactionBundle:Default:report_b.html.twig', array('saleTransactions' => $saleTransactions,
-                                                                                   'totalSaleAmount' => $totalSaleAmount,
-                                                                                    'totalProfit' => $totalProfit,));
-        
-        //return $this->redirect($this->generateUrl('km_report_b', array('saleTransactions' => $saleTransactions)));
-        // do the merge work here
-        try {
-            foreach ($selectedModels as $selectedModel) {
-                //Generate the report 
-            }
-            
-            $modelManager->update($selectedModel);
-        } catch (\Exception $e) {
-            $this->addFlash('sonata_flash_error', 'flash_batch_activation_error');
-
-            return new RedirectResponse(
-                $this->admin->generateUrl('list', $this->admin->getFilterParameters())
-            );
-        }
-
-        $this->addFlash('sonata_flash_success', $this->get('translator')->trans(' successful operations !'));
-
-        return new RedirectResponse(
-            $this->admin->generateUrl('list', $this->admin->getFilterParameters())
-        );
-    }
-    
-    
 }
