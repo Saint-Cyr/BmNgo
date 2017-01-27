@@ -78,6 +78,7 @@
                                 <th>Profit (FCFA)</th>
                                 {% endif %}
                                 <th>Transaction ID#</th>
+                                <th>Seller</th>
                                 <!--<th style="width: 59%">Description</th>-->
                               </tr>
                             </thead>
@@ -93,6 +94,13 @@
                                 <td>{{ sale.profit }}</td>
                                 {% endif %}
                                 <td>{{ sale.stransaction.id }}</td>
+                                <td>
+                                    {% if sale.stransaction.user is empty %}
+                                        Unknown
+                                        {% else %}
+                                          {{ sale.stransaction.user.name }}  
+                                    {% endif %}
+                                </td>
                               </tr>
                               {% endfor %}
                                   {% endfor %}

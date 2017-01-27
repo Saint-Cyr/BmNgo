@@ -264,7 +264,11 @@ class User extends BaseUser
      */
     public function getName()
     {
-        return $this->name;
+        if(!$this->name){
+            return $this->username;
+        }else{
+            return $this->name;
+        }
     }
 
     /**

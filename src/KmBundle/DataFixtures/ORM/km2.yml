@@ -174,9 +174,18 @@ UserBundle\Entity\User:
         enabled: true
         roles: [ROLE_ADMIN]
         
+    seller:
+        username: seller
+        name: Seller
+        branch: "@branch1"
+        email: seller@domain.com
+        plainPassword: test
+        enabled: true
+        roles: [ROLE_SELLER]
+        
 TransactionBundle\Entity\Stock:
     stock1:
-        value: 10
+        value: 100
         alertLevel: 3
         product: "@product1"
         branch: "@branch1"

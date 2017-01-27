@@ -66,7 +66,8 @@ class STransactionAdmin extends AbstractAdmin
                 'type_options' => array(
                     'delete' => false,
                     'delete_options' => array(
-                        'type' => 'hidden',
+                        'allow_delete' => true,
+                        'type' => 'displayed',
                         'type_options' => array(
                             'mapped' => false,
                             'required' => false,
@@ -131,8 +132,8 @@ class STransactionAdmin extends AbstractAdmin
         // retrieve the default batch actions (currently only delete)
         $actions = parent::getBatchActions();
 
-        if (
-          $this->hasRoute('edit') && $this->isGranted('EDIT') //&&
+        if (true
+          //$this->hasRoute('edit') && $this->isGranted('EDIT') //&&
           //$this->hasRoute('delete') && $this->isGranted('DELETE')
             ) {
             $actions['report'] = array(

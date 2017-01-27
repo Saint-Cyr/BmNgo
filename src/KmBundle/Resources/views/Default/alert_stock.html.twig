@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
-
-{% for branch in branches %}
+{% if is_granted('ROLE_ADMIN') %}
+    {% for branch in branches %}
 
 <li class="dropdown notifications-menu">
     {% if branch.alertStocks|length > 0 %}
@@ -66,7 +66,7 @@
     </ul>
 </li>
 {% endfor %}
-
+{% endif %}
 <!--<li role="presentation" class="dropdown">
     <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
         <i class="fa fa-database"></i>

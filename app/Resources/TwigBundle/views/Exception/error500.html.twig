@@ -16,6 +16,7 @@
 
     <!-- Custom Theme Style -->
     <link href="{{ asset('assets/css/custom.min.css') }}" rel="stylesheet">
+    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
   </head>
 
   <body class="nav-md">
@@ -27,7 +28,7 @@
             <div class="text-center">
               <h1 class="error-number">500</h1>
               <h2>Internal Server Error</h2>
-              <p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing. <a href="#">Report this?</a>
+              <p>We track these errors automatically, but if the problem persists feel free to contact us. In the meantime, try refreshing. <a href="{{ path('km_documentation') }}">Back</a>
               </p>
               <div class="mid_center">
                 <h3>Search</h3>

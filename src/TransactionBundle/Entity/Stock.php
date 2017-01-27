@@ -152,6 +152,11 @@ class Stock
         $this->value = $this->value - $quantity;
     }
     
+    public function increaseValue($quantity)
+    {
+        $this->value = $this->value + $quantity;
+    }
+    
     public function __toString() {
         
         if($this->name){
