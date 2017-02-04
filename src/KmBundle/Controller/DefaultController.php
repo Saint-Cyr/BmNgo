@@ -47,13 +47,42 @@ class DefaultController extends Controller
     {
         //Get the statistic handler service
         $statisticHandler = $this->get('km.statisticHandler');
+        //Get the entity manager
+        $em = $this->getDoctrine()->getManager();
+        //Get all the branches
+        $branches = $em->getRepository('KmBundle:Branch')->findAll();
+        //Hydrate every branch
+        foreach ($branches as $b){
+            //Set sale amount
+            $b->setFlySaleAmount($statisticHandler->getSaleByBranch($b));
+            //Profit
+            $b->setFlyProfitAmount($statisticHandler->getProfitByBranch($b));
+            //Expenditure
+            $b->setFlyExpenditureAmount($statisticHandler->getExpenditureByBranch($b));
+            //Balance
+            $b->setFlyBalanceAmount($statisticHandler->getBalanceByBranch($b));
+        }
+        
         //Get all the sale transaction amount for every month
         $stransactions = $statisticHandler->getSaleByMonth();
-        //return $this->render('/gentelella/media_gallery.html.twig');
-        //return $this->render('/pages/form_buttons.html.twig');
-        //return $this->render('/pages/icons.html.twig');
-        //return $this->render('/pages/invoice.html.twig');
-        return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions));
+        //Get the resum for all branches
+        $totalSale = $statisticHandler->getSale();
+        $totalProfit = $statisticHandler->getProfit();
+        $totalExpenditure = $statisticHandler->getExpenditure();
+        $totalBalance = $statisticHandler->getBalance();
+        
+        return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions,
+                                                                        'branches' => $branches,
+                                                                        'totalSale' => $totalSale,
+                                                                        'totalProfit' => $totalProfit,
+                                                                        'totalBalance' => $totalBalance,
+                                                                        'totalExpenditure' => $totalExpenditure,));
+    }
+    
+    public function branchesAction()
+    {
+        $branches = $this->getDoctrine()->getManager()->getRepository('KmBundle:Branch')->findAll();
+        return $this->render('KmBundle:Default:branches.html.twig', array('branches' => $branches));
     }
     
     public function validateUpdateStockAction($update)

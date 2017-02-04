@@ -22,6 +22,34 @@ class Branch
     private $id;
     
     /**
+     * @var float
+     *
+     * @ORM\Column(name="flySaleAmount", type="float", nullable=true)
+     */
+    private $flySaleAmount;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="flyProfitAmount", type="float", nullable=true)
+     */
+    private $flyProfitAmount;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="flyExpenditureAmount", type="float", nullable=true)
+     */
+    private $flyExpenditureAmount;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="flyBalanceAmount", type="float", nullable=true)
+     */
+    private $flyBalanceAmount;
+    
+    /**
      * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="branch")
      */
     private $users;
@@ -255,5 +283,22 @@ class Branch
     public function getUsers()
     {
         return $this->users;
+    }
+    
+    /**
+     * 
+     * @return list of stocks in alert zone
+     */
+    public function getAlertStocks()
+    {
+        $alertLevels = array();
+        
+        foreach($this->getStocks() as $stock){
+            if($stock->getAlertLevel() >= $stock->getValue() && $stock->isTracked()){
+                $alertLevels[] = $stock;
+            }
+        }
+        
+        return $alertLevels;
     }
 }

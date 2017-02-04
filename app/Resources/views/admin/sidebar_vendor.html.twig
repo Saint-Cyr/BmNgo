@@ -32,29 +32,14 @@
                         <ul class="nav child_menu">
                             <li><a>By Branch<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="#level2_1">Branch 1</a>
-                                    </li>
-                                    <li><a href="#level2_2">Branch 2</a>
-                                    </li>
+                                    {{ render(controller('KmBundle:Default:branches')) }}
                                 </ul>
                             </li>
                             <li><a href="#">All</a></li>
                         </ul>
                     </li>
-                    <li><a href="#"><i class="fa fa-bar-chart"></i> Report </a>
-                    <li><a><i class="fa fa-database"></i> Stock <span class="fa fa-chevron-down"></span></a>
-                        <ul class="nav child_menu">
-                            <li><a>By Branch<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="#level2_1">Branch 1</a>
-                                    </li>
-                                    <li><a href="#level2_2">Branch 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#">All</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="{{ path('admin_transaction_report_create') }}"><i class="fa fa-bar-chart"></i> Report </a>
+                    
                     <li><a href="{{ path('km_setting') }}"><i class="fa fa-wrench"></i> Setting </a>
                     </li>
                     <li><a><i class="fa fa-windows"></i> Support / Extra <span class="fa fa-chevron-down"></span></a>
@@ -91,3 +76,8 @@
         <!-- /menu footer buttons -->
     </div>
 </div>
+                            
+                            
+                            
+                            
+                            

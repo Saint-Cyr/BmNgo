@@ -141,6 +141,12 @@ class STransactionAdmin extends AbstractAdmin
                 'translation_domain' => 'SonataAdminBundle',
                 'ask_confirmation' => false
             );
+            
+            $actions['cancel'] = array(
+                'label' => 'Cancel',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
 
         }
 

@@ -208,5 +208,46 @@ class STransactionAdminController extends CRUDController
         );
     }
     
+    public function batchActionCancel(ProxyQueryInterface $selectedModelQuery, Request $request = null)
+    {
+
+        
+        $modelManager = $this->admin->getModelManager();
+
+        $selectedModels = $selectedModelQuery->execute();
+
+        $saleTransactions = $selectedModelQuery->execute();
+        
+        //Get the stockHandler service
+        $stockHandler = $this->get('km.stock_handler');
+        $branch = $this->getUser()->getBranch();
+        
+        // do the merge work here
+        try {
+                foreach ($selectedModels as $selectedModel) {
+                    //Generate the report
+                    foreach ($selectedModel->getSales() as $sale){
+                        $stockHandler->updateStock($branch, $sale->getProduct(), $sale->getQuantity(), false);
+                    }
+                    $modelManager->delete($selectedModel);
+                    
+                }
+            
+            
+        } catch (\Exception $e) {
+            $this->addFlash('sonata_flash_error', 'flash_batch_activation_error');
+
+            return new RedirectResponse(
+                $this->admin->generateUrl('list', $this->admin->getFilterParameters())
+            );
+        }
+
+        $this->addFlash('sonata_flash_success', $this->get('translator')->trans(' successful operations !'));
+
+        return new RedirectResponse(
+            $this->admin->generateUrl('list', $this->admin->getFilterParameters())
+        );
+    }
+    
     
 }

@@ -51,7 +51,7 @@
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-cart-plus"></i></div>
-                  <div class="count">179</div>
+                  <div class="count">{{ totalSale }}</div>
                   <h3>Sale</h3>
                   
                 </div>
@@ -59,7 +59,7 @@
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-line-chart"></i></div>
-                  <div class="count">179</div>
+                  <div class="count">{{ totalProfit }}</div>
                   <h3>Profit</h3>
                   
                 </div>
@@ -67,14 +67,14 @@
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
-                  <div class="count">179</div>
+                  <div class="count">{{ totalExpenditure }}</div>
                   <h3>Expenditure</h3>
                 </div>
               </div>
               <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
                 <div class="tile-stats">
                   <div class="icon"><i class="fa fa-anchor"></i></div>
-                  <div class="count">179</div>
+                  <div class="count">{{ totalBalance }}</div>
                   <h3>Balance</h3>
                 </div>
               </div>
@@ -107,46 +107,22 @@
                     <div class="row">
 
                       <div class="col-md-12">
-                         <div class="col-md-3 col-sm-6 col-xs-12">
-                          <div class="pricing ui-ribbon-container">
-                            <div class="ui-ribbon-wrapper">
-                              <div class="ui-ribbon" style="color: yellowgreen;">
-                                30%
-                              </div>
-                            </div>
-                            <div class="title" style="background-color: #5e388f">
-                              
-                            <h1>VALLEY</h1>
-                            </div>
-                            <div class="x_content">
-                              <div class="">
-                                <div class="pricing_features">
-                                   <ul class="list-unstyled text-left">
-                                    <li><i class="fa fa-cart-plus text-success"></i> Sale : <strong> 47500</strong></li>
-                                    <li><i class="fa fa-line-chart text-success"></i> Profit : <strong> 47500</strong></li>
-                                    <li><i class="fa fa-sort-amount-desc text-danger"></i> Expenditure : <strong> 47500</strong></li>
-                                  </ul>
-                                </div>
-                              </div>
-                              
-                            </div>
-                          </div>
-                        </div>
+                      {% for branch in branches %}
                         <!-- price element -->
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           
                           <div class="pricing">
                             <div class="title" style="background-color: #5e388f;">
                               
-                              <h1>BATA NLONGKAK</h1>
+                            <h1>{{ branch.name }}</h1>
                             </div>
                             <div class="x_content">
                               <div class="">
                                 <div class="pricing_features">
                                   <ul class="list-unstyled text-left">
-                                    <li><i class="fa fa-cart-plus text-success"></i> Sale : <strong> 47500</strong></li>
-                                    <li><i class="fa fa-line-chart text-success"></i> Profit : <strong> 47500</strong></li>
-                                    <li><i class="fa fa-sort-amount-desc text-danger"></i> Expenditure : <strong> 47500</strong></li>
+                                    <li><i class="fa fa-cart-plus text-success"></i> Sale : <strong> {{ branch.flySaleAmount }}</strong></li>
+                                    <li><i class="fa fa-line-chart text-success"></i> Profit : <strong> {{ branch.flyProfitAmount }}</strong></li>
+                                    <li><i class="fa fa-sort-amount-desc text-danger"></i> Expenditure : <strong> {{ branch.flyExpenditureAmount }}</strong></li>
                                   </ul>
                                 </div>
                               </div>
@@ -154,9 +130,9 @@
                             </div>
                           </div>
                         </div>
-                        <!-- price element -->
-
-                        <!-- price element -->
+                        <!-- price element -->  
+                        {% endfor %}
+                        {% if branches|length <= 2 %}
                         <div class="col-md-3 col-sm-6 col-xs-12">
                           
                           <div class="pricing">
@@ -178,31 +154,33 @@
                             </div>
                           </div>
                         </div>
-                        <!-- price element -->
+                        <div class="col-md-3 col-sm-6 col-xs-12">
+                          
+                          <div class="pricing">
+                            <div class="title" style="background-color: #bab8b8;">
+                              
+                              <h1>COMING SOON</h1>
+                            </div>
+                            <div class="x_content">
+                              <div class="">
+                                <div class="pricing_features">
+                                  <ul class="list-unstyled text-left">
+                                    <li><i class="fa fa-cart-plus"></i> Sale : <strong> 000.000</strong></li>
+                                    <li><i class="fa fa-line-chart"></i> Profit : <strong> 000.000</strong></li>
+                                    <li><i class="fa fa-sort-amount-desc"></i> Expenditure :<strong> 000.000</strong></li>
+                                  </ul>
+                                </div>
+                              </div>
+                              
+                            </div>
+                          </div>
+                        </div>
+                            {% endif %}
+                            
                         
-                        <!-- price element -->
-                        <div class="col-md-3 col-sm-6 col-xs-12">
-                          
-                          <div class="pricing">
-                            <div class="title" style="background-color: #bab8b8;">
-                              
-                              <h1>COMING SOON</h1>
-                            </div>
-                            <div class="x_content">
-                              <div class="">
-                                <div class="pricing_features">
-                                  <ul class="list-unstyled text-left">
-                                    <li><i class="fa fa-cart-plus"></i> Sale : <strong> 000.000</strong></li>
-                                    <li><i class="fa fa-line-chart"></i> Profit : <strong> 000.000</strong></li>
-                                    <li><i class="fa fa-sort-amount-desc"></i> Expenditure :<strong> 000.000</strong></li>
-                                  </ul>
-                                </div>
-                              </div>
-                              
-                            </div>
-                          </div>
-                        </div>
-                        <!-- price element -->
+                        
+                        
+                        
                         
                       </div>
                     </div>
