@@ -1,14 +1,14 @@
 transaction_product_list:
     path:     /product_list
     defaults: { _controller: TransactionBundle:Default:productList }
-
-transaction_pos:
-    path: /pos
-    defaults: { _controller: TransactionBundle:Default:pos }
     
 transaction_pos2:
     path: /pos2
     defaults: { _controller: TransactionBundle:Default:pos2 }
+    
+transaction_pos_barcode:
+    path: /pos_barcode
+    defaults: { _controller: TransactionBundle:Default:pos }
     
 sale_transaction:
     type: rest
@@ -18,3 +18,19 @@ sale_transaction:
 sale_transaction2:
     path: /sale
     defaults: { _controller: TransactionBundle:Default:sale }
+    
+app_gentelella:
+    path: /client/dashboard
+    defaults: { _controller: TransactionBundle:Default:client }
+
+app_dashboard:
+    path: /client/dashboard
+    defaults: { _controller: TransactionBundle:Default:client }
+
+gentelella_page:
+    path: /client/page
+    defaults: { _controller: TransactionBundle:Default:client }
+
+km_setting:
+    path: /setting
+    defaults: { _controller: KmBundle:Default:Setting }

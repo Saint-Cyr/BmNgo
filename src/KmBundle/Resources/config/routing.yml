@@ -1,6 +1,10 @@
 km_homepage:
-    path:     /generate_barcode
+    path:     /generate_barcode/{barcode}
     defaults: { _controller: KmBundle:Default:index }
+    
+km_barecode_test:
+    path:     /barcode_test
+    defaults: { _controller: KmBundle:Default:BarcodeTest }
     
 km_dashboard:
     path:    /report
@@ -9,3 +13,20 @@ km_dashboard:
 km_documentation:
     path:    /
     defaults: { _controller: KmBundle:Default:front }
+    
+km_report_a:
+    path:    /report_a
+    defaults: { _controller: KmBundle:Default:reportA }
+    
+km_report_b:
+    path:    /report_b
+    defaults: { _controller: KmBundle:Default:reportB }
+    
+km_validate_update_stock:
+    path: /validate_update_stock/{update}
+    defaults: { _controller: KmBundle:Default:validateUpdateStock }
+    
+sales: 
+  type: rest
+  resource:     "TransactionBundle:Api"
+  prefix:  api

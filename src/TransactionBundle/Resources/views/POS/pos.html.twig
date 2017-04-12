@@ -2,7 +2,7 @@
 <html ng-app="myApp">
 
 <head>
-  <title>Point of Sale Interface</title>
+  <title>POS1</title>
   <!--<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
   <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
 
@@ -20,6 +20,7 @@
 
   <link rel="stylesheet" href="{{ asset('style.css') }}" />
   <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}"/>
+  <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
   <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
   <script>
       // Code goes here
@@ -30,14 +31,18 @@ app.controller('POSController', function ($scope, $http)
 {
     $scope.fileName = 'KINGMANAGER/web/1.jpg';
     $scope.focusImage = '';
+    $scope.gif = 'logo.png';
     
     var data = {
         {% for p in products %}
-            "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24) }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
-        {% endfor %}
+            {% for stock in app.user.branch.stocks %}
+                        {% if stock.product.id == p.id and stock.tracked %}
+                            "{{ p.barcode }}" : {count: 1, detail: "{{ p.name|slice(0, 24)|e('js')|raw }}", id: {{ p.id }}, price: {{ p.unitPrice }} },
+                        {% endif %}
+            {% endfor %} 
+      {% endfor %}
   };
     
-        
     $scope.itemsCnt = 1;
     $scope.order = [];
     $scope.isDisabled = true;
@@ -118,22 +123,28 @@ app.controller('POSController', function ($scope, $http)
     
     $scope.checkout = function(index) {
       //S@int-Cyr edition start here
+      //S@int-Cyr edition start here
       //Data to be sent to the server (order[])
-      var data = {
+      var order2 = $scope.order.slice(0);
+      //Data to be sent to the server (order[])
+      var data = {"data":{
           'id': 1,
-          'order': $scope.order,
+          'order': order2,
           'total': $scope.getSum(),
-      };
-      
+    }};
+
+      //Prevent user to send another request
+      $scope.order = '';
+      $scope.gif = 'gif1.gif';
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sale', data);
+      var outPut = $http.post('http://localhost/BeezyManager/web/sales/transactions', data);
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
           alert(data);
           //alert( "successfull message: " + JSON.stringify({data: data}));
           //alert("Order total: $" + $scope.getSum() + "\n\nPayment received. Thanks. cache: " + $scope.cacheAmount + "change: " + $scope.getChange());
           $scope.order = [];
-          
+          $scope.gif = 'logo.png';
       });
       
       outPut.error(function(data, status, header, config){
@@ -167,26 +178,207 @@ app.controller('POSController', function ($scope, $http)
     }
 });
 
+//Script for the alert box
+    var ALERT_TITLE = "Beezy Manager";
+    var ALERT_BUTTON_TEXT = "Ok";
 
+    if(document.getElementById) {
+        window.alert = function(txt) {
+            createCustomAlert(txt);
+        }
+    }
+
+    function createCustomAlert(txt) {
+        d = document;
+
+        if(d.getElementById("modalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "modalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "alertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        h1 = alertObj.appendChild(d.createElement("h1"));
+        h1.appendChild(d.createTextNode(ALERT_TITLE));
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "closeBtn";
+        btn.appendChild(d.createTextNode(ALERT_BUTTON_TEXT));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() { removeCustomAlert();return false; }
+
+        alertObj.style.display = "block";
+
+    }
+
+    function removeCustomAlert() {
+        document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"));
+    }
   </script>
+  
+  <style>
+    #modalContainer {
+    background-color:rgba(0, 0, 0, 0.3);
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:10000;
+    background-image:url(tp.png); /* required by MSIE to prevent actions on lower z-index elements */
+    }
+
+    #alertBox {
+        position:relative;
+        width:300px;
+        min-height:100px;
+        margin-top:50px;
+        border:1px solid #666;
+        background-color:#fff;
+        background-repeat:no-repeat;
+        background-position:20px 30px;
+    }
+
+    #modalContainer > #alertBox {
+        position:fixed;
+    }
+
+    #alertBox h1 {
+        margin:0;
+        font:bold 0.9em verdana,arial;
+        background-color:#5e388f;
+        color:#FFF;
+        border-bottom:1px solid #000;
+        padding:2px 0 2px 5px;
+    }
+
+    #alertBox p {
+        font:0.7em verdana,arial;
+        height:50px;
+        padding-left:50px;
+        margin-left: auto;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    #alertBox #closeBtn {
+        display:block;
+        position:relative;
+        margin:5px auto;
+        padding:7px;
+        border:0 none;
+        width:70px;
+        font:0.7em verdana,arial;
+        text-transform:uppercase;
+        text-align:center;
+        color:#FFF;
+        background-color:#5e388f;
+        border-radius: 3px;
+        text-decoration:none;
+    }
+
+    /* unrelated styles */
+
+    #mContainer {
+        position:relative;
+        width:600px;
+        margin:auto;
+        padding:5px;
+        border-top:2px solid #000;
+        border-bottom:2px solid #000;
+        font:0.7em verdana,arial;
+    }
+
+    h1,h2 {
+        margin:0;
+        padding:4px;
+        font:bold 1.5em verdana;
+        border-bottom:1px solid #000;
+    }
+
+    code {
+        font-size:1.2em;
+        color:#069;
+    }
+
+    #credits {
+        position:relative;
+        margin:25px auto 0px auto;
+        width:350px; 
+        font:0.7em verdana;
+        border-top:1px solid #000;
+        border-bottom:1px solid #000;
+        height:90px;
+        padding-top:4px;
+    }
+
+    #credits img {
+        float:left;
+        margin:5px 10px 5px 0px;
+        border:1px solid #000000;
+        width:80px;
+        height:79px;
+    }
+
+    .important {
+        background-color:#F5FCC8;
+        padding:2px;
+    }
+
+    code span {
+        color:green;
+    }
+  </style>
 </head>
 
 
 
 <body data-ng-controller="POSController">
-        
   <div class="container">
+    <header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+        
+        {{ render(controller('KmBundle:Default:stockUpdate')) }}
+        <!-- /.navbar-custom-menu -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>
+    <br>
     <div class="row">
       <div class="col-md-6">
         {% verbatim %}
-        <div class="jumbotron">
-            <h1 style="font-size: 120px; color: red;">{{getSum() | currency:' ':true:'1.2-2'}}</h1>
+        <hr>
+        <div class="jumbotron" style="margin-top: 21px;">
+            <span style="font-size: 120px; color: red;">{{getSum() | currency:' ':true:'1.2-2'}}</span>
         </div>
         <div class="jumboron">
         <div class="row">
             <form name="itemForm">
                   <input type="password" name="barcode"  style="opacity: 0;" id="barcodeId"
-                         ng-model="barcode" ng-model-options="{ debounce: 500 }" autofocus="true" ng-focus="focused()" ng-blur="blurred()"/>
+                    ng-model="barcode" ng-model-options="{ debounce: 500 }" autofocus="true" ng-focus="focused()" ng-blur="blurred()"/>
             <br/>
             </form>
 
@@ -207,17 +399,19 @@ app.controller('POSController', function ($scope, $http)
       </div>
       <br>
       <div class="col-md-6">
-        
+        <style>
+            .panel > .panel-heading {
+                background-color: #5e388f;
+            }
+        </style>
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Order Summary</h3>
               
             </div>
             <div class="panel-body" style="max-height:320px; overflow:auto;">
-              <div class="text-warning" ng-hide="order.length">
-                  {% endverbatim %}
-                <img src="{{ asset('images/logo.png') }}" style="margin-left:150px;" width="150"/>
-                {% verbatim %}
+              <div class="text-warning" ng-hide="order.length" ng-model="gif">
+                   <img src="/BeezyManager/web/images/{{ gif }}" style="margin-left:150px;" width="150"/>
               </div>
               
               <ul class="list-group">
@@ -233,7 +427,7 @@ app.controller('POSController', function ($scope, $http)
                       </button>
                       
                        <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
-                        <span class="fa fa-trash"></span>
+                        <span class="fa fa-trash-o"></span>
                       </button>                     
                   </div>
                   <div class="label label-success pull-right">{{item.totalPrice | currency:'FCFA ':true:'1.2-2'}}</div>
@@ -252,6 +446,7 @@ app.controller('POSController', function ($scope, $http)
             </div>
             <div class="pull-right">
                 <br>
+                
                 <div class="input-group col-md-6">
                     <span class="input-group-addon">
                         <i class="fa fa-dolla" aria-hidden="true"></i>
@@ -259,7 +454,7 @@ app.controller('POSController', function ($scope, $http)
                     <input class="form-control" type="text" placeholder="Cache amount (FCFA)" ng-model="cacheAmount" ng-disabled="!order.length">
                     
                 </div>
-                
+            
                 <div class="inline-group col-md-6">
                     <span class="btn btn-default" style="color: green;" ng-disabled="!order.length" ng-click="getChange()">{{getChange() | currency:'':true:'1.2-2'}}</span>
                     <span class="btn btn-default" ng-click="clearOrder()" ng-disabled="!order.length">Clear</span>
@@ -277,9 +472,21 @@ app.controller('POSController', function ($scope, $http)
       <!--<img src="yellow3.gif" width="20"/>
       <img src="off.gif" width="20"/>-->
       <br><br>
-      <img src="{{ asset('LG_Blink.gif') }}" width="20"/>
+      
       <!--<img src="green.gif" width="20"/>-->
-      <a href="{{ path('transaction_pos2') }}"><span class="fa fa-list"></span></a>
+      <div class="col-md-12 control">
+            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                <div style="float:left; font-size: 120%; position: relative; top:-10px"> 
+                    <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true" style="color: #320070;"></i></a>   
+                    <a href="{{ path('transaction_pos2') }}"><i class="fa fa-bars" aria-hidden="true" style="color: #320070; margin-left: 6px;"></i></a>  
+                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true" style="color: #320070; margin-left: 6px;"></i></a>
+                    <img src="{{ asset('SR_Blink.gif') }}" width="20" style="margin-left:500px;"/>
+                </div>
+                <div style="float:right; font-size: 80%; position: relative; top:-10px">
+                    <a href="#" style="color: #320070;">© 2017 - Saint-Cyr MAPOUKA</a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

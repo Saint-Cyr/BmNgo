@@ -20,13 +20,51 @@ class Branch
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="flySaleAmount", type="float", nullable=true)
+     */
+    private $flySaleAmount;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="flyProfitAmount", type="float", nullable=true)
+     */
+    private $flyProfitAmount;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="flyExpenditureAmount", type="float", nullable=true)
+     */
+    private $flyExpenditureAmount;
+    
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="flyBalanceAmount", type="float", nullable=true)
+     */
+    private $flyBalanceAmount;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="UserBundle\Entity\User", mappedBy="branch")
+     */
+    private $users;
+    
     /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="TransactionBundle\Entity\Stock", mappedBy="branch")
+     */
+    private $stocks;
 
     /**
      * @var \DateTime
@@ -177,5 +215,186 @@ class Branch
     public function getExpenditures()
     {
         return $this->expenditures;
+    }
+
+    /**
+     * Add stock
+     *
+     * @param \TransactionBundle\Entity\Stock $stock
+     *
+     * @return Branch
+     */
+    public function addStock(\TransactionBundle\Entity\Stock $stock)
+    {
+        $this->stocks[] = $stock;
+
+        return $this;
+    }
+
+    /**
+     * Remove stock
+     *
+     * @param \TransactionBundle\Entity\Stock $stock
+     */
+    public function removeStock(\TransactionBundle\Entity\Stock $stock)
+    {
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return Branch
+     */
+    public function addUser(\UserBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \UserBundle\Entity\User $user
+     */
+    public function removeUser(\UserBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
+    }
+    
+    /**
+     * 
+     * @return list of stocks in alert zone
+     */
+    public function getAlertStocks()
+    {
+        $alertLevels = array();
+        
+        foreach($this->getStocks() as $stock){
+            if($stock->getAlertLevel() >= $stock->getValue() && $stock->isTracked()){
+                $alertLevels[] = $stock;
+            }
+        }
+        
+        return $alertLevels;
+    }
+
+    /**
+     * Set flySaleAmount
+     *
+     * @param float $flySaleAmount
+     *
+     * @return Branch
+     */
+    public function setFlySaleAmount($flySaleAmount)
+    {
+        $this->flySaleAmount = $flySaleAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get flySaleAmount
+     *
+     * @return float
+     */
+    public function getFlySaleAmount()
+    {
+        return $this->flySaleAmount;
+    }
+
+    /**
+     * Set flyProfitAmount
+     *
+     * @param float $flyProfitAmount
+     *
+     * @return Branch
+     */
+    public function setFlyProfitAmount($flyProfitAmount)
+    {
+        $this->flyProfitAmount = $flyProfitAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get flyProfitAmount
+     *
+     * @return float
+     */
+    public function getFlyProfitAmount()
+    {
+        return $this->flyProfitAmount;
+    }
+
+    /**
+     * Set flyExpenditureAmount
+     *
+     * @param float $flyExpenditureAmount
+     *
+     * @return Branch
+     */
+    public function setFlyExpenditureAmount($flyExpenditureAmount)
+    {
+        $this->flyExpenditureAmount = $flyExpenditureAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get flyExpenditureAmount
+     *
+     * @return float
+     */
+    public function getFlyExpenditureAmount()
+    {
+        return $this->flyExpenditureAmount;
+    }
+
+    /**
+     * Set flyBalanceAmount
+     *
+     * @param float $flyBalanceAmount
+     *
+     * @return Branch
+     */
+    public function setFlyBalanceAmount($flyBalanceAmount)
+    {
+        $this->flyBalanceAmount = $flyBalanceAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get flyBalanceAmount
+     *
+     * @return float
+     */
+    public function getFlyBalanceAmount()
+    {
+        return $this->flyBalanceAmount;
     }
 }

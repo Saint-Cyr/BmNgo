@@ -1,13 +1,205 @@
+TransactionBundle\Entity\Product:
+    product1:
+        barcode: 2002256910209
+        name: Nexcare
+        unitPrice: 130.00
+        wholeSalePrice: 7.00
+        
+    product2:
+        barcode: 9780198610458
+        name: Oxford French Dictionary
+        unitPrice: 17.50
+        wholeSalePrice: 8.00
+        
+    product3:
+        name: Jus Top 0.35 L
+        unitPrice: 300
+        wholeSalePrice: 250
+        category: "@category1"
+        
+    product4:
+        name: Jus Top 1.5 L
+        unitPrice: 300
+        wholeSalePrice: 250
+        category: "@category1"
+        
+    product5:
+        name: Cle USB 2 GB
+        unitPrice: 2500
+        wholeSalePrice: 1500
+        category: "@category2"
+    
+    product6:
+        name: Cle USB 4 GB
+        unitPrice: 4000
+        wholeSalePrice: 1500
+        
+    product7:
+        name: Casque MP3 Micro
+        unitPrice: 5000
+        wholeSalePrice: 3000
+        
+    product8:
+        name: Chemise cartonier
+        unitPrice: 100
+        wholeSalePrice: 75
+        
+    product9:
+        name: Papier carton
+        unitPrice: 100
+        wholeSalePrice: 50
+        
+    product10:
+        name: Sylo
+        unitPrice: 100
+        wholeSalePrice: 40
+        
+    product11:
+        name: Scanner
+        unitPrice: 250
+        wholeSalePrice: 0
+        
+    product12:
+        name: Plastification
+        unitPrice: 250
+        wholeSalePrice: 0
+        
+    product13:
+        name: Photocopy
+        unitPrice: 25
+        wholeSalePrice: 0
+    
+
 TransactionBundle\Entity\Sale:
-    sale_{1..10}:
-        amount: 10.23
+    sale1:
         product: '@product1'
+        quantity: 1
+        #amount: 10.23
         stransaction: '@stransaction1'
+        createdAt: <(new \DateTime('01-01-2008'))>
+        
+    sale2:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        createdAt: <(new \DateTime('01-01-2009'))>
+        
+    sale3:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        
+    sale4:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        
+    sale5:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        
+    sale6:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        
+    sale7:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        
+    sale8:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        
+    sale9:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        
+    sale10:
+        product: '@product1'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction1'
+    
+    sale11:
+        product: '@product2'
+        quantity: 2
+        #amount: 10.23
+        stransaction: '@stransaction1'
+        createdAt: <(new \DateTime('01-01-2009'))>
+        
+    sale12:
+        product: '@product5'
+        quantity: 4
+        #amount: 10.23
+        stransaction: '@stransaction2'
+        createdAt: <(new \DateTime('01-01-2010'))>
+        
+    sale13:
+        product: '@product8'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction15'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale14:
+        product: '@product9'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale15:
+        product: '@product10'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale16:
+        product: '@product8'
+        quantity: 1
+        #amount: 10.23
+        stratedAt: <(new \DateTime('01-01-1999'))>
+        
+    sale17:
+        product: '@product9'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale18:
+        product: '@product10'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
+        
+    sale19:
+        product: '@product11'
+        quantity: 1
+        #amount: 10.23
+        stransaction: '@stransaction16'
+        createdAt: <(new \DateTime('01-01-1999'))>
 
 TransactionBundle\Entity\STransaction:
     stransaction1:
         totalAmount: 900.50
         branch: '@branch1'
+        createdAt: <(new \DateTime('01-10-2014'))>
     stransaction2:
         totalAmount: 2000
         branch: '@branch2'
@@ -59,13 +251,25 @@ TransactionBundle\Entity\STransaction:
     #Dec
     stransaction14:
         totalAmount: 1200
-        branch: '@branch2'
+        branch: '@branch3'
+    
+    stransaction15:
+        totalAmount: 1200
+        branch: '@branch3'
+        
+    stransaction16:
+        totalAmount: 1200
+        branch: '@branch3'
 
 KmBundle\Entity\Branch:
     branch1:
         name: BRANCH 1
     branch2:
         name: BRANCH 2
+    branch3:
+        name: BATA
+    branch4:
+        name: VALLEY
     
 KmBundle\Entity\Expenditure:
     expenditure1:
@@ -74,16 +278,68 @@ KmBundle\Entity\Expenditure:
     expenditure2:
         amount: 40.10
         branch: '@branch1'
+
+TransactionBundle\Entity\Stock:
+    stock1:
+        name: JUS TOP 0.35 L_B
+        value: 10000
+        alertLevel: 7
+        product: "@product3"
+        branch: "@branch3"
         
-TransactionBundle\Entity\Product:
-    product1:
-        barcode: 051131995222
-        name: Nexcare
-        unitPrice: 130.00
-        wholeSalePrice: 7.00
-    product2:
-        barcode: 9780198610458
-        name: Oxford French Dictionary
-        unitPrice: 17.50
-        wholeSalePrice: 8.00
+    stock2:
+        name: JUS TOP 1.5 L_B
+        value: 5
+        alertLevel: 5
+        product: "@product4"
+        branch: "@branch3"
+        
+    stock3:
+        name: JUS TOP 1.5 L_V
+        value: 2
+        product: "@product3"
+        branch: "@branch4"
+    
+    stock4:
+        name: CLE USB 2 GB_B
+        value: 4
+        alertLevel: 5
+        product: "@product5"
+        branch: "@branch3"
+        
+    stock5:
+        name: CLE USB 4 GB_B
+        value: -1
+        alertLevel: 5
+        product: "@product6"
+        branch: "@branch3"
+        
+    stock6:
+        name: CASQUE MP3 MICRO_B
+        value: -3
+        alertLevel: 5
+        product: "@product7"
+        branch: "@branch3"
+        
+    stock7:
+        value: 10
+        alertLevel: 3
+        product: "@product1"
+        branch: "@branch3"
+        
+UserBundle\Entity\User:
+    super-admin:
+        username: super-admin
+        branch: "@branch3"
+        email: mapoukacyr@yahoo.fr
+        plainPassword: test
+        enabled: true
+        roles: [ROLE_SUPER_ADMIN]
+        
+TransactionBundle\Entity\Category:
+    category1:
+        name: Fridge
+    category2:
+        name: Computer Accessory
+        
         

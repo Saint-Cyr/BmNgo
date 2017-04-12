@@ -3,11 +3,10 @@
 /*
  * This file is part of Components of KingManager project
  * By contributor S@int-Cyr MAPOUKA
- * (c) YAME Group <info@yamegroup.com>
+ * (c) TizampaTech <mapoukacyr@yahoo.fr>
  * For the full copyrght and license information, please view the LICENSE
  * file that was distributed with this source code
  */
-
 namespace Tests\TransactionBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
@@ -30,11 +29,30 @@ class SaleTest extends WebTestCase
         $this->saleHandler = $this->application->getKernel()->getContainer()->get('transaction.sale_handler');
     }
     
-    public function testSetProfit()
+    public function testGetProfit()
     {
-        //Get a sale from the fixtures
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
-        $sale->setProfit();
-        $this->assertEquals($sale->getProfit(), 123.0);
+        //$this->assertEquals($sale->getProfit(), 123);
+        
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(12);
+        //$this->assertEquals($sale->getProfit(), 4000);
+        
+        
+    }
+    
+    public function testGetAmount()
+    {
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
+        //$this->assertEquals($sale->getAmount(), 130);
+    }
+    
+    public function testSetAmount()
+    {
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
+        $sale->setAmount(100);
+        $this->assertEquals(100, $sale->getAmount());
+        
+        $sale->setAmount();
+        $this->assertEquals(150, $sale->getAmount());
     }
 }

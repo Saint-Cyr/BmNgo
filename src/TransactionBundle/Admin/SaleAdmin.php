@@ -17,6 +17,8 @@ class SaleAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('amount')
+            ->add('stransaction')
+            ->add('profit')
         ;
     }
 
@@ -26,9 +28,12 @@ class SaleAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+            ->add('id')
             ->add('stransaction')
+            ->add('product')
             ->add('amount')
             ->add('profit')
+            ->add('quantity')
             ->add('createdAt')
             ->add('_action', null, array(
                 'actions' => array(
@@ -46,8 +51,9 @@ class SaleAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('amount')
-            ->add('stransaction')
+            ->add('product')
+            ->add('quantity', 'integer', array('required' => false))
+            ->add('amount', null, array('required' => false, 'label' => 'Amount (only valid for untracked stock)'))
         ;
     }
 

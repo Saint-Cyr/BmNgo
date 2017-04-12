@@ -20,6 +20,20 @@ class Sale
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime")
+     */
+    private $createdAt;
+    
+    /**
+     * @var Integer
+     *
+     * @ORM\Column(name="quantity", type="integer", nullable=true)
+     */
+    private $quantity;
 
     /**
      * @var float
@@ -34,8 +48,7 @@ class Sale
      * @ORM\Column(name="profit", type="float", nullable=true)
      */
     private $profit;
-
-
+    
     /**
      * Get id
      *
@@ -47,7 +60,7 @@ class Sale
     }
     
     public function __toString() {
-        return 'Sale object: '.$this->getId();
+        return $this->getProduct()->getName();
     }
     
     /**
@@ -57,6 +70,7 @@ class Sale
     
     /**
      * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\Product", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
      */
     private $product;
 
@@ -156,5 +170,29 @@ class Sale
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Sale
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
     }
 }

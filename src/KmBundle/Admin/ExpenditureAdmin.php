@@ -26,6 +26,7 @@ class ExpenditureAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
+        
             ->add('amount')
             ->add('branch')
             ->add('createdAt')
@@ -45,9 +46,15 @@ class ExpenditureAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
+        ->with('Other', array('class' => 'col-md-6'))
             ->add('branch')
             ->add('amount')
-            ->add('createdAt')
+            ->add('createdAt', 'sonata_type_datetime_picker', array(
+                      'dp_side_by_side'  => true,
+                      'dp_use_current'   => false,
+                      'dp_use_seconds'   => false,
+              ))
+        ->end()
         ;
     }
 

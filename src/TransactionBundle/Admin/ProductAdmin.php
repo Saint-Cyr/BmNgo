@@ -18,6 +18,8 @@ class ProductAdmin extends AbstractAdmin
         $datagridMapper
             ->add('name')
             ->add('barcode')
+            ->add('categories')
+            
         ;
     }
 
@@ -28,10 +30,17 @@ class ProductAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('image', null, array('template' => 'TransactionBundle:Default:list.html.twig'))
-            ->add('name')
-            ->add('unitPrice')
-            ->add('barcode')
-            ->add('category')
+            ->add('name', null, array('editable' => true))
+            ->add('unitPrice', 'decimal', array('editable' => true));
+            if($this->isGranted('ROLE_SUPER_ADMIN')){
+                $listMapper->add('wholeSalePrice', 'decimal', array('editable' => true))
+                           ->add('profit');
+            }
+            
+            $listMapper->add('totalStock', null, array('label' => 'Total Stock'))
+            ->add('categories')
+            ->add('imagePos', null, array('editable' => true))
+            ->add('locked', null, array('editable' => true))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -47,17 +56,24 @@ class ProductAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        //The super-user have to be able to edit barcode
+        $disabled = true;
+        
+        if($this->isGranted('SUPER-ADMIN')){
+            $disabled = false;       
+        }
+        
         //$option = (preg_match('/_edit$/', $this->getRequest()->get('_route'))) ? false : true;
         $formMapper
         ->with('General information', array('class' => 'col-md-8'))
             ->add('name')
-            ->add('category')
-            ->add('barcode')
+            ->add('categories');
+            $formMapper->add('barcode', null, array('disabled' => $disabled))
             ->add('file', 'file', array('required' => false))
         ->end()
         ->with('Pricing', array('class' => 'col-md-4'))
-            ->add('unitPrice')
-            ->add('wholeSalePrice')
+            ->add('unitPrice', null, array('required' => false))
+            ->add('wholeSalePrice', null, array('required' => false))
         ->end()
         ;
     }
@@ -71,6 +87,44 @@ class ProductAdmin extends AbstractAdmin
             ->add('name')
             ->add('unitPrice')
         ;
+    }
+    
+    public function preValidate($object) {
+        parent::preValidate($object);
+        //If the unit sale price has not been field then initialize it
+        if(!$object->getUnitPrice()){
+            $object->setUnitPrice(0);
+        }
+        //If the whole sale price has not been field then initialize it
+        if(!$object->getWholeSalePrice()){
+            $object->setWholeSalePrice(0);
+        }
+    }
+    
+    public function getBatchActions()
+    {
+        // retrieve the default batch actions (currently only delete)
+        $actions = parent::getBatchActions();
+       
+        if (
+          $this->hasRoute('edit') && $this->isGranted('EDIT') &&
+          $this->hasRoute('delete') && $this->isGranted('DELETE')
+            ) {
+            $actions['generate'] = array(
+                'label' => 'Reg. BC',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
+            
+            $actions['lockBarcode'] = array(
+                'label' => 'Lock BC',
+                'translation_domain' => 'SonataAdminBundle',
+                'ask_confirmation' => true
+            );
+
+        }
+
+        return $actions;
     }
     
     public function prePersist($image)

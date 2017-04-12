@@ -22,8 +22,8 @@ class Category
     private $id;
     
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
-     * 
+     * @ORM\ManyToMany(targetEntity="TransactionBundle\Entity\Product", inversedBy="categories")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $products;
 
@@ -33,6 +33,13 @@ class Category
      * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="displayed", type="boolean", nullable=true)
+     */
+    private $displayed;
 
     /**
      * @var \DateTime
@@ -52,8 +59,19 @@ class Category
         return $this->id;
     }
     
+    public function getSimpleArray()
+    {
+        $products = null;
+        foreach ($this->getProducts() as $p){
+            $products[] = $p;
+        }
+        
+        return $products;
+    }
+    
     public function __construct() {
         $this->setCreatedAt(new \DateTime("now"));
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     public function __toString() {
@@ -106,6 +124,30 @@ class Category
     public function getCreatedAt()
     {
         return $this->createdAt;
+    }
+
+    /**
+     * Set displayed
+     *
+     * @param boolean $displayed
+     *
+     * @return Category
+     */
+    public function setDisplayed($displayed)
+    {
+        $this->displayed = $displayed;
+
+        return $this;
+    }
+
+    /**
+     * Get displayed
+     *
+     * @return boolean
+     */
+    public function getDisplayed()
+    {
+        return $this->displayed;
     }
 
     /**

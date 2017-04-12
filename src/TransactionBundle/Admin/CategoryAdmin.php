@@ -27,8 +27,9 @@ class CategoryAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('name')
+            ->add('name', null, array('editable' => true))
             ->add('createdAt')
+            ->add('displayed', null, array('editable' => true))
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -47,6 +48,7 @@ class CategoryAdmin extends AbstractAdmin
         $formMapper
         ->with('Detail', array('class' => 'col-md-6'))
             ->add('name')
+            ->add('products')
         ->end()
         ;
     }
@@ -61,5 +63,18 @@ class CategoryAdmin extends AbstractAdmin
             ->add('name')
             ->add('createdAt')
         ;
+    }
+    
+    public function prePersist($category) {
+        parent::prePersist($category);
+        $this->preUpdate($category);
+    }
+    
+    public function preUpdate($category) {
+        parent::preUpdate($category);
+        /*foreach ($category->getProducts() as $p){
+            $category->addProduct($p);
+        }*/
+        
     }
 }

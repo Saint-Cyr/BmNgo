@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
-
 <head>
-  <title>Point of Sale Interface</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>POS2</title>
   <!--<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>-->
   <script data-require="jquery@*" data-semver="2.0.3" src="{{ asset('vendor/jquery-3.1.0.min.js') }}"></script>
   
@@ -26,12 +26,19 @@
 var app = angular.module('myApp', []);
 
 app.controller('POSController', function ($scope, $http) {
+    $scope.disableIt = false;
+    $scope.gif = 'logo.png';
+    
     $scope.food = {
       {% for p in products %}
-            {{ p.id }} : {count: 1, id: {{ p.id }}, detail: "{{ p }}", price: {{ p.unitPrice }} },  
+            {% for stock in app.user.branch.stocks %}
+                {# Rember only product that have stock value can be sold on POS2 #}
+                        {% if stock.product.id == p.id and stock.tracked %}
+                            {{ p.id }} : {count: 1, id: {{ p.id }}, detail: "{{ p.name|slice(0, 24)|e('js')|raw }}", price: {{ p.unitPrice }} },
+                        {% endif %}
+            {% endfor %} 
       {% endfor %}
     };
-    
     
     $scope.itemsCnt = 1;
     $scope.order = [];
@@ -103,27 +110,36 @@ function isEmpty(obj) {
     };*/
     
     $scope.checkout = function(index) {
+       //Prevent user to send a second request
+      
       //S@int-Cyr edition start here
       //Data to be sent to the server (order[])
-      var data = {
-          'id': 1,
-          'order': $scope.order,
-          'total': $scope.getSum(),
-      };
+      var order2 = $scope.order.slice(0);
       
+      var data = {"data":{
+          'id': 1,
+          'order': order2,
+          'total': $scope.getSum(),
+    }};
+
+    //Prevent user to send another request
+      $scope.order = '';
+      
+      $scope.gif = 'gif1.gif';
       //Data containing the response from the server
-      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sale', data);
+      var outPut = $http.post('http://localhost/BeezyManager/web/app_dev.php/sales/transactions', data);
+      //alert( "successfull message: " + JSON.stringify({data: data}));
       //When successfull response comes from the server
       outPut.success(function(data, status, headers, config){
           alert(data);
-          //alert( "successfull message: " + JSON.stringify({data: data}));
-          //alert("Order total: $" + $scope.getSum() + "\n\nPayment received. Thanks. cache: " + $scope.cacheAmount + "change: " + $scope.getChange());
-          $scope.order = [];
           
+          $scope.order = [];
+          $scope.gif = 'logo.png';
       });
       
       outPut.error(function(data, status, header, config){
           alert('an error occur: cannot perform the transaction');
+          
       });
       //S@int-Cyr edition end here
       
@@ -136,7 +152,167 @@ function isEmpty(obj) {
     };
 });
 
+
+    //Script for the alert box
+    var ALERT_TITLE = "Beezy Manager";
+    var ALERT_BUTTON_TEXT = "Ok";
+
+    if(document.getElementById) {
+        window.alert = function(txt) {
+            createCustomAlert(txt);
+        }
+    }
+
+    function createCustomAlert(txt) {
+        d = document;
+
+        if(d.getElementById("modalContainer")) return;
+
+        mObj = d.getElementsByTagName("body")[0].appendChild(d.createElement("div"));
+        mObj.id = "modalContainer";
+        mObj.style.height = d.documentElement.scrollHeight + "px";
+
+        alertObj = mObj.appendChild(d.createElement("div"));
+        alertObj.id = "alertBox";
+        if(d.all && !window.opera) alertObj.style.top = document.documentElement.scrollTop + "px";
+        alertObj.style.left = (d.documentElement.scrollWidth - alertObj.offsetWidth)/2 + "px";
+        alertObj.style.visiblity="visible";
+
+        h1 = alertObj.appendChild(d.createElement("h1"));
+        h1.appendChild(d.createTextNode(ALERT_TITLE));
+
+        msg = alertObj.appendChild(d.createElement("p"));
+        //msg.appendChild(d.createTextNode(txt));
+        msg.innerHTML = txt;
+
+        btn = alertObj.appendChild(d.createElement("a"));
+        btn.id = "closeBtn";
+        btn.appendChild(d.createTextNode(ALERT_BUTTON_TEXT));
+        btn.href = "#";
+        btn.focus();
+        btn.onclick = function() { removeCustomAlert();return false; }
+
+        alertObj.style.display = "block";
+
+    }
+
+    function removeCustomAlert() {
+        document.getElementsByTagName("body")[0].removeChild(document.getElementById("modalContainer"));
+    }
   </script>
+  <style>
+    #modalContainer {
+    background-color:rgba(0, 0, 0, 0.3);
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:10000;
+    background-image:url(tp.png); /* required by MSIE to prevent actions on lower z-index elements */
+    }
+
+    #alertBox {
+        position:relative;
+        width:300px;
+        min-height:100px;
+        margin-top:50px;
+        border:1px solid #666;
+        background-color:#fff;
+        background-repeat:no-repeat;
+        background-position:20px 30px;
+    }
+
+    #modalContainer > #alertBox {
+        position:fixed;
+    }
+
+    #alertBox h1 {
+        margin:0;
+        font:bold 0.9em verdana,arial;
+        background-color:#5e388f;
+        color:#FFF;
+        border-bottom:1px solid #000;
+        padding:2px 0 2px 5px;
+    }
+
+    #alertBox p {
+        font:0.7em verdana,arial;
+        height:50px;
+        padding-left:50px;
+        margin-left: auto;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+
+    #alertBox #closeBtn {
+        display:block;
+        position:relative;
+        margin:5px auto;
+        padding:7px;
+        border:0 none;
+        width:70px;
+        font:0.7em verdana,arial;
+        text-transform:uppercase;
+        text-align:center;
+        color:#FFF;
+        background-color:#5e388f;
+        border-radius: 3px;
+        text-decoration:none;
+    }
+
+    /* unrelated styles */
+
+    #mContainer {
+        position:relative;
+        width:600px;
+        margin:auto;
+        padding:5px;
+        border-top:2px solid #000;
+        border-bottom:2px solid #000;
+        font:0.7em verdana,arial;
+    }
+
+    h1,h2 {
+        margin:0;
+        padding:4px;
+        font:bold 1.5em verdana;
+        border-bottom:1px solid #000;
+    }
+
+    code {
+        font-size:1.2em;
+        color:#069;
+    }
+
+    #credits {
+        position:relative;
+        margin:25px auto 0px auto;
+        width:350px; 
+        font:0.7em verdana;
+        border-top:1px solid #000;
+        border-bottom:1px solid #000;
+        height:90px;
+        padding-top:4px;
+    }
+
+    #credits img {
+        float:left;
+        margin:5px 10px 5px 0px;
+        border:1px solid #000000;
+        width:80px;
+        height:79px;
+    }
+
+    .important {
+        background-color:#F5FCC8;
+        padding:2px;
+    }
+
+    code span {
+        color:green;
+    }
+  </style>
 </head>
 <body data-ng-controller="POSController">
   <div class="container">
@@ -146,60 +322,77 @@ function isEmpty(obj) {
         
       </div>
     </div>
-
     <div class="row">
       <div class="col-sm-6">
-        <div class="well">
+        
         {% for category in categories %}
-          <div class="box">
-            <div class="text-info">{{ category.name }}</div>
-            <hr>
-                {% for p in category.products %}
-                    <button class="buttons btn btn-primary" ng-click="add(food.{{ p.id }})">{{ p.name }}</button>
-                {% endfor %}
-          </div>
+            {% if category.displayed %}
+                <div class="box" style="margin-top: 2px;">
+                    <div class="text-info">{{ category.name }}</div>
+                    <style>
+                        .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                            background-color: #5e388f !important;
+                        }
+                    </style>
+                    <hr>
+                    {% for p in category.products %}
+                        {% for stock in app.user.branch.stocks %}
+                            {% if stock.product.id == p.id %}
+                                {% if (p.image == "") or (not p.imagePos) %}
+                                    <button class="btn btn-primary" ng-click="add(food.{{ p.id }})" style="width: 130px; height: 110px;">
+                                        {{ p }}
+                                    </button>
+                                {% else %}
+                                    <img src="{{ asset('upload/product/'~p.image) }}" style="width: 130px; height: 110px;"
+                                    ng-click="add(food.{{ p.id }})" alt="{{ p.name }}" class="img-thumbnail">
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            {% endif %}
           <br></br>
           {% endfor %}
           {% verbatim %}
-
-        </div>
-          {% endverbatim %}
-          <a href="{{ path('transaction_pos') }}"><img src="{{ asset('barecode.jpg') }}" width="50" for="barcodeId"/></a>
-          {% verbatim %}
+        
+          
       </div>
-
       <div class="col-sm-6">
-        <div class="well">
+        
+        <style>
+            .panel > .panel-heading {
+                background-color: #5e388f;
+            }
+        </style>
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Order Summary</h3>
             </div>
             <div class="panel-body" style="max-height:320px; overflow:auto;">
-              <div class="text-warning" ng-hide="order.length">
-                {% endverbatim %}
-                <img src="{{ asset('images/logo.png') }}" style="margin-left:150px;" width="150"/>
-                {% verbatim %}
+              <div class="text-warning" ng-hide="order.length" ng-model="gif">
+                
+                    <img src="/BeezyManager/web/images/{{ gif }}" style="margin-left:150px;" width="150"/>
+                
               </div>
-              <ul class="list-group">
+            <ul class="list-group">
                 <li class="list-group-item" ng-repeat="item in order">
-                  <span> {{item.item.detail}}</span>
-
+                  <span style="font-size: 23px;"> {{item.item.detail}}</span>
                   <div class="btn-group pull-right" role="group" aria-label="...">
                       <button type="button" class="btn btn-xs " ng-disabled="" ng-click="subtractItem(item, $index)">
-                        <span type="button" class="glyphicon glyphicon-minus"></span>
+                        <span type="button" class="fa fa-minus"></span>
                       </button>
                       <button type="button" class="btn  btn-xs" ng-click="addItem(item, $index)">
-                        <span class="glyphicon glyphicon-plus"></span>
+                        <span class="fa fa-plus"></span>
                       </button>
-                       <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
-                        <span class="glyphicon glyphicon-trash"></span>
+                      <button type="button" class="btn btn-danger btn-xs"  ng-click="deleteItem($index)">
+                        <span class="fa fa-trash-o"></span>
                       </button>                     
                   </div>
-                  <div class="label label-success pull-right">FCFA {{item.totalPrice}}</div>
+                  <div class="label label-success pull-right">{{item.totalPrice}}</div>
                   <div class="label label-default pull-right">{{item.orderedItemCnt}}</div>
 
                 </li>
-              </ul>
+            </ul>
                   
             </div>
             <div class="panel-footer" ng-show="order.length">
@@ -210,18 +403,39 @@ function isEmpty(obj) {
                 Do not let go of customer without taking payment !
               </div>
             </div>
-            
             <div class="pull-right">
               <span class="btn btn-default" ng-click="clearOrder()" ng-disabled="!order.length">Clear</span>
-              <span class="btn btn-danger" ng-click="checkout()" ng-disabled="!order.length">Checkout</span>
+              <span class="btn btn-danger" ng-click="checkout()" ng-disabled="(!order.length)">Checkout</span>
             </div>
-
           </div>
-        </div>
+        
       </div>
     </div>
-  </div>
+    <div style="margin-top:10px" class="form-group">
+        <!-- Button -->
+        <div class="col-sm-12 controls">
 
+        </div>
+   
+    </div>
+    {% endverbatim %}
+    
+    
+    <div class="form-group">
+        <div class="col-md-12 control">
+            <div style="border-top: 1px solid#888; padding-top:15px; font-size:85%" >
+                <div style="float:left; font-size: 120%; position: relative; top:-10px"> 
+                    <a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true" style="color: #320070;"></i></a>   
+                    <a href="{{ path('transaction_pos_barcode') }}"><i class="fa fa-barcode" aria-hidden="true" style="color: #320070; margin-left: 6px;"></i></a>  
+                    <a href="#"><i class="fa fa-question-circle" aria-hidden="true" style="color: #320070; margin-left: 6px;"></i></a>
+                </div>
+                <div style="float:right; font-size: 80%; position: relative; top:-10px">
+                    <a href="#" style="color: #320070;">© 2017 - Saint-Cyr MAPOUKA</a>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+ </div>
 </body>
-{% endverbatim %}
 </html>

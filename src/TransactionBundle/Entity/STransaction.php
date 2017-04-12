@@ -3,6 +3,7 @@
 namespace TransactionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * STransaction
@@ -26,7 +27,13 @@ class STransaction
      * @ORM\JoinColumn(nullable=false)
      */
     private $branch;
-
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $user;
+    
     /**
      * @var \DateTime
      *
@@ -37,7 +44,7 @@ class STransaction
     /**
      * @var float
      *
-     * @ORM\Column(name="totalAmount", type="float")
+     * @ORM\Column(name="totalAmount", type="float", nullable=true)
      */
     private $totalAmount;
     
@@ -49,9 +56,11 @@ class STransaction
     private $profit;
     
     /**
-     * @ORM\OneToMany(targetEntity="Sale", mappedBy="stransaction", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Sale", mappedBy="stransaction", cascade={"remove", "all"})
      */
     private $sales;
+    
+    private $oneTime;
 
     /**
      * Get id
@@ -63,8 +72,39 @@ class STransaction
         return $this->id;
     }
     
+    public function isOneTime()
+    {
+        return $this;
+    }
+    
     public function __toString() {
         return 'STransaction object: '.$this->getId();
+    }
+    
+    /**
+     * @Assert\IsTrue(message = "Sale is not valid")
+     */
+    public function isSaleValid()
+    {
+        $response = true;
+        
+        foreach($this->getSales() as $sale){
+            
+            foreach ($sale->getProduct()->getStocks() as $stock){
+                
+                if((!$stock->isTracked() && $sale->getQuantity()) ||
+                    (!$stock->isTracked() && !$sale->getAmount())  ||
+                    ($stock->isTracked() && !$sale->getQuantity())) 
+                    //($stock->isTracked() && $sale->getAmount()))
+                    {
+                    $response = false;
+               
+                }
+            }
+            
+        }
+        
+        return $response;
     }
 
     /**
@@ -112,7 +152,14 @@ class STransaction
      */
     public function getTotalAmount()
     {
-        return $this->totalAmount;
+        $totalAmount = null;
+        
+        foreach ($this->getSales() as $sale){
+            
+            $totalAmount = $totalAmount + $sale->getAmount();
+        }
+        
+        return $totalAmount;
     }
     /**
      * Constructor
@@ -161,7 +208,7 @@ class STransaction
      * Set profit
      *
      * @param float $profit
-     *
+     * @deprecated since version 1.0_alpha
      * @return STransaction
      */
     public function setProfit()
@@ -187,7 +234,13 @@ class STransaction
      */
     public function getProfit()
     {
-        return $this->profit;
+        $profit = null;
+        
+        foreach ($this->getSales() as $sale){
+            $profit = $profit + $sale->getProfit();
+        }
+        
+        return $profit;
     }
 
     /**
@@ -212,5 +265,53 @@ class STransaction
     public function getBranch()
     {
         return $this->branch;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return STransaction
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set oneTime
+     *
+     * @param boolean $oneTime
+     *
+     * @return STransaction
+     */
+    public function setOneTime($oneTime)
+    {
+        $this->oneTime = $oneTime;
+
+        return $this;
+    }
+
+    /**
+     * Get oneTime
+     *
+     * @return boolean
+     */
+    public function getOneTime()
+    {
+        return $this->oneTime;
     }
 }

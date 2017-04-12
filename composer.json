@@ -34,7 +34,8 @@
         "friendsofsymfony/rest-bundle": "^2.1",
         "friendsofsymfony/user-bundle": "2.0.x-dev",
         "symfony/assetic-bundle": "^2.8",
-        "qandidate/symfony-json-request-transformer": "^1.2"
+        "qandidate/symfony-json-request-transformer": "^1.2",
+        "knplabs/knp-time-bundle": "^1.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

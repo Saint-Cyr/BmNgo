@@ -3,6 +3,7 @@
 namespace TransactionBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Sale
@@ -20,6 +21,20 @@ class Sale
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createdAt", type="datetime", nullable=true)
+     */
+    private $createdAt;
+    
+    /**
+     * @var Integer
+     *
+     * @ORM\Column(name="quantity", type="integer", nullable=true)
+     */
+    private $quantity;
 
     /**
      * @var float
@@ -34,8 +49,19 @@ class Sale
      * @ORM\Column(name="profit", type="float", nullable=true)
      */
     private $profit;
-
-
+    
+    /**
+     * @Assert\Valid
+     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\STransaction", inversedBy="sales", cascade={"persist"})
+     */
+    private $stransaction;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\Product", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $product;
+    
     /**
      * Get id
      *
@@ -47,18 +73,16 @@ class Sale
     }
     
     public function __toString() {
-        return 'Sale object: '.$this->getId();
+        return $this->getProduct()->getName();
     }
     
-    /**
-     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\STransaction", inversedBy="sales", cascade={"persist"})
-     */
-    private $stransaction;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="TransactionBundle\Entity\Product", cascade={"persist"})
-     */
-    private $product;
+    public function __construct() {
+        
+        if(!$this->createdAt){
+            $this->setCreatedAt(new \DateTime("now"));
+        }
+        
+    }
 
     /**
      * Set amount
@@ -67,9 +91,13 @@ class Sale
      *
      * @return Sale
      */
-    public function setAmount($amount)
+    public function setAmount($amount = null)
     {
-        $this->amount = $amount;
+        if(!$amount){
+            $this->amount = $this->getQuantity() * $this->getProduct()->getUnitPrice();
+        }else{
+            $this->amount = $amount;
+        }
 
         return $this;
     }
@@ -131,7 +159,7 @@ class Sale
      */
     public function getProfit()
     {
-        return $this->profit;
+        return (($this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice()) * $this->getQuantity());
     }
 
     /**
@@ -156,5 +184,55 @@ class Sale
     public function getProduct()
     {
         return $this->product;
+    }
+
+    /**
+     * Set quantity
+     *
+     * @param integer $quantity
+     *
+     * @return Sale
+     */
+    public function setQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+        
+        $this->setAmount();
+        
+        return $this;
+    }
+
+    /**
+     * Get quantity
+     *
+     * @return integer
+     */
+    public function getQuantity()
+    {
+        return $this->quantity;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Sale
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
     }
 }

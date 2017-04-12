@@ -19,6 +19,7 @@ class UserAdmin extends AbstractAdmin
             ->add('username')
             ->add('email')
             ->add('enabled')
+            ->add('branch')
         ;
     }
 
@@ -28,8 +29,10 @@ class UserAdmin extends AbstractAdmin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('username')
+            ->add('image', null, array('template' => 'UserBundle:Default:list.html.twig'))
+            ->add('name')
             ->add('email')
+            ->add('branch')
             ->add('enabled', null, array('editable' => true))
             ->add('lastLogin')
             ->add('_action', null, array(
@@ -47,14 +50,18 @@ class UserAdmin extends AbstractAdmin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $edition = (preg_match('/_edit$/', $this->getRequest()->get('_route'))) ? false : true;
         $typeContext = array();
         
-        if($this->isGranted('ROLE_SUPER_ADMIN')){
+        if($this->isGranted('ROLE_SUPER_ADMIN') && ($edition)){
             $typeContext['Super-Admin'] = 'super-admin';
             $typeContext['Administrator'] = 'administrator';
         }
         
-        $passwordRequired = (preg_match('/_edit$/', $this->getRequest()->get('_route'))) ? false : true;
+        if($this->isGranted('ROLE_ADMIN') && ($edition)){
+            $typeContext['Seller'] = 'seller';
+        }
+        
         $formMapper
             ->with('Connexion Information', array('class' => 'col-md-4'))
                 ->add('username')
@@ -62,15 +69,20 @@ class UserAdmin extends AbstractAdmin
                 ->add('plainPassword', 'repeated', array(
                         'type' => 'password',
                         'invalid_message' => 'The password fields must match.',
-                        'required' => $passwordRequired,
+                        'required' => $edition,
                         'first_options'  => array('label' => 'Password'),
                         'second_options' => array('label' => 'Repeat Password'),
                     ))
                 
             ->end()
                 
-        ->with('Personal information', array('class' => 'col-md-4'))
-            ->add('name');
+            ->with('Personal information', array('class' => 'col-md-4'))
+
+                ->add('name', null, array('label' => 'Name (length must be more than 5)'))
+                ->add('branch')
+                ->add('phoneNumber')
+                ->add('file', 'file', array('required' => false))
+            ;
         
         
         if ($this->isGranted('EDIT')) {
@@ -100,12 +112,38 @@ class UserAdmin extends AbstractAdmin
         $object->setEnabled(true);
         
         switch ($object->getType()){
-        case 'super-admin':
-            $object->setRoles(array('ROLE_SUPER_ADMIN'));
-        break;
-        case 'administrator':
-            $object->setRoles(array('ROLE_ADMIN'));
-        break;
+            case 'super-admin':
+                $object->setRoles(array('ROLE_SUPER_ADMIN'));
+            break;
+            case 'administrator':
+                $object->setRoles(array('ROLE_ADMIN'));
+            break;
+            case 'seller':
+                $object->setRoles(array('ROLE_SELLER'));
+            break;
+        }
+    }
+    
+    public function prePersist($user)
+    {
+        $this->manageFileUpload($user);
+    }
+    
+    public function __construct($code, $class, $baseControllerName, $manager = null) {
+        parent::__construct($code, $class, $baseControllerName);
+        $this->userManager = $manager;
+    }
+    
+    public function preUpdate($user) {
+        $this->manageFileUpload($user);
+        $this->userManager->updateCanonicalFields($user);
+        $this->userManager->updatePassword($user);
+    }
+
+    private function manageFileUpload($image)
+    {
+        if ($image->getFile()) {
+            $image->refreshUpdated();
         }
     }
 }

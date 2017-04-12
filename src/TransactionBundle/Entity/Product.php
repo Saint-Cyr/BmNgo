@@ -45,11 +45,14 @@ class Product
      */
     private $image;
     
+    private $flyProfit;
+    
+    private $flyAmount;
+    
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\OneToMany(targetEntity="Stock", mappedBy="product")
      */
-    private $category;
+    private $stocks;
 
     /**
      * @var string
@@ -61,6 +64,20 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="locked", type="boolean", nullable=true)
+     */
+    private $locked;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imagePos", type="boolean", nullable=true)
+     */
+    private $imagePos;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="barcode", type="string", length=255, nullable=true, unique=true)
      */
     private $barcode;
@@ -68,19 +85,30 @@ class Product
     /**
      * @var float
      *
-     * @ORM\Column(name="unitPrice", type="float")
+     * @ORM\Column(name="unitPrice", type="float", nullable=true)
      */
     private $unitPrice;
     
     /**
+     * @ORM\ManyToMany(targetEntity="TransactionBundle\Entity\Category", mappedBy="products")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $categories;
+    
+    /**
      * @var float
      *
-     * @ORM\Column(name="WholeSalePrice", type="float")
+     * @ORM\Column(name="WholeSalePrice", type="float", nullable=true)
      */
     private $wholeSalePrice;
     
     public function __toString() {
         return $this->name;
+    }
+    
+    public function getProfit()
+    {
+        return $this->getUnitPrice() - $this->getWholeSalePrice();
     }
     
     /**
@@ -171,7 +199,11 @@ class Product
      */
     public function getImage()
     {
-        return $this->getId().'.'.$this->image;
+        if((substr($this->image, -4) == 'jpeg')||(substr($this->image, -3) == 'jpg')||(substr($this->image, -3) == 'png')){
+            return $this->getId().'.'.$this->image;
+        }else{
+            return null;
+        }
     }
 
     /**
@@ -207,6 +239,17 @@ class Product
     {
         return $this->id;
     }
+    
+    public function totalStock()
+    {
+        $total = 0;
+        
+        foreach ($this->getStocks() as $stock){
+            $total = $total + $stock->getValue();
+        }
+        
+        return $total;
+    }
 
     /**
      * Set name
@@ -239,7 +282,7 @@ class Product
      *
      * @return Product
      */
-    public function setUnitPrice($unitPrice)
+    public function setUnitPrice($unitPrice = null)
     {
         $this->unitPrice = $unitPrice;
 
@@ -287,7 +330,7 @@ class Product
      *
      * @return Product
      */
-    public function setWholeSalePrice($wholeSalePrice)
+    public function setWholeSalePrice($wholeSalePrice = null)
     {
         $this->wholeSalePrice = $wholeSalePrice;
 
@@ -303,28 +346,187 @@ class Product
     {
         return $this->wholeSalePrice;
     }
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->stocks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * Set category
+     * Add stock
      *
-     * @param \TransactionBundle\Entity\Category $category
+     * @param \TransactionBundle\Entity\Stock $stock
      *
      * @return Product
      */
-    public function setCategory(\TransactionBundle\Entity\Category $category = null)
+    public function addStock(\TransactionBundle\Entity\Stock $stock)
     {
-        $this->category = $category;
+        $this->stocks[] = $stock;
 
         return $this;
     }
 
     /**
-     * Get category
+     * Remove stock
      *
-     * @return \TransactionBundle\Entity\Category
+     * @param \TransactionBundle\Entity\Stock $stock
      */
-    public function getCategory()
+    public function removeStock(\TransactionBundle\Entity\Stock $stock)
     {
-        return $this->category;
+        $this->stocks->removeElement($stock);
+    }
+
+    /**
+     * Get stocks
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStocks()
+    {
+        return $this->stocks;
+    }
+
+    /**
+     * Set locked
+     *
+     * @param boolean $locked
+     *
+     * @return Product
+     */
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean
+     */
+    public function isLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * Get locked
+     *
+     * @return boolean
+     */
+    public function getLocked()
+    {
+        return $this->locked;
+    }
+
+    /**
+     * Set imagePos
+     *
+     * @param boolean $imagePos
+     *
+     * @return Product
+     */
+    public function setImagePos($imagePos)
+    {
+        $this->imagePos = $imagePos;
+
+        return $this;
+    }
+
+    /**
+     * Get imagePos
+     *
+     * @return boolean
+     */
+    public function getImagePos()
+    {
+        return $this->imagePos;
+    }
+
+    /**
+     * Set flyProfit
+     *
+     * @param string $flyProfit
+     *
+     * @return Product
+     */
+    public function setFlyProfit($flyProfit)
+    {
+        $this->flyProfit = $flyProfit;
+
+        return $this;
+    }
+
+    /**
+     * Get flyProfit
+     *
+     * @return string
+     */
+    public function getFlyProfit()
+    {
+        return $this->flyProfit;
+    }
+
+    /**
+     * Set flyAmount
+     *
+     * @param string $flyAmount
+     *
+     * @return Product
+     */
+    public function setFlyAmount($flyAmount)
+    {
+        $this->flyAmount = $flyAmount;
+
+        return $this;
+    }
+
+    /**
+     * Get flyAmount
+     *
+     * @return string
+     */
+    public function getFlyAmount()
+    {
+        return $this->flyAmount;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \TransactionBundle\Entity\Category $category
+     *
+     * @return Product
+     */
+    public function addCategory(\TransactionBundle\Entity\Category $category)
+    {
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \TransactionBundle\Entity\Category $category
+     */
+    public function removeCategory(\TransactionBundle\Entity\Category $category)
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 }
