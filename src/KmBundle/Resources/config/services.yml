@@ -11,7 +11,7 @@ services:
         class: KmBundle\Service\ReportHandler
         arguments: ["@doctrine.orm.entity_manager"]
         
-    km.statisticHandler:
+    km.statistic_handler:
         class: KmBundle\Service\StatisticHandler
         arguments: ["@doctrine.orm.entity_manager"]
 

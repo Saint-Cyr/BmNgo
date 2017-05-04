@@ -8,7 +8,7 @@
  * file that was distributed with this source code
  */
 
-namespace Tests\TransactionBundle\Service;
+namespace Tests\KmBundle\Service;
 
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;

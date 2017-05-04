@@ -5,6 +5,9 @@ fos_user:
     registration:
         form:
             type: UserBundle\Form\RegistrationType
+    from_email:
+        address: mapoukacyr@gmail.com
+        sender_name: BeezyManager
 fos_rest:
     param_fetcher_listener: true
     body_listener: true

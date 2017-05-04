@@ -46,7 +46,7 @@ class DefaultController extends Controller
     public function dashboardAction()
     {
         //Get the statistic handler service
-        $statisticHandler = $this->get('km.statisticHandler');
+        $statisticHandler = $this->get('km.statistic_handler');
         //Get the entity manager
         $em = $this->getDoctrine()->getManager();
         //Get all the branches

@@ -64,7 +64,7 @@ class User extends BaseUser
     private $type;
     
     /**
-     * @ORM\ManyToOne(targetEntity="KmBundle\Entity\Branch", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="KmBundle\Entity\Branch", inversedBy="users", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(nullable=true)
      */
     private $branch;
