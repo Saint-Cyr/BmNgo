@@ -2,6 +2,8 @@
 
 namespace KmBundle\Service;
 
+use KmBundle\Entity\Branch;
+
 class StatisticHandler
 {
     //To store the entity manager
@@ -11,8 +13,26 @@ class StatisticHandler
     {
         $this->em = $em;
     }
+
+    /*
+     * Hydrate branch with fly data in order to give
+     * to the view.
+     * @return type KmBuntle:Branch
+     */
+    public function setBranchFlyData(Branch $branch)
+    {
+        //Get all the STransaction for today and by branch
+        $totalForTodayByBranch = $this->em->getRepository('TransactionBundle:STransaction')
+            ->getForTodayByBranch($branch);
+
+        $branch->setFlySaleAmount($totalForTodayByBranch['sale']);
+        $branch->setFlyProfitAmount($totalForTodayByBranch['profit']);
+        $branch->setFlyExpenditureAmount($totalForTodayByBranch['expenditure']);
+        $branch->setFlyBalanceAmount($totalForTodayByBranch['balance']);
+    }
     
     /**
+     * @deprecated since 1.0-dev
      * @return type Description
      */
     public function getSale(array $input = null)
@@ -112,6 +132,7 @@ class StatisticHandler
     /**
      * 
      * @param array $input
+     * @deprecated since 1.0-dev
      */
     public function getProfit(array $input = null)
     {
@@ -146,6 +167,7 @@ class StatisticHandler
     /**
      * 
      * @param array $input
+     * @deprecated since 1.0-dev
      */
     public function getBalance(array $input = null)
     {
@@ -154,7 +176,7 @@ class StatisticHandler
     }
     
     /**
-     * 
+     * @deprecated since 1.0-dev
      * @param \KmBundle\Entity\Branch $branch
      */
     public function getSaleByBranch(\KmBundle\Entity\Branch $branch)
@@ -162,8 +184,16 @@ class StatisticHandler
         //Get all the saleTransaction for the given branch
         $STransactions = $branch->getStransactions();
         $total = 0;
+
         foreach ($STransactions as $st){
-            $total = $total + $st->getTotalAmount();
+            //Make sure to collect only for today
+            $stDate = $st->getCreatedAt()->format('d');
+            $today = new \DateTime("now");
+            $today->format('d');
+
+            if($stDate == $today){
+                $total = $total + $st->getTotalAmount();
+            }
         }
         
         return $total;

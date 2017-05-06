@@ -166,7 +166,9 @@ class STransaction
      */
     public function __construct()
     {
-        $this->setCreatedAt(new \DateTime("now"));
+        $dateTime = new \DateTime("now");
+        $dateTime->format("Y-m-d");
+        $this->setCreatedAt($dateTime);
         $this->sales = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

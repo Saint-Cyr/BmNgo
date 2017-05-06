@@ -218,6 +218,22 @@ class Branch
     }
 
     /**
+     * Get expenditure value
+     * @return integer
+     */
+    public function getExpendituresAmount()
+    {
+        //Get all the expenditure related to the given branch
+        $expenditures = $this->getExpenditures();
+        $total = 0.00;
+        foreach ($expenditures as $exp){
+            $total = $total + $exp->getAmount();
+        }
+
+        return $total;
+    }
+
+    /**
      * Add stock
      *
      * @param \TransactionBundle\Entity\Stock $stock

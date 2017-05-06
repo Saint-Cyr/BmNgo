@@ -54,7 +54,7 @@ class DefaultController extends Controller
         $products = $em->getRepository('TransactionBundle:Product')->findAll();
         //Get the list of all the categories
         $categories = $em->getRepository('TransactionBundle:Category')->findAll();
-        
+
         return $this->render('TransactionBundle:POS:pos2.html.twig', array('categories' => $categories,
                                                                            'products' => $products));
     }

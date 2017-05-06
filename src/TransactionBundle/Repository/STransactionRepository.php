@@ -10,4 +10,50 @@ namespace TransactionBundle\Repository;
  */
 class STransactionRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findLast()
+    {
+        $qb = $this->createQueryBuilder('st');
+        $qb->setMaxResults(1);
+        $qb->orderBy('st.id', 'DESC');
+        return $qb->getQuery()->getSingleResult();
+    }
+
+    public function getForTodayByBranch($branch)
+    {
+        $initDate = new \DateTime('now'); // Have for example 2013-06-10 09:53:21
+        $initDate->setTime(0, 0, 0); // Modify to 2013-06-10 00:00:00, beginning of the day
+
+        $finalDate = clone $initDate;
+        $finalDate->modify('+1 day'); // Have 2013-06-11 00:00:00
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('e')
+            ->from('TransactionBundle:STransaction', 'e')
+            ->where('e.createdAt >= :initDate')
+            ->andWhere('e.createdAt <= :finalDate')
+            ->andWhere('e.branch = :branch')
+            ->setParameter('branch', $branch)
+            ->setParameter('initDate', $initDate->format('Y-m-d'))
+            ->setParameter('finalDate', $finalDate->format('Y-m-d'));
+
+        $result = $qb->getQuery()->getResult();
+
+        $totalSaleAmount = null;
+        $totalProfitAmount = null;
+        $totalBalanceAmount = null;
+        $totalExpenditureAmount = null;
+
+        foreach ($result as $st){
+            $totalSaleAmount = $totalSaleAmount + $st->getTotalAmount();
+            $totalProfitAmount = $totalProfitAmount + $st->getProfit();
+            $totalExpenditureAmount = $totalExpenditureAmount + $st->getBranch()->getExpendituresAmount();
+            $totalBalanceAmount = ($totalProfitAmount - $totalExpenditureAmount);
+        }
+
+        return array('results' => $result,
+                     'sale' => $totalSaleAmount,
+                     'profit' => $totalProfitAmount,
+                     'balance' => $totalBalanceAmount,
+                     'expenditure' => $totalExpenditureAmount);
+    }
 }

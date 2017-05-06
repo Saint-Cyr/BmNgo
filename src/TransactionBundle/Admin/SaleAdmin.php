@@ -17,7 +17,7 @@ class SaleAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('amount')
-            ->add('stransaction')
+            //->add('stransaction')
             ->add('profit')
         ;
     }
@@ -29,7 +29,7 @@ class SaleAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('stransaction')
+            //->add('stransaction')
             ->add('product')
             ->add('amount')
             ->add('profit')

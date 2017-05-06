@@ -51,26 +51,29 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         //Get all the branches
         $branches = $em->getRepository('KmBundle:Branch')->findAll();
-        //Hydrate every branch
+        //Prepare resum for all branch
+        $totalSale = null;
+        $totalProfit = null;
+        $totalExpenditure = null;
+        $totalBalance = null;
+
         foreach ($branches as $b){
-            //Set sale amount
-            $b->setFlySaleAmount($statisticHandler->getSaleByBranch($b));
-            //Profit
-            $b->setFlyProfitAmount($statisticHandler->getProfitByBranch($b));
-            //Expenditure
-            $b->setFlyExpenditureAmount($statisticHandler->getExpenditureByBranch($b));
-            //Balance
-            $b->setFlyBalanceAmount($statisticHandler->getBalanceByBranch($b));
+            //Hydrate every branch
+            $statisticHandler->setBranchFlyData($b);
+            $totalSale = $totalSale + $b->getFlySaleAmount();
+            $totalExpenditure = $totalExpenditure + $b->getFlyExpenditureAmount();
+            $totalProfit = $totalProfit + $b->getFlyProfitAmount();
+            $totalBalance = $totalBalance + $b->getFlyBalanceAmount();
         }
-        
+
         //Get all the sale transaction amount for every month
         $stransactions = $statisticHandler->getSaleByMonth();
-        //Get the resum for all branches
+        /*//Get the resum for all branches
         $totalSale = $statisticHandler->getSale();
         $totalProfit = $statisticHandler->getProfit();
         $totalExpenditure = $statisticHandler->getExpenditure();
-        $totalBalance = $statisticHandler->getBalance();
-        
+        $totalBalance = $statisticHandler->getBalance();*/
+
         return $this->render('/admin/vendor_dashboard.html.twig', array('stransactions' => $stransactions,
                                                                         'branches' => $branches,
                                                                         'totalSale' => $totalSale,

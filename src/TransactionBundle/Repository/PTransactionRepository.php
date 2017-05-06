@@ -10,4 +10,5 @@ namespace TransactionBundle\Repository;
  */
 class PTransactionRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

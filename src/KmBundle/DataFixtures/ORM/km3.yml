@@ -70,7 +70,7 @@ KmBundle\Entity\Branch:
         name: VALLEY
 
 TransactionBundle\Entity\STransaction:
-    stransaction1:
+    stransaction_{0..100000}:
         totalAmount: 900.50
         branch: '@branch1'
         createdAt: <(new \DateTime('01-10-2014'))>
@@ -81,77 +81,77 @@ TransactionBundle\Entity\STransaction:
         createdAt: <(new \DateTime('01-10-2014'))>
 
 TransactionBundle\Entity\Sale:
-    sale1_{0..10}:
+    sale1_{0..100000}:
         product: '@product1'
         quantity: 1
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2008'))>
 
     sale2:
         product: '@product2'
         quantity: 1
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2008'))>
 
     sale3:
         product: '@product2'
         quantity: 2
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2008'))>
 
     sale4:
         product: '@product3'
         quantity: 1
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2011'))>
 
     sale5:
         product: '@product4'
         quantity: 1
         amount: 250
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2011'))>
 
     sale6:
         product: '@product4'
         quantity: 1
         amount: 500
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2011'))>
 
     sale7:
         product: '@product5'
         quantity: 1
         amount: 500
-        stransaction: '@stransaction2'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2011'))>
 
     sale8:
         product: '@product5'
         quantity: 1
         amount: 1000
-        stransaction: '@stransaction2'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2011'))>
 
     sale9:
         product: '@product5'
         quantity: 1
         amount: 2000
-        stransaction: '@stransaction2'
+        stransaction: '@stransaction*'
         createdAt: <(new \DateTime('01-01-2011'))>
 
     sale10:
         product: '@product6'
         quantity: 1
         amount: 1000
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         #createdAt: <(new \DateTime('01-01-2011'))>
 
     sale11:
         product: '@product7'
         quantity: 1
         amount: 1500
-        stransaction: '@stransaction1'
+        stransaction: '@stransaction*'
         #createdAt: <(new \DateTime('01-01-2011'))>
 
 
