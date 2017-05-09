@@ -88,7 +88,7 @@ class ReportHandler
     public function buildReportAoneProduct(\DateTime $initialDate, \DateTime $finalDate, Product $product)
     {   
         $sales = $this->em->getRepository('TransactionBundle:Sale')
-                      ->getSaleFromTo($initialDate, $finalDate, $product);
+                      ->getFromTo($initialDate, $finalDate, $product);
         
         $profit = null;
         $amount = null;
@@ -113,7 +113,7 @@ class ReportHandler
         if($unreportedProducts){
             foreach ($unreportedProducts as $up){
                 $sales = $this->em->getRepository('TransactionBundle:Sale')
-                          ->getSaleFromTo($initialDate, $finalDate, $up);
+                          ->getFromTo($initialDate, $finalDate, $up);
 
                 $profit = null;
                 $amount = null;

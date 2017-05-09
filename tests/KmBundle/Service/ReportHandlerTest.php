@@ -34,6 +34,9 @@ class ReportHandlerTest extends WebTestCase
     {
         $initDate = new \DateTime('01-01-2008');
         $finitDate = new \DateTime('01-01-2011');
+
+        $initDate2 = new \DateTime('now');
+        $finitDate2 = new \DateTime('now');
         
         $category1 = $this->em->getRepository('TransactionBundle:Category')->find(1);
         $category2 = $this->em->getRepository('TransactionBundle:Category')->find(2);
@@ -54,7 +57,8 @@ class ReportHandlerTest extends WebTestCase
         }
         
         $outPut1 = $this->reportHandler->getReportA($initDate, $finitDate, $secretariat, $boutique);
-        //There are 1 array for reported product / services like Plastification, Scanner, ...and 1 array for Boutique (other)
+        //There are 1 array for reported product / services like Plastification, Scanner, ...
+        //and 1 array for Boutique (other)
         $this->assertEquals(count($outPut1), 6);
         //There are only 3 products in Boutique
         $this->assertEquals(count($outPut1['E1']), 3);
@@ -122,7 +126,7 @@ class ReportHandlerTest extends WebTestCase
         $outPut1 = $this->reportHandler->getReportA($initDate, $finitDate, null, $boutique);
         $this->assertNull($outPut1['E2']);
         //There are only 3 products in Boutique
-        $this->assertEquals(count($outPut1['E1']), 3);
+        $this->assertCount(3, $outPut1['E1']);
         //Check each one of the product of the shop
         $this->assertEquals($outPut1['E1'][0]->getName(), 'CD Simple');
         $this->assertEquals($outPut1['E1'][1]->getName(), 'DVD');
@@ -139,6 +143,13 @@ class ReportHandlerTest extends WebTestCase
         $this->assertEquals(count($outPut1), 6);
         $this->assertEquals($outPut1['E1'], null);
         $this->assertEquals($outPut1['E2'], null);
+
+        //Case where initData and finiDate is all today's dates
+        $outPut3 = $this->reportHandler->getReportA($initDate2, $finitDate2, $secretariat, $boutique);
+        $this->assertCount(6, $outPut3);
+        //$this->assertEquals($outPut3['E1'][0]->getName(), 'CD Simple');
+        //$this->assertEquals($outPut3['E1'][0]->getFlyAmount(), 10);
+
     }
     
     public function testBuildReportAoneProduct()

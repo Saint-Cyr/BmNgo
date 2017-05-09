@@ -60,8 +60,9 @@ class ReportAdminController extends CRUDController
                 $results['E1_LABEL'] = $object->getE1()->getName();
                 $results['E2_LABEL'] = $object->getE2()->getName();
                 
-                return $this->render('TransactionBundle:Default:report_a.html.twig', array('results' => $results, 'initDate' => $object->getInitDate(),
-                                                                                           'finitDate' => $object->getFinitDate()));
+                return $this->render('TransactionBundle:Default:report_a.html.twig',
+                    array('results' => $results, 'initDate' => $object->getInitDate(),
+                          'finitDate' => $object->getFinitDate()));
                 
                 //If no user selected, use the current one
                 if(!$object->getUser()){

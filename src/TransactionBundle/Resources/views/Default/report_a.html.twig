@@ -33,81 +33,7 @@
 
             <div class="row">
 
-              <!--<div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                  <div class="x_title">
-                    <h2>Report A (General) <small>From: 23/01/16 To: 30/01/2017</small></h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                      </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
-                    
-                    <div class="clearfix"></div>
-                  </div>
-
-                  <div class="x_content">
-
-                    <div class="table-responsive">
-                      <table class="table table-striped jambo_table bulk_action">
-                        <thead>
-                          <tr class="headings">
-                            <th>
-                              <input type="checkbox" id="check-all" class="flat">
-                            </th>
-                            <th class="column-title">Photo 4x4 </th>
-                            <th class="column-title">Internet</th>
-                            <th class="column-title">Impression</th>
-                            <th class="column-title">Photocopy</th>
-                            <th class="column-title">Photocopy couleur</th>
-                            <th class="column-title">Plastification</th>
-                            <th class="column-title">Scan</th>
-                            <th class="column-title">Telephone </th>
-                            <th class="column-title">Saisie </th>
-                            <th class="column-title">Autre </th>
-                            
-                            </th>
-                            <th class="bulk-actions" colspan="7">
-                              <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          <tr class="even pointer">
-                            <td class="a-center ">
-                              <input type="checkbox" class="flat" name="table_records">
-                            </td>
-                            <td class=" ">25000</td>
-                            <td class=" ">135000</td>
-                            <td class=" ">82000</td>
-                            <td class=" ">64750</td>
-                            <td class=" ">13800</td>
-                            <td class=" ">11400</td>
-                            <td class=" ">22350</td>
-                            <td class=" ">33780</td>
-                            <td class=" ">36700</td>
-                            <td class="a-right a-right ">189900</td>
-                            
-                            </td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>-->
+              <h1>Other Page</h1>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                   <div class="x_title">
@@ -143,8 +69,6 @@
                             <th class="column-title">Product / Service </th>
                             <th class="column-title">Sale (FCFA)</th>
                             <th class="column-title">Profit  (FCFA)</th>
-                            
-                            
                             </th>
                             <th class="bulk-actions" colspan="7">
                               <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
@@ -153,20 +77,18 @@
                         </thead>
 
                         <tbody>
+
                         {% for result in results.E2 %}
                           <tr class="even pointer">
                             <td class="a-center ">
                               <input type="checkbox" class="flat" name="table_records">
                             </td>
-                            
                             <td class=" ">{{ result.name }}</td>
                             <td class=" ">{{ result.flyAmount }}</td>
                             <td class=" ">{{ result.flyProfit }}</td>
-                            
-                            
                           </tr>
-                          
                         {% endfor %}
+
                         <tr class="even pointer">
                             <td class="a-center ">
                               <input type="checkbox" class="flat" name="table_records">
@@ -203,7 +125,8 @@
                             
                           </div>
                         </div>
-                    </div>
+                  </div>
+
                   </div>
                 </div>
               </div>
@@ -216,7 +139,7 @@
         <!-- footer content -->
         <footer>
           <div class="pull-right">
-            Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com">Colorlib</a>
+            BeezyManager by <a href="#">StCyrLabs</a>
           </div>
           <div class="clearfix"></div>
         </footer>

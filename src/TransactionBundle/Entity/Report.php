@@ -41,6 +41,13 @@ class Report
     private $e2;
     
     private $e3;
+
+    private $type;
+
+    public function getType()
+    {
+        return $this->type;
+    }
     
     
 

@@ -79,7 +79,7 @@ class STransactionAdminController extends CRUDController
                 //hydrate each sale with the unitPrice of it related product
                 foreach ($object->getSales() as $sale){
                     //Update the stock
-                    $stockHandler->updateStock($branch, $sale->getProduct(), $sale->getQuantity());
+                    $stockHandler->updateStock($branch, $sale->getProduct(), $sale->getQuantity(), true);
                 }
                 //$object->setTotalAmount($object->getTotalAmount())
                 

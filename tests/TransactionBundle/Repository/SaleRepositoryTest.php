@@ -29,22 +29,32 @@ class SaleRepositoryTest extends WebTestCase
         $this->em = $this->application->getKernel()->getContainer()->get('doctrine.orm.entity_manager');
         $this->reportHandler = $this->application->getKernel()->getContainer()->get('km.report_handler');
     }
-    
-    public function testGetSaleFromTo()
+
+    public function testGetFromTo()
     {
-        //To avoid risk notice by PHPUnit
-        $this->assertTrue(true);
-        //Parameters
-        $initialDate = new \DateTime('01-01-2008');
-        $finalDate = new \DateTime('01-01-2009');
-        $product = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        
+        //Case 1
+        $product = $this->em->getRepository('TransactionBundle:Product')->find(10);
+        $this->assertEquals($product->getName(), 'Chemise cartonier');
+
+        $initDate = new \DateTime('now');
+        $finalDate = new \DateTime('now');
+
         $sales = $this->em->getRepository('TransactionBundle:Sale')
-                          ->getSaleFromTo($initialDate, $finalDate, $product);
-        //$this->assertEquals(count($sales), 2);
-        
-        foreach ($sales as $s){
-            //$this->assertEquals($s->getProduct()->getName(), 'Nexcare');
-        }
+            ->getFromTo($initDate, $finalDate, $product);
+
+        $this->assertCount(2, $sales);
+
+        //Case 2
+        $product = $this->em->getRepository('TransactionBundle:Product')->find(5);
+        $this->assertEquals($product->getName(), 'Scanner');
+
+        $initDate = new \DateTime('2011-01-01');
+        $finalDate = new \DateTime('2011-01-01');
+
+        $sales = $this->em->getRepository('TransactionBundle:Sale')
+            ->getFromTo($initDate, $finalDate, $product);
+
+        $this->assertCount(3, $sales);
+
     }
 }

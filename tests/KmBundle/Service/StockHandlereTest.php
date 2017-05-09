@@ -37,7 +37,7 @@ class StockHandlerTest extends WebTestCase
     {
         //Get the product and the stock
         $product = $this->em->getRepository('TransactionBundle:Product')->find(1);
-        //it have to be Jus Top 0.35 L and it related stock
+        //it have to be CD Simple and it related stock
         $this->assertEquals($product->getName(), 'CD Simple');
         //Get the branch
         $branch = $this->em->getRepository('KmBundle:Branch')->find(1);
@@ -46,7 +46,7 @@ class StockHandlerTest extends WebTestCase
         $stocks = $product->getStocks();
         //Make sure $stocks is not null
         $this->assertNotEmpty($stocks);
-        //Get the stockHandler service
+        //Get the stockandler service
         $stockHandler = $this->application->getKernel()->getContainer()->get('km.stock_handler');
         
         //Case where the quantity of the product is 1 and decreasing action
@@ -94,7 +94,6 @@ class StockHandlerTest extends WebTestCase
         //Notice the fourth parameter is to decrease (true) or increase (false) the stock
         $stockHandler->updateStock($branch, $product, $quantity, false);
         $this->assertEquals($stock->getValue(), ($stockInitValue + $quantity));
-        
     }
 }
 

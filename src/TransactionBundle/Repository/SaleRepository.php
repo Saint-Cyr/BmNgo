@@ -10,20 +10,21 @@ namespace TransactionBundle\Repository;
  */
 class SaleRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getSaleFromTo($initDate, $finalDate, $product)
+    public function getFromTo(\Datetime $initDate, $finalDate, $product)
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $from = new \DateTime($initDate->format("Y-m-d")." 00:00:00");
+        $to   = new \DateTime($finalDate->format("Y-m-d")." 23:59:59");
+
+        $qb = $this->createQueryBuilder("e");
         $qb->select('e')
-            ->from('TransactionBundle:Sale', 'e')
-            ->where('e.createdAt >= :initDate')
-            ->andWhere('e.createdAt <= :finalDate')
-            ->andWhere('e.product = :product')
+            ->where('e.product = :product')
+            ->andWhere('e.createdAt BETWEEN :from AND :to')
             ->setParameter('product', $product)
-            ->setParameter('initDate', $initDate->format('Y-m-d'))
-            ->setParameter('finalDate', $finalDate->format('Y-m-d'));
+            ->setParameter('from', $from )
+            ->setParameter('to', $to)
+        ;
+        $result = $qb->getQuery()->getResult();
 
-    $result = $qb->getQuery()->getResult();
-
-    return $result;
+        return $result;
     }
 }
