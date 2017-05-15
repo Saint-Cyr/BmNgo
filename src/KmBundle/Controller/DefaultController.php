@@ -8,6 +8,12 @@ use Hackzilla\BarcodeBundle\Utility\Barcode;
 
 class DefaultController extends Controller
 {
+    public function synchronizerAction()
+    {
+        $synchronizerHandler = $this->get('km.synchronizer_handler');
+        $synchronizerHandler->sart();
+    }
+
     public function frontAction()
     {
         //when logout, goes to the login page

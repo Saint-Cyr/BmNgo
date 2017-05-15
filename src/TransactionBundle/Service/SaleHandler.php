@@ -4,6 +4,8 @@ namespace TransactionBundle\Service;
 use TransactionBundle\Entity\STransaction;
 use TransactionBundle\Entity\Sale;
 use KmBundle\Entity\Branch;
+use UserBundle\Entity\User;
+
 //use FOS\RestBundle\View\View;
 
 class SaleHandler
@@ -34,6 +36,42 @@ class SaleHandler
         foreach ($inputData['order'] as $s){
             //create an instance of a sale
             $sale = new Sale();
+            //Link the sale to the related product
+            $product = $this->em->getRepository('TransactionBundle:Product')->find($s['item']['id']);
+            $sale->setProduct($product);
+            $sale->setProfit();
+            //Call the stocktHandler service to update the stock
+            $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt'], true);
+            //Set the quantity
+            $sale->setQuantity($s['orderedItemCnt']);
+            $sale->setAmount($s['totalPrice']);
+            $sale->setStransaction($stransaction);
+            $this->em->persist($sale);
+        }
+        //Persist its in DB.
+        $this->em->persist($stransaction);
+        $this->em->flush();
+    }
+
+    public function processSaleTransaction2(array $inputData, Branch $branch, User $user)
+    {
+        //Create an instance of a SaleTransaction & hydrate it with the branch and the total amount of the transaction
+        $stransaction = new STransaction();
+        //Keep the datime from the client. The same dateTime will be used for each sale as well
+        $dateTime = new \DateTime($inputData['date_time']);
+        $stransaction->setCreatedAt($dateTime);
+        $stransaction->setTotalAmount($inputData['total']);
+        $stransaction->setBranch($branch);
+        $stransaction->setIdSynchrone($inputData['st_synchrone_id']);
+        //Link the employee to the transaction
+        $stransaction->setUser($user);
+
+        //Loop over each sale
+        foreach ($inputData['order'] as $s){
+            //create an instance of a sale
+            $sale = new Sale();
+            //Keep DateTime from client
+            $sale->setCreatedAt($dateTime);
             //Link the sale to the related product
             $product = $this->em->getRepository('TransactionBundle:Product')->find($s['item']['id']);
             $sale->setProduct($product);

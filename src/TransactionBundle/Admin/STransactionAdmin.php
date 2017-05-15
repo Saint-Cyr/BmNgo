@@ -37,7 +37,8 @@ class STransactionAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('branch')
-            //->add('sales')
+            ->add('idSynchrone')
+            ->add('sales')
             ->add('totalAmount')
             ->add('user.name', null, array('label' => 'Seller'));
             if($this->isGranted('ROLE_SUPER_ADMIN')){

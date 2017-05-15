@@ -27,6 +27,13 @@ class STransaction
      * @ORM\JoinColumn(nullable=false)
      */
     private $branch;
+
+    /**
+     * @var int
+     * @ORM\Column(name="idSynchrone", type="string", nullable=true, unique=true)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $idSynchrone;
     
     /**
      * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User")
@@ -315,5 +322,29 @@ class STransaction
     public function getOneTime()
     {
         return $this->oneTime;
+    }
+
+    /**
+     * Set idSynchrone
+     *
+     * @param integer $idSynchrone
+     *
+     * @return STransaction
+     */
+    public function setIdSynchrone($idSynchrone)
+    {
+        $this->idSynchrone = $idSynchrone;
+
+        return $this;
+    }
+
+    /**
+     * Get idSynchrone
+     *
+     * @return integer
+     */
+    public function getIdSynchrone()
+    {
+        return $this->idSynchrone;
     }
 }
