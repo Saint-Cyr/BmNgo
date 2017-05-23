@@ -147,7 +147,8 @@ class Sale
     {
         //calculate the profit based on the unit & whole sale price of the product
         $profit = $this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice();
-        $this->profit = $profit;
+        //Don't forget to multiply profit by the quantity
+        $this->profit = ($profit * $this->getQuantity());
         
         return $this;
     }
@@ -159,7 +160,9 @@ class Sale
      */
     public function getProfit()
     {
-        return (($this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice()) * $this->getQuantity());
+        //Because profit must be time context then it have to be persisted one time during the transaction
+        return $this->profit;
+        //return (($this->getProduct()->getUnitPrice() - $this->getProduct()->getWholeSalePrice()) * $this->getQuantity());
     }
 
     /**

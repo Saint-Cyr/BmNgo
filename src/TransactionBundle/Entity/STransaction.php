@@ -202,6 +202,16 @@ class STransaction
     {
         $this->sales->removeElement($sale);
     }
+    
+    /*
+     * By @Saint-Cyr
+     */
+    public function removeSales()
+    {
+        foreach ($this->getSales() as $s){
+            $this->removeSale($s);
+        }
+    }
 
     /**
      * Get sales
@@ -328,13 +338,27 @@ class STransaction
      * Set idSynchrone
      *
      * @param integer $idSynchrone
-     *
+     * 
      * @return STransaction
      */
-    public function setIdSynchrone($idSynchrone)
+    public function setIdSynchrone($idSynchrone = null)
     {
-        $this->idSynchrone = $idSynchrone;
+        if(!$idSynchrone){
+            //When no idSynchrone has been provided. Then generate a new one
+            $length = 10;
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < $length; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)];
+            }
 
+            $this->idSynchrone = md5(uniqid(rand(), true));
+        }else{
+            //When set intentionally
+            $this->idSynchrone = $idSynchrone;
+        }
+        
         return $this;
     }
 

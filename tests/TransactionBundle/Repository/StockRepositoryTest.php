@@ -30,6 +30,25 @@ class StockRepositoryTest extends WebTestCase
         $this->reportHandler = $this->application->getKernel()->getContainer()->get('km.report_handler');
     }
     
+    public function testGetTrackedByBranch()
+    {
+        $branch = $this->em->getRepository('KmBundle:Branch')->find(1);
+        $stocks = $this->em->getRepository('TransactionBundle:Stock')->getTrackedByBranch($branch, true);
+        
+        $this->assertCount(4, $stocks);
+        $this->assertEquals($stocks[0]->getProduct()->getName(), 'CD Simple');
+        $this->assertEquals($stocks[0]->getBranch()->getName(), 'BATA');
+        
+        $this->assertEquals($stocks[1]->getProduct()->getName(), 'DVD');
+        $this->assertEquals($stocks[1]->getBranch()->getName(), 'BATA');
+        
+        $this->assertEquals($stocks[2]->getProduct()->getName(), 'Manette 4500');
+        $this->assertEquals($stocks[2]->getBranch()->getName(), 'BATA');
+        
+        $this->assertEquals($stocks[3]->getProduct()->getName(), 'Chemise cartonier');
+        $this->assertEquals($stocks[3]->getBranch()->getName(), 'BATA');
+    }
+    
     public function testGetStocked()
     {
         $branch = $this->em->getRepository('KmBundle:Branch')->find(1);
@@ -43,4 +62,5 @@ class StockRepositoryTest extends WebTestCase
         $destocked = $this->em->getRepository('TransactionBundle:Stock')->getDestocked($branch);
         $this->assertEquals(count($destocked), 1);
     }
+    
 }

@@ -29,20 +29,37 @@ class STransactionTest extends WebTestCase
         $this->saleHandler = $this->application->getKernel()->getContainer()->get('transaction.sale_handler');
     }
     
+    public function testGetIdSynchrone()
+    {
+        //To do : work with mocked object
+        $stransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(1);
+        //set and idSynchrone intentionally
+        $stransaction->setIdSynchrone('qwerty');
+        //Make sure this idSynchrone has been set
+        $this->assertEquals($stransaction->getIdSynchrone(), 'qwerty');
+    }
+
+
     public function testGetProfit()
     {
-        //To avoid risk notice by PHPUnit
-        $this->assertTrue(true);
         //Get a STransaction from the fixtures
         $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(1);
-        //$this->assertEquals($STransaction->getProfit(), 1230.00);
+        $this->assertEquals($STransaction->getProfit(), 3000.00);
+        
+        $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(5);
+        $this->assertEquals($STransaction->getProfit(), 520);
+        
+        $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
+        $this->assertEquals($STransaction->getProfit(), null);
     }
     
     public function testGetTotalAmount()
     {
         //To avoid risk notice by PHPUnit
-        $this->assertTrue(true);
-        $STransaction = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
-        //$this->assertEquals($STransaction->getTotalAmount(), 10000);
+        $STransaction1 = $this->em->getRepository('TransactionBundle:STransaction')->find(1);
+        $this->assertEquals($STransaction1->getTotalAmount(), 6300);
+        
+        $STransaction2 = $this->em->getRepository('TransactionBundle:STransaction')->find(2);
+        $this->assertEquals($STransaction2->getTotalAmount(), 3500);
     }
 }

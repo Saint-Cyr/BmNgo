@@ -38,3 +38,9 @@ services:
         arguments: [~, TransactionBundle\Entity\Report, TransactionBundle:ReportAdmin]
         tags:
             - { name: sonata.admin, manager_type: orm, group: Transaction, label: Report }
+
+    #transaction.admin.canceled_s_transaction:
+     #   class: TransactionBundle\Admin\CanceledSTransactionAdmin
+      #  arguments: [~, TransactionBundle\Entity\CanceledSTransaction, SonataAdminBundle:CRUD]
+       # tags:
+        #    - { name: sonata.admin, manager_type: orm, group: Admin, label: CanceledSTransaction }

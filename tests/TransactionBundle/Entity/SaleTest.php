@@ -31,26 +31,42 @@ class SaleTest extends WebTestCase
     
     public function testGetProfit()
     {
-        //To avoid risk notice by PHPUnit
         $this->assertTrue(true);
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
-        //$this->assertEquals($sale->getProfit(), 123);
+        $this->assertEquals($sale->getProfit(), 50);
+        
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(2);
+        $this->assertEquals($sale->getProfit(), 150);
+        
+        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(3);
+        $this->assertEquals($sale->getProfit(), 300);
         
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(12);
-        //$this->assertEquals($sale->getProfit(), 4000);
+        $this->assertEquals($sale->getProfit(), null);
         
     }
     
     public function testGetAmount()
     {
-        //To avoid risk notice by PHPUnit
-        $this->assertTrue(true);
-        $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
-        //$this->assertEquals($sale->getAmount(), 130);
+        $sale1 = $this->em->getRepository('TransactionBundle:Sale')->find(1);
+        $this->assertEquals($sale1->getAmount(), 150);
+        
+        $sale2 = $this->em->getRepository('TransactionBundle:Sale')->find(2);
+        $this->assertEquals($sale2->getAmount(), 300);
+        
+        $sale3 = $this->em->getRepository('TransactionBundle:Sale')->find(3);
+        $this->assertEquals($sale3->getAmount(), 600);
+        
+        $sale4 = $this->em->getRepository('TransactionBundle:Sale')->find(4);
+        $this->assertEquals($sale4->getAmount(), 4500);
+        
+        $sale5 = $this->em->getRepository('TransactionBundle:Sale')->find(5);
+        $this->assertEquals($sale5->getAmount(), 250);
     }
     
     public function testSetAmount()
     {
+        $this->assertTrue(true);
         $sale = $this->em->getRepository('TransactionBundle:Sale')->find(1);
         $sale->setAmount(100);
         $this->assertEquals(100, $sale->getAmount());

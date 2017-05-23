@@ -6,6 +6,10 @@ services:
     km.stock_handler:
         class: KmBundle\Service\StockHandler
         arguments: ["@doctrine.orm.entity_manager"]
+        
+    km.notification_handler:
+        class: KmBundle\Service\NotificationHandler
+        arguments: ["@doctrine.orm.entity_manager"]
 
     km.synchronizer_handler:
             class: KmBundle\Service\SynchronizerHandler

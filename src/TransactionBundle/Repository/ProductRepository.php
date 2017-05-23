@@ -10,5 +10,11 @@ namespace TransactionBundle\Repository;
  */
 class ProductRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByTrackedStock()
+    {
+        /*$dql = "SELECT p FROM TransactionBundle:Product p JOIN p.stock Where stock.tracked = true";
+        $query = $this->_em->createQuery($dql);
+        return $results = $query->getResult();*/
+    }
     
 }

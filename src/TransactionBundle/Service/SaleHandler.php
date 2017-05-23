@@ -48,11 +48,14 @@ class SaleHandler
             $sale->setStransaction($stransaction);
             $this->em->persist($sale);
         }
+        //Generate the idSynchrone as the transaction has been initiate on the server itself.
+        $stransaction->setIdSynchrone(null);
         //Persist its in DB.
         $this->em->persist($stransaction);
         $this->em->flush();
     }
-
+    
+    
     public function processSaleTransaction2(array $inputData, Branch $branch, User $user)
     {
         //Create an instance of a SaleTransaction & hydrate it with the branch and the total amount of the transaction
@@ -62,6 +65,7 @@ class SaleHandler
         $stransaction->setCreatedAt($dateTime);
         $stransaction->setTotalAmount($inputData['total']);
         $stransaction->setBranch($branch);
+        //set the idSynchrone sent by the client
         $stransaction->setIdSynchrone($inputData['st_synchrone_id']);
         //Link the employee to the transaction
         $stransaction->setUser($user);
@@ -73,7 +77,7 @@ class SaleHandler
             //Keep DateTime from client
             $sale->setCreatedAt($dateTime);
             //Link the sale to the related product
-            $product = $this->em->getRepository('TransactionBundle:Product')->find($s['item']['id']);
+            $product = $this->em->getRepository('TransactionBundle:Product')->find($s['id']);
             $sale->setProduct($product);
             $sale->setProfit();
             //Call the stocktHandler service to update the stock

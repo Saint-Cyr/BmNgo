@@ -35,26 +35,19 @@ class Report
      */
     private $finitDate;
     
-    /**
-     * @var
-     *
-     * @ORM\Column(name="e1", type="datetime", nullable=true)
-     */
-    private $e1;
     
-    /**
-     * @var
-     *
-     * @ORM\Column(name="e2", type="datetime", nullable=true)
-     */
+    private $e1;
+   
     private $e2;
     
-    /**
-     * @var
-     *
-     * @ORM\Column(name="e3", type="datetime", nullable=true)
-     */
     private $e3;
+
+    private $type;
+
+    public function getType()
+    {
+        return $this->type;
+    }
     
     
 
@@ -139,5 +132,53 @@ class Report
     public function getE1()
     {
         return $this->e1;
+    }
+
+    /**
+     * Set e2
+     *
+     * @param \DateTime $e2
+     *
+     * @return Report
+     */
+    public function setE2($e2)
+    {
+        $this->e2 = $e2;
+
+        return $this;
+    }
+
+    /**
+     * Get e2
+     *
+     * @return \DateTime
+     */
+    public function getE2()
+    {
+        return $this->e2;
+    }
+
+    /**
+     * Set e3
+     *
+     * @param \DateTime $e3
+     *
+     * @return Report
+     */
+    public function setE3($e3)
+    {
+        $this->e3 = $e3;
+
+        return $this;
+    }
+
+    /**
+     * Get e3
+     *
+     * @return \DateTime
+     */
+    public function getE3()
+    {
+        return $this->e3;
     }
 }

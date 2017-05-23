@@ -152,6 +152,11 @@ class Stock
         $this->value = $this->value - $quantity;
     }
     
+    public function increaseValue($quantity)
+    {
+        $this->value = $this->value + $quantity;
+    }
+    
     public function __toString() {
         
         if($this->name){
@@ -486,5 +491,53 @@ class Stock
     public function getDestockedValue()
     {
         return $this->destockedValue;
+    }
+
+    /**
+     * Set stockedAt
+     *
+     * @param \DateTime $stockedAt
+     *
+     * @return Stock
+     */
+    public function setStockedAt($stockedAt)
+    {
+        $this->stockedAt = $stockedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get stockedAt
+     *
+     * @return \DateTime
+     */
+    public function getStockedAt()
+    {
+        return $this->stockedAt;
+    }
+
+    /**
+     * Set destockedAt
+     *
+     * @param \DateTime $destockedAt
+     *
+     * @return Stock
+     */
+    public function setDestockedAt($destockedAt)
+    {
+        $this->destockedAt = $destockedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get destockedAt
+     *
+     * @return \DateTime
+     */
+    public function getDestockedAt()
+    {
+        return $this->destockedAt;
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace KmBundle\Admin;
+namespace TransactionBundle\Admin;
 
 use Sonata\AdminBundle\Admin\AbstractAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -8,7 +8,7 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-class BranchAdmin extends AbstractAdmin
+class CanceledSTransactionAdmin extends AbstractAdmin
 {
     /**
      * @param DatagridMapper $datagridMapper
@@ -16,7 +16,10 @@ class BranchAdmin extends AbstractAdmin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('name')
+            
+            ->add('totalAmount')
+            ->add('createdAt')
+            ->add('sales')
         ;
     }
 
@@ -27,9 +30,9 @@ class BranchAdmin extends AbstractAdmin
     {
         $listMapper
             ->add('id')
-            ->add('name')
+            ->add('totalAmount')
             ->add('createdAt')
-            ->add('idSynchrone')
+            //->add('sales')
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
@@ -46,9 +49,10 @@ class BranchAdmin extends AbstractAdmin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name')
-            ->add('idSynchrone')
-             
+            ->add('id')
+            ->add('totalAmount')
+            ->add('createdAt')
+            ->add('sales')
         ;
     }
 
@@ -59,8 +63,9 @@ class BranchAdmin extends AbstractAdmin
     {
         $showMapper
             ->add('id')
-            ->add('name')
+            ->add('totalAmount')
             ->add('createdAt')
+            ->add('sales')
         ;
     }
 }

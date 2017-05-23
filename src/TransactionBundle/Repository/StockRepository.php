@@ -1,6 +1,7 @@
 <?php
 
 namespace TransactionBundle\Repository;
+use KmBundle\Entity\Branch;
 
 /**
  * StockRepository
@@ -10,6 +11,19 @@ namespace TransactionBundle\Repository;
  */
 class StockRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTrackedByBranch(Branch $branch, $tracked)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('s')
+           ->from('TransactionBundle:Stock', 's')
+           ->where('s.tracked = :tracked')
+           ->andWhere('s.branch = :branch')
+           ->setParameter('branch', $branch)
+           ->setParameter('tracked', $tracked);
+        $result = $qb->getQuery()->getResult();
+        return $result;
+    }
+    
     public function getStocked($branch)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

@@ -59,6 +59,16 @@ class Category
         return $this->id;
     }
     
+    public function getSimpleArray()
+    {
+        $products = null;
+        foreach ($this->getProducts() as $p){
+            $products[] = $p;
+        }
+        
+        return $products;
+    }
+    
     public function __construct() {
         $this->setCreatedAt(new \DateTime("now"));
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
@@ -138,5 +148,39 @@ class Category
     public function getDisplayed()
     {
         return $this->displayed;
+    }
+
+    /**
+     * Add product
+     *
+     * @param \TransactionBundle\Entity\Product $product
+     *
+     * @return Category
+     */
+    public function addProduct(\TransactionBundle\Entity\Product $product)
+    {
+        $this->products[] = $product;
+
+        return $this;
+    }
+
+    /**
+     * Remove product
+     *
+     * @param \TransactionBundle\Entity\Product $product
+     */
+    public function removeProduct(\TransactionBundle\Entity\Product $product)
+    {
+        $this->products->removeElement($product);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

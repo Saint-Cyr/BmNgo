@@ -227,8 +227,14 @@ class STransactionAdminController extends CRUDController
                 foreach ($selectedModels as $selectedModel) {
                     //Generate the report
                     foreach ($selectedModel->getSales() as $sale){
+                        
                         $stockHandler->updateStock($branch, $sale->getProduct(), $sale->getQuantity(), false);
                     }
+                    //Add notification to TransactionCanceledSTransaction object
+                    $notificationHandler = $this->get('km.notification_handler');
+                    
+                    $notificationHandler->addSTransaction($selectedModel, $this->getUser());
+                    
                     $modelManager->delete($selectedModel);
                     
                 }
@@ -247,7 +253,5 @@ class STransactionAdminController extends CRUDController
         return new RedirectResponse(
             $this->admin->generateUrl('list', $this->admin->getFilterParameters())
         );
-    }
-    
-    
+    }    
 }

@@ -85,11 +85,62 @@
               </ul>
             </li>
             {% endif %}
+            {% if canceledSTransactions|length != 0 %}
+            <li class="dropdown notifications-menu">
+              <!-- Menu toggle button -->
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-backward"></i>
+                <span class="label label-warning">-{{ canceledSTransactions|length }}</span>
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <!-- Inner Menu: contains the notifications -->
+                  <ul class="menu">
+                      {% for object in canceledSTransactions %}
+                        <li><!-- start notification -->
+                          <a href="#">
+                              <span class="label label-warning"></span>
+                              <span style="color: orange;"> 
+                                  <b style="font-size: 16px;">
+                                    {{ object.totalAmount }}
+                                  </b> - ST#{{ object.id }} || {{ object.createdAt|date('d-m-y:H:m:i')}}
+                              </span><br>
+                              <ul class="fa-ul">
+                                {% for sale in object.sales %}
+                                    {% if sale is not null %}
+                                        <li><i class="fa-li fa fa-check"></i>{{ sale.quantity }} {{ sale.name }}</li>
+                                    {% endif %}
+                                {% endfor %}
+                                </ul>
+                              <i style="padding-left: 45px;">{{ object.canceledAt|ago }}</i> <b>- {{ object.other }} -</b> 
+                          </a>
+                        </li>
+                      {% endfor %}
+                    <!-- end notification -->
+                  </ul>
+                </li>
+                <li class="footer">
+                    <a href="{{ path('km_validate_update_stock', {'update':2}) }}">
+                            <style>
+                                .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+                                    background-color: #5e388f !important;
+                                }
+                            </style>
+                            <button class="btn btn-primary" type="submit" name="btn_create_and_create">
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                                Seen
+                            </button>
+                    </a>
+                </li>
+              </ul>
+              
+            </li>
+            {% endif %}
+            
             
             <!-- Tasks Menu -->
             <li class="dropdown tasks-menu">
               <!-- Menu Toggle Button -->
-              
               
             </li>
             <!-- User Account Menu -->

@@ -44,9 +44,13 @@ class DefaultController extends Controller
         //Get all the updated stock
         $stocked = $em->getRepository('TransactionBundle:Stock')->getStocked($branch);
         $destocked = $em->getRepository('TransactionBundle:Stock')->getDestocked($branch);
+        //Get all the CanceledSTransactionNotification for $branch
+        $canceledSTransactions = $em->getRepository('TransactionBundle:CanceledSTransaction')
+                ->findBy(array('branchId' => $branch->getId()));
         
         return $this->render('KmBundle:Default:stock_update.html.twig',
-                array('stocked' => $stocked, 'destocked' => $destocked));
+                array('stocked' => $stocked, 'destocked' => $destocked,
+                      'canceledSTransactions' => $canceledSTransactions));
     }
     
     public function dashboardAction()
@@ -103,10 +107,15 @@ class DefaultController extends Controller
             foreach ($stocked as $stock){
                 $stock->setStocked(false);
             }
-        }else{
+        }elseif($update == 0){
             $destocked = $em->getRepository('TransactionBundle:Stock')->findBy(array('destocked' => true));
             foreach ($destocked as $stock){
                 $stock->setDestocked(false);
+            }
+        }else{
+            $canceledSTransactions = $em->getRepository('TransactionBundle:CanceledSTransaction')->findAll();
+            foreach ($canceledSTransactions as $object){
+                $em->remove($object);
             }
         }
         

@@ -177,6 +177,8 @@ class STransactionAdmin extends AbstractAdmin
     }
     
     public function preValidate($object) {
+        //Generate idSynchrone
+        $object->setIdSynchrone(null);
         parent::preValidate($object);
         
         foreach ($object->getSales() as $sale){

@@ -18,8 +18,7 @@ class SynchronizerHandler
 
     public function start()
     {
+        return true;
         //$this->client->pos('http://localhost/BeezyManager/web/app_dev.php/sales/transactions')
     }
-    
-
 }
