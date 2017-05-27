@@ -74,16 +74,16 @@ class SaleHandler
         foreach ($inputData['order'] as $s){
             //create an instance of a sale
             $sale = new Sale();
-            //Keep DateTime from client
-            $sale->setCreatedAt($dateTime);
             //Link the sale to the related product
             $product = $this->em->getRepository('TransactionBundle:Product')->find($s['id']);
             $sale->setProduct($product);
+            //Keep DateTime from client
+            $sale->setCreatedAt($dateTime);
+            //Set the quantity
+            $sale->setQuantity($s['orderedItemCnt']);
             $sale->setProfit();
             //Call the stocktHandler service to update the stock
             $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt'], true);
-            //Set the quantity
-            $sale->setQuantity($s['orderedItemCnt']);
             $sale->setAmount($s['totalPrice']);
             $sale->setStransaction($stransaction);
             $this->em->persist($sale);

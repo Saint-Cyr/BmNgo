@@ -32,6 +32,15 @@ class BarcodeHandlerTest extends WebTestCase
     
     public function testGenerateBarcode()
     {
-        $this->assertEquals(true, true);   
+        $branch = $this->em->getRepository('KmBundle:Branch')->find(3);
+        $this->assertEquals($branch->getName(), 'BATA');
+        //Load all the stock
+        $stocks = $this->em->getRepository('TransactionBundle:Stock')->getTrackedByBranch($branch, true);
+        foreach ($stocks as $s){
+            $products[] = $s->getProduct();
+        }
+        
+        $this->assertEquals(count($stocks), 175);
+        $this->assertEquals(count($products), 175);
     }
 }

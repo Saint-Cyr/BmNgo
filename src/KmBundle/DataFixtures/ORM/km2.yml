@@ -17,12 +17,18 @@ TransactionBundle\Entity\Category:
         displayed: true
         
 TransactionBundle\Entity\Product:
+    product1{1..100}:
+        barcode: <name()>
+        name: <name()>
+        unitPrice: 150.00
+        wholeSalePrice: 100.00
+        #categories: '@category1'
+        
     product1:
         barcode: 2002256910205
         name: CD Simple
         unitPrice: 150.00
         wholeSalePrice: 100.00
-        #categories: '@category1'
         
     product2:
         barcode: 2002256910206
