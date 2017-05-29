@@ -1,7 +1,6 @@
 <?php
-
 namespace TransactionBundle\Controller;
-
+ini_set('memory_limit', '128M');
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,17 +29,27 @@ class ApiController extends Controller
         
         $stocks = $em->getRepository('TransactionBundle:Stock')->getTrackedByBranch($branch, true);
         
+        //Because Doctrine load all the related field, we have to build new Data structure
+        $products[] = null;
         foreach ($stocks as $s){
             $p = $s->getProduct();
             $products[] = array('name' => $p->getName(), 'barcode' => $p->getBarcode(),
                                 'unit_price' => $p->getUnitPrice(), 'id' => $p->getId());
         }
         
+        $Branch = array('name' => $branch->getName(), 'id' => $branch->getId());
+        //return $Branch;
         
         //Get all users
         $users = $em->getRepository('UserBundle:User')->findBy(array('branch' => $data['branch_id']));
-        return array('products' => $products, 'users' => $users, 'status' => true,
-                     'message' => 'successfull download', 'branch' => $branch);
+        $Users[] = null;
+        foreach ($users as $u){
+            $Users[] = array('username' => $u->getUsername(), 'email' => $u->getEmail(), 'roles' => $u->getRoles());
+        }
+        
+        //return array('products' => $products, 'branch' => $Branch, 'users' => $Users);
+        return array('products' => $products, 'users' => $Users, 'status' => true,
+                     'message' => 'successfull download', 'branch' => $Branch);
     }
     
     public function postUploadAction(Request $request)

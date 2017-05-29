@@ -147,8 +147,24 @@ class ReportHandlerTest extends WebTestCase
         //Case where initData and finiDate is all today's dates
         $outPut3 = $this->reportHandler->getReportA($initDate2, $finitDate2, $secretariat, $boutique);
         $this->assertCount(6, $outPut3);
-        //$this->assertEquals($outPut3['E1'][0]->getName(), 'CD Simple');
-        //$this->assertEquals($outPut3['E1'][0]->getFlyAmount(), 10);
+        //Shop (E1)
+        $this->assertEquals($outPut3['E1'][0]->getName(), 'CD Simple');
+        $this->assertEquals($outPut3['E1'][1]->getName(), 'DVD');
+        $this->assertEquals($outPut3['E1'][2]->getName(), 'Manette 4500');
+        
+        $this->assertEquals($outPut3['E2'][0]->getName(), 'Plastification');
+        $this->assertEquals($outPut3['E2'][1]->getName(), 'Scanner');
+        $this->assertEquals($outPut3['E2'][2]->getName(), 'Photo44');
+        $this->assertEquals($outPut3['E2'][3]->getName(), 'Photocopy');
+        $this->assertEquals($outPut3['E2'][4]->getName(), 'Internet');
+        $this->assertEquals($outPut3['E2'][5]->getName(), 'Serigraphy');
+        //According to the fixtures, only some of the products/services has been sold today
+        //and all the rest are null (check fixtures doc for further details)
+        $this->assertEquals($outPut3['E2'][0]->getFlyAmount(), null);
+        $this->assertEquals($outPut3['E2'][2]->getFlyAmount(), 1000);
+        $this->assertEquals($outPut3['E2'][3]->getFlyAmount(), 1500);
+        $this->assertEquals($outPut3['E2'][4]->getFlyAmount(), 7000);
+        $this->assertEquals($outPut3['E2'][5]->getFlyAmount(), 100000);
 
     }
     

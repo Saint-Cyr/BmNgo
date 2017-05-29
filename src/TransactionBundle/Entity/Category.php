@@ -75,6 +75,9 @@ class Category
     }
     
     public function __toString() {
+        if(!$this->name){
+            return 'New Category';
+        }
         return $this->name;
     }
 

@@ -73,6 +73,10 @@ class Sale
     }
     
     public function __toString() {
+        if(!$this->getProduct()->getName()){
+            return 'New Sale';
+        }
+        
         return $this->getProduct()->getName();
     }
     

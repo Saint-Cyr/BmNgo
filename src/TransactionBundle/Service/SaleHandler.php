@@ -39,12 +39,12 @@ class SaleHandler
             //Link the sale to the related product
             $product = $this->em->getRepository('TransactionBundle:Product')->find($s['item']['id']);
             $sale->setProduct($product);
-            $sale->setProfit();
             //Call the stocktHandler service to update the stock
             $this->stockHandler->updateStock($branch, $product, $s['orderedItemCnt'], true);
             //Set the quantity
             $sale->setQuantity($s['orderedItemCnt']);
             $sale->setAmount($s['totalPrice']);
+            $sale->setProfit();
             $sale->setStransaction($stransaction);
             $this->em->persist($sale);
         }
