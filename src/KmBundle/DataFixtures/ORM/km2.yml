@@ -113,6 +113,11 @@ TransactionBundle\Entity\STransaction:
         branch: '@branch2'
         createdAt: <(new \DateTime('now'))>
         
+    stransaction6:
+        totalAmount: 200
+        branch: '@branch2'
+        #createdAt: <(new \DateTime('01-01-2010'))>
+        
 TransactionBundle\Entity\Sale:
     sale1:
         product: '@product1'
@@ -216,6 +221,14 @@ TransactionBundle\Entity\Sale:
         amount: 400
         stransaction: '@stransaction5'
         profit: null
+        
+    sale16:
+        product: '@product11'
+        #quantity: 50
+        amount: 400
+        stransaction: '@stransaction6'
+        createdAt: <(new \DateTime('01-01-2010'))>
+        #profit: null
         
         
 UserBundle\Entity\User:

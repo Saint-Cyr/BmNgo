@@ -19,6 +19,7 @@ class STransactionAdmin extends AbstractAdmin
         $datagridMapper
             ->add('totalAmount')
             ->add('createdAt', 'doctrine_orm_date_range', array('field_type'=>'sonata_type_date_range_picker',))
+            ->add('branch')
             /*->add('createdAt', 'doctrine_orm_date_range', [
     'field_type'=>'sonata_type_datetime_range_picker',
     'field_options' => [
@@ -38,7 +39,7 @@ class STransactionAdmin extends AbstractAdmin
         $listMapper
             ->add('branch')
             //->add('idSynchrone')
-            ->add('sales')
+            //->add('sales')
             ->add('totalAmount')
             ->add('user.name', null, array('label' => 'Seller'));
             if($this->isGranted('ROLE_SUPER_ADMIN')){

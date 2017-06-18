@@ -57,7 +57,7 @@ class StatisticHandlerTest extends WebTestCase
         $branch2 = $this->em->getRepository('KmBundle:Branch')->find(2);
         $this->statisticHandler->setBranchFlyData($branch2);
 
-        $this->assertEquals($branch2->getFlySaleAmount(), 109700);
+        $this->assertEquals($branch2->getFlySaleAmount(), 110100);
         $this->assertEquals($branch2->getFlyProfitAmount(), 520);
         $this->assertEquals($branch2->getFlyExpenditureAmount(), null);
         $this->assertEquals($branch2->getFlyBalanceAmount(), 520);

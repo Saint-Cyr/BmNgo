@@ -32,7 +32,7 @@ class SaleRepositoryTest extends WebTestCase
 
     public function testGetFromTo()
     {
-        //Case 1
+        //Case 1 (Now)
         $product = $this->em->getRepository('TransactionBundle:Product')->find(10);
         $this->assertEquals($product->getName(), 'Chemise cartonier');
 
@@ -45,6 +45,42 @@ class SaleRepositoryTest extends WebTestCase
         $this->assertCount(2, $sales);
 
         //Case 2
+        $product = $this->em->getRepository('TransactionBundle:Product')->find(1);
+        $this->assertEquals($product->getName(), 'CD Simple');
+
+        $initDate = new \DateTime('2008-01-01');
+        $finalDate = new \DateTime('2008-01-01');
+
+        $sales = $this->em->getRepository('TransactionBundle:Sale')
+            ->getFromTo($initDate, $finalDate, $product);
+
+        $this->assertCount(1, $sales);
+        
+        //Case 3
+        $product = $this->em->getRepository('TransactionBundle:Product')->find(2);
+        $this->assertEquals($product->getName(), 'DVD');
+
+        $initDate = new \DateTime('2008-01-01');
+        $finalDate = new \DateTime('2008-01-01');
+
+        $sales = $this->em->getRepository('TransactionBundle:Sale')
+            ->getFromTo($initDate, $finalDate, $product);
+
+        $this->assertCount(2, $sales);
+        
+        //Case 6
+        $product = $this->em->getRepository('TransactionBundle:Product')->find(11);
+        $this->assertEquals($product->getName(), 'Other1');
+
+        $initDate = new \DateTime('2010-01-01');
+        $finalDate = new \DateTime('2010-01-01');
+
+        $sales = $this->em->getRepository('TransactionBundle:Sale')
+            ->getFromTo($initDate, $finalDate, $product);
+
+        $this->assertCount(1, $sales);
+        
+        //Case 5
         $product = $this->em->getRepository('TransactionBundle:Product')->find(5);
         $this->assertEquals($product->getName(), 'Scanner');
 

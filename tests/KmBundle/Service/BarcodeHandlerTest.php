@@ -32,7 +32,7 @@ class BarcodeHandlerTest extends WebTestCase
     
     public function testGenerateBarcode()
     {
-        $branch = $this->em->getRepository('KmBundle:Branch')->find(3);
+        $branch = $this->em->getRepository('KmBundle:Branch')->find(1);
         $this->assertEquals($branch->getName(), 'BATA');
         //Load all the stock
         $stocks = $this->em->getRepository('TransactionBundle:Stock')->getTrackedByBranch($branch, true);
@@ -40,7 +40,7 @@ class BarcodeHandlerTest extends WebTestCase
             $products[] = $s->getProduct();
         }
         
-        $this->assertEquals(count($stocks), 175);
-        $this->assertEquals(count($products), 175);
+        $this->assertEquals(count($stocks), 4);
+        $this->assertEquals(count($products), 4);
     }
 }

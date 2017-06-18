@@ -20,7 +20,7 @@ class ReportAdmin extends AbstractAdmin
            ->with('Data', array('class' => 'col-md-4'))
                ->add('e1', 'entity', array('class' => 'TransactionBundle:Category', 'label' => 'E1: One by column (Ex: Secre)', 'required' => true))
                ->add('e2', 'entity', array('class' => 'TransactionBundle:Category', 'label' => 'E2: All in one column (Ex: Shop)', 'required' => true))
-               ->add('e3', 'entity', array('class' => 'TransactionBundle:Category', 'label' => 'E3: Exclued', 'required' => false))
+               ->add('e3', 'entity', array('class' => 'KmBundle:Branch', 'label' => 'Branch', 'required' => true))
            ->end();
 
        $formMapper
