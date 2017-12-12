@@ -18,6 +18,7 @@ class STransactionAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('totalAmount')
+	    ->add('user')
             ->add('createdAt', 'doctrine_orm_date_range', array('field_type'=>'sonata_type_date_range_picker',))
             ->add('branch')
             /*->add('createdAt', 'doctrine_orm_date_range', [

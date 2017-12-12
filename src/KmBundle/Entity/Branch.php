@@ -95,7 +95,10 @@ class Branch
     }
     
     public function __toString() {
-        return $this->name;
+	if($this->name){
+	    return $this->name;
+	}        
+	return 'New Branch';
     }
 
     /**

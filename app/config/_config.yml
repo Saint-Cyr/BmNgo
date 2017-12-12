@@ -131,7 +131,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
+        driver:   pdo_mysql
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
@@ -144,24 +144,11 @@ doctrine:
         #   2. Uncomment database_path in parameters.yml.dist
         #   3. Uncomment next line:
         #     path:     "%database_path%"
-        
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
-
-#doctrine:
-#    dbal:
-#        default_connection: default
-#        connections:
-#            default:
-#                driver:   pdo_sqlite
-#                path:     %kernel.root_dir%/test.db
-#    orm:
-#        auto_generate_proxy_classes: '%kernel.debug%'
-#        naming_strategy: doctrine.orm.naming_strategy.underscore
-#        auto_mapping: true
 
 # Swiftmailer Configuration
 swiftmailer:

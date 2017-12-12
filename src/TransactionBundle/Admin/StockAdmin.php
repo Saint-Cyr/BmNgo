@@ -17,6 +17,7 @@ class StockAdmin extends AbstractAdmin
     {
         $datagridMapper
             ->add('product.barcode')
+	    ->add('product.categories')
             ->add('product')
             ->add('value')
             ->add('tracked')
