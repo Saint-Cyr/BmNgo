@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>BeezyManager</title>
+
+    <!-- Bootstrap -->
+    <link href="{{ asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+    
+    <!-- Custom styling plus plugins -->
+    
+    <link rel="stylesheet" href="{{ asset('css/AdminLTE.min.css') }}">
+    <link rel='shortcut icon' type='image/x-icon' href='{{ asset('images/favicon.ico') }}' />
+  </head>
+
+
+<body onload="window.print();">
+<div class="wrapper">
+  <!-- Main content -->
+  <section class="invoice">
+    <!-- title row -->
+    <div class="row">
+      
+      <div class="col-xs-12">
+        <h2 class="page-header">
+          <img src="{{ asset('images/logo_mc.png') }}" style="" width='100px'/>
+        </h2>
+      </div>
+      <!-- /.col -->
+    </div>
+        <div>
+            <h1 class="text-center" style="font-size: 35px"> WAY - BILL</h1>
+        </div>
+        
+    <table>
+  
+  
+ <table class="table table-bordered">
+  <thead>
+    
+  </thead>
+  <tbody>
+    <tr>
+      
+      <td>#ID : 00001</td>
+      <td>Transporteur: </td>
+      
+    </tr>
+    <tr>
+      <td>Date d'établissement : {{ "now"|date("d/m/Y") }}</td>
+      <td>Expediteur: </td>
+    </tr>
+    <tr>
+        <td>Type de vehicule et immatriculation:</td>
+        <td>Destinataire: </td>
+    </tr>
+    <tr>
+      <td>Date d'arrivée prévue :_ _ _ _ _ /{{ "now"|date("m/Y") }}</td>
+      <td>Nom du chauffeur: _ _ _ _ _  _ _ _ _ _ _ _ _ _ _</td>
+    </tr>
+             
+  </tbody>
+</table>
+<br>
+<table class="table table-bordered">
+  <thead>
+    
+  </thead>
+  <tbody>
+    <tr>
+      <td>Nb colis</td>
+      <td>Poids / Volume</td>
+      <td>Designation des produits</td>
+      <td>No P.R. ou Prog. Ou centre cout</td>
+      <td>Quantite recu</td>
+      
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>PIECE</td>
+      <td>ECRAN ORDINATEUR</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>PIECE</td>
+        <td>CHAISE ROULANTE</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>PIECE</td>
+      <td>GPS AVEC PILE</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>PIECE</td>
+      <td>MANUELS PROCEDURES FP3</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>TOTAL POIDS = </td>
+      <td></td>
+    </tr>
+             
+  </tbody>
+</table>
+
+    
+    
+
+    
+
+    <div class="row">
+      <!-- accepted payments column -->
+      <div class="col-xs-6">
+
+        <div class="table-responsive"  style='font-size: 12px'>
+          <table class="table">
+            <tr>
+              <th style="width:50%">Destinataire:</th>
+              
+            </tr>
+            <tr>
+              <th>Nom:</th>
+              <td>Francis NAMSEINE</td>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <td>Officier Logistique</td>
+            </tr>
+            <tr>
+              <th>Telephone:</th>
+              <td>75588591</td>
+            </tr>
+          </table>
+        </div>
+        <div class="table-responsive" style='font-size: 12px'>
+          <table class="table">
+            <tr>
+              <th style="width:50%">Transporteur</th>
+              
+            </tr>
+            <tr>
+              <th>Nom:</th>
+              <td>ELVIN SENGA</td>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <td>HAND INT</td>
+            </tr>
+            <tr>
+              <th>Telephone:</th>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <!-- /.col -->
+      <div class="col-xs-6">
+
+        <div class="table-responsive"  style='font-size: 12px'>
+          <table class="table">
+            <tr>
+              <th style="width:50%">Expediteur</th>
+              
+            </tr>
+            <tr>
+              <th>Nom:</th>
+              <td>Jean Maximin GONENDJI</td>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <td>Mercy Corps Bangui</td>
+            </tr>
+            <tr>
+              <th>Telephone:</th>
+              <td>75051245</td>
+            </tr>
+          </table>
+        </div>
+        <img src="{{ asset('images/barcode_bill.png') }}" style="padding-top: 20px; padding-left: 80px;"/>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- ./wrapper -->
+</body>
+</html>

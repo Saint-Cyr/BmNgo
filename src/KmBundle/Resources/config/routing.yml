@@ -30,3 +30,4 @@ sales:
   type: rest
   resource:     "TransactionBundle:Api"
   prefix:  api
+    

@@ -1,3 +1,7 @@
+transaction_bill:
+    path:    /way_bill
+    defaults: { _controller: TransactionBundle:Default:wayBill }
+    
 transaction_product_list:
     path:     /product_list
     defaults: { _controller: TransactionBundle:Default:productList }
