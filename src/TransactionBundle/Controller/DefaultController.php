@@ -7,7 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
-{   
+{
+    public function wayBillAction()
+    {
+        return $this->render('TransactionBundle:Default:way_bill.html.twig');
+    }
+    
     public function saleAction(Request $request)
     {
         //Get the data structure that came from the client as an array
