@@ -183,6 +183,7 @@ class StockAdmin extends AbstractAdmin
     {
         return ['Designation' => 'product',
 	        'Project Code' => 'product.projectCode',
+		date("D M d, Y G:i") => 'product.totalStock',
 		'Rubric' => 'product.categories'];
     }
 }
