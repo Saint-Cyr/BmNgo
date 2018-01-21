@@ -71,8 +71,11 @@ class ProductAdmin extends AbstractAdmin
             $formMapper->add('barcode', null, array('disabled' => $disabled))
             ->add('file', 'file', array('required' => false))
         ->end()
-        ->with('Pricing', array('class' => 'col-md-4'))
-            ->add('unitPrice', null, array('required' => false))
+        ->with('Other', array('class' => 'col-md-4'))
+	    ->add('projectCode', null, array('required' => false))
+	    ->add('officeCode', null, array('required' => false))
+	    ->add('linCode', null, array('required' => false))
+	    ->add('unitPrice', null, array('required' => false))
             ->add('wholeSalePrice', null, array('required' => false))
         ->end()
         ;

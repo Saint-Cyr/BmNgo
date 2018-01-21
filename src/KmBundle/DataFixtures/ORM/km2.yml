@@ -29,12 +29,14 @@ TransactionBundle\Entity\Product:
         name: CD Simple
         unitPrice: 150.00
         wholeSalePrice: 100.00
+        projectCode: 1
         
     product2:
         barcode: 2002256910206
         name: DVD
         unitPrice: 300.00
         wholeSalePrice: 150.00
+        projectCode: 2
         #categories: '@category1'
     
     product3:
@@ -42,41 +44,50 @@ TransactionBundle\Entity\Product:
         name: Manette 4500
         unitPrice: 4500.00
         wholeSalePrice: 2000.00
+        projectCode: 3
         #categories: '@category1'
     
     product4:
         barcode: 2002256910269
         name: Plastification
+        projectCode: 4
         
     product5:
         barcode: 2002256910609
         name: Scanner
+        projectCode: 5
         
     product6:
         barcode: 2002256916209
         name: Photo44
+        projectCode: 6
         
     product7:
         barcode: 2001256910209
         name: Photocopy
+        projectCode: 7
     
     product8:
         barcode: 2002156910209
         name: Internet
+        projectCode: 8
     
     product9:
         barcode: 2002216910209
         name: Serigraphy
+        projectCode: 9
     
     product10:
         barcode: 2002251910209
         name: Chemise cartonier
         unitPrice: 100
         wholeSalePrice: 60
+        projectCode: 10
         
     product11:
         barcode: 2002256110209
         name: Other1
+        projectCode: 11
         
 KmBundle\Entity\Branch:
     branch1:

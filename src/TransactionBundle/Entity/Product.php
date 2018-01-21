@@ -64,6 +64,27 @@ class Product
     /**
      * @var string
      *
+     * @ORM\Column(name="projectCode", type="string", length=255, unique=false)
+     */
+    private $projectCode;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="officeCode", type="string", length=255, unique=true, nullable=true)
+     */
+    private $officeCode;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="linCode", type="string", length=255, unique=false, nullable=true)
+     */
+    private $linCode;
+    
+    /**
+     * @var string
+     *
      * @ORM\Column(name="locked", type="boolean", nullable=true)
      */
     private $locked;
@@ -532,5 +553,77 @@ class Product
     public function getCategories()
     {
         return $this->categories;
+    }
+
+    /**
+     * Set projectCode
+     *
+     * @param string $projectCode
+     *
+     * @return Product
+     */
+    public function setProjectCode($projectCode)
+    {
+        $this->projectCode = $projectCode;
+
+        return $this;
+    }
+
+    /**
+     * Get projectCode
+     *
+     * @return string
+     */
+    public function getProjectCode()
+    {
+        return $this->projectCode;
+    }
+
+    /**
+     * Set officeCode
+     *
+     * @param string $officeCode
+     *
+     * @return Product
+     */
+    public function setOfficeCode($officeCode)
+    {
+        $this->officeCode = $officeCode;
+
+        return $this;
+    }
+
+    /**
+     * Get officeCode
+     *
+     * @return string
+     */
+    public function getOfficeCode()
+    {
+        return $this->officeCode;
+    }
+
+    /**
+     * Set linCode
+     *
+     * @param string $linCode
+     *
+     * @return Product
+     */
+    public function setLinCode($linCode)
+    {
+        $this->linCode = $linCode;
+
+        return $this;
+    }
+
+    /**
+     * Get linCode
+     *
+     * @return string
+     */
+    public function getLinCode()
+    {
+        return $this->linCode;
     }
 }

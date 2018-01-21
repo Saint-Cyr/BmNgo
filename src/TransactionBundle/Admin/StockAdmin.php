@@ -38,10 +38,13 @@ class StockAdmin extends AbstractAdmin
             ->add('value', null, array('editable' => true))
             ->add('alertLevel', null, array('editable' => true))
             ->add('product')
-            ->add('stocked')
+	    ->add('product.projectCode', null, array('label' => 'Project Code'))
+	    ->add('product.officeCode', null, array('label' => 'Office Code'))
+	    ->add('product.linCode', null, array('label' => 'LIN Code'))
+            /*->add('stocked')
             ->add('destocked')
             ->add('updateOther')
-            ->add('alertStockCreatedAt')
+            ->add('alertStockCreatedAt')*/
             ->add('_action', null, array(
                 'actions' => array(
                     'show' => array(),
