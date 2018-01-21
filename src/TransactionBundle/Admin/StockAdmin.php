@@ -173,4 +173,16 @@ class StockAdmin extends AbstractAdmin
         }
         
     }
+
+    public function getExportFormats()
+    {
+        return ['xls'];
+    }
+
+    public function getExportFields()
+    {
+        return ['Designation' => 'product',
+	        'Project Code' => 'product.projectCode',
+		'Rubric' => 'product.categories'];
+    }
 }
